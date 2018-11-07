@@ -1,7 +1,7 @@
-// import SyncStorage from 'sync-storage';
-// import SyncStorage from 'react-native-sync-localstorage';
+//import StoragePool from 'sync-storage';
+import { AsyncStorage as StoragePool } from 'react-native';
+// import StoragePool from 'react-native-sync-localstorage';
 import { Component } from 'react';
-import { AsyncStorage } from 'react-native';
 import { BehaviorSubject } from 'rxjs';
 
 export enum Modes {
@@ -91,15 +91,17 @@ export interface IStorage {
 
 export class Storage {
     private maps: { [T in keyof IStorage]?: BehaviorSubject<IStorage[T]> } = {};
+    public ready: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
     constructor() {
         (async () => {
-            let keys = await AsyncStorage.getAllKeys();
+            let keys = await StoragePool.getAllKeys();
             keys.forEach( async (key) => {
-                let data = JSON.parse(await AsyncStorage.getItem(key) || '{}');
+                let data = JSON.parse(await StoragePool.getItem(key) || '{}');
                 let map = this.maps[key];
                 if (!map) this.maps[key] = new BehaviorSubject(data);
                 else map.next(data);
             });
+            this.ready.next(true);
         })();
     }
 
@@ -115,7 +117,8 @@ export class Storage {
     }
     set<T extends keyof IStorage>(key: T, value: IStorage[T]): void {
         let sj = this.getSubject(key);
-        AsyncStorage.setItem(key, JSON.stringify(value));
+        console.log('key', key, value);
+        StoragePool.setItem(key, JSON.stringify(value));
         sj.next(value);
     }
     update<T extends keyof IStorage, U extends keyof IStorage[T]>(key: T, subkey: U, value: IStorage[T][U]) {
@@ -139,6 +142,7 @@ export class Storage {
 }
 
 type Validator = RegExp | { (value: any): boolean };
+
 
 // export class Storage {
 //     private maps: { [T in keyof IStorage]?: BehaviorSubject<IStorage[T]> } = {};

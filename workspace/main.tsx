@@ -1,32 +1,31 @@
 import React, {Component} from 'react';
 import { Router, Stack, Scene, Actions } from 'react-native-router-flux';
+import Storage from './config/storage';
 
 import { LoginContent } from './contents/login';
-import { VideoPage } from './contents/video-page';
+import { MainPage } from './contents/main-page';
 import { Setup } from './contents/setup';
 
-
-// import { Container } from 'native-base';
-// type Props = {};
-// export default class App extends Component<Props> {
-//   render() {
-//     return (
-//       <Container>
-//         <LoginContent />
-//       </Container>
-//     );
-//   }
-// }
-
-const App = () => (
-    <Router>
-        <Stack key="root" hideNavBar={true}>
-            <Scene key="setup" component={Setup} />
-            
-            <Scene key="login" component={LoginContent} />
-            <Scene key="videopage" component={VideoPage} />
-            <Scene key="setup" component={Setup} />
-        </Stack>
-    </Router>
-);
+class App extends Component<any, any> {
+    constructor(props) {
+        super(props);
+        this.state = { ready: false }
+    }
+    componentWillMount() {
+        Storage.ready.subscribe( (ready) => this.setState({ready}) );
+    }
+    render() {
+        return this.state.ready ? (
+            <Router>
+                <Stack key="root" hideNavBar={true}>
+                <Scene key="login" component={LoginContent} />
+                    
+                    <Scene key="login" component={LoginContent} />
+                    <Scene key="main" component={MainPage} />
+                    <Scene key="setup" component={Setup} />
+                </Stack>
+            </Router>
+        ) : null;
+    }
+}
 export default App;

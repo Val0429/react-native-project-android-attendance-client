@@ -4,11 +4,11 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Text, Item, Input, H1 } from 'native-base';
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import { Actions } from 'react-native-router-flux';
-import { rcImages } from './../../resources/images';
+import { rcImages } from '../../../../resources/images';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import { OutlineElement } from './libs/outline-element';
-import { Face } from './libs/face';
+import { OutlineElement } from '../outline-element';
+import { Face } from '../face';
 
 import Shimmer from 'react-native-shimmer';
 

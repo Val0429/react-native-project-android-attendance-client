@@ -39,7 +39,7 @@ export class LoginContent extends Component<Props> {
                                     <Input secureTextEntry={true} style={styles.item_input} placeholder='Password'/>
                                 </Item>
 
-                                <Button style={styles.item_button} primary full onPress={() => Actions.push('videopage')}>
+                                <Button style={styles.item_button} primary full onPress={() => Actions.push('main')}>
                                     <Icon name='login' style={[styles.item_icon, {fontSize: 32, marginTop: 1}]} />
                                     <Text style={styles.item_input}>Login</Text>
                                 </Button>
