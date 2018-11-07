@@ -5,6 +5,7 @@
     "@babel/typescript"
   ],
   "plugins": [
+    "@babel/transform-flow-strip-types",
     "@babel/proposal-class-properties",
     "@babel/proposal-object-rest-spread"
   ]

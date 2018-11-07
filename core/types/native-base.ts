@@ -4,7 +4,7 @@ declare module "native-base" {
             /**
              * scrolling bounces or not.
              */
-            bounces: boolean;
+            bounces?: boolean;
         }
     }
 }

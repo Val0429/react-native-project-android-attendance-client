@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import {Platform, StyleSheet, View, Image} from 'react-native';
+import {Platform, View, Image} from 'react-native';
+import EStyleSheet from 'react-native-extended-stylesheet';
 import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Text, Item, Input } from 'native-base';
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import { Actions } from 'react-native-router-flux';
@@ -14,22 +15,18 @@ export class LoginContent extends Component<Props> {
     render() {
         return (
             <Container>
-                <Content bounces={false} contentContainerStyle={{flex: 1}} style={{backgroundColor: "#191F2C"}}>
+                <Content bounces={false} contentContainerStyle={{flex: 1}} style={styles.content}>
                     <Grid>
                         {/* image */}
-                        <Row size={3} style={[styles.row,
-                            {alignItems: 'flex-end', paddingBottom: 20}]}>
-                            <Image source={rcImages.attendance} />
+                        <Row size={4} style={[styles.row_base, styles.row_1_icon]}>
+                            <Image style={{height: "80%"}} resizeMode="contain" source={rcImages.attendance} />
                         </Row>
                         {/* title */}
-                        <Row size={0.7} style={[styles.row,
-                            {alignItems: 'flex-start'}]}>
+                        <Row size={0.7} style={[styles.row_base, styles.row_2_title]}>
                             <Text style={styles.title}>Attendance Client</Text>
                         </Row>
                         {/* form */}
-                        <Row size={4} style={[styles.row,
-                            {alignItems: 'flex-start'}]}>
-
+                        <Row size={4} style={[styles.row_base, styles.row_3_form]}>
                             <Col size={1.5} />
                             <Col size={1}>
                                 <Item style={styles.item}>
@@ -43,7 +40,7 @@ export class LoginContent extends Component<Props> {
                                 </Item>
 
                                 <Button style={styles.item_button} primary full onPress={() => Actions.push('videopage')}>
-                                    <Icon name='login' style={[styles.item_icon, {fontSize: 32, marginTop: 4}]} />
+                                    <Icon name='login' style={[styles.item_icon, {fontSize: 32, marginTop: 1}]} />
                                     <Text style={styles.item_input}>Login</Text>
                                 </Button>
                             </Col>
@@ -57,32 +54,48 @@ export class LoginContent extends Component<Props> {
     }
 }  
 
-const styles = StyleSheet.create({
-    row: {
-      justifyContent: 'center',
-      alignItems: 'center',
+const styles = EStyleSheet.create({
+    content: {
+        backgroundColor: "$bgColor"
+    },
+
+    row_base: {
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    row_1_icon: {
+        alignItems: 'flex-end',
+        paddingBottom: '10rem'
+    },
+
+    row_2_title: {
+        alignItems: 'flex-start'
     },
     title: {
         fontFamily: 'FontAwesome',
-        fontSize: 48,
+        fontSize: "18 rem",
         color: 'white'
     },
+
+    row_3_form: {
+        alignItems: 'flex-start'
+    },
     item: {
-        margin: 5
+        margin: "1 rem"
     },
     item_icon: {
         color: "#EEEEFF",
-        fontSize: 36
+        fontSize: "12 rem"
     },
     item_input: {
         color: "white",
-        marginLeft: 10,
-        fontSize: 24
+        marginLeft: "4 rem",
+        fontSize: "8 rem"
     },
     item_button: {
-        marginTop: 15,
-        borderRadius: 5,
-        height: 50,
+        marginTop: "7 rem",
+        borderRadius: "2 rem",
+        height: "18 rem",
     }
   });
   
