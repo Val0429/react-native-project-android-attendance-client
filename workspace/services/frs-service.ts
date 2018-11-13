@@ -1,18 +1,22 @@
 import * as request from 'request';
 import { client } from 'websocket';
 import { Observable, BehaviorSubject, Subject, Observer } from 'rxjs';
-import { UserType, sjRecognizedUser, sjUnRecognizedUser, RecognizedUser, UnRecognizedUser } from './frs-service/core';
-import Storage, {SettingsFRS} from './../config/storage';
+import { UserType, sjRecognizedUser, sjUnRecognizedUser, RecognizedUser, UnRecognizedUser, Gender, Demographic } from './frs-service/core';
+import Storage, {SettingsFRS, SettingsDGS} from './../config/storage';
 export * from './frs-service/core';
+import RNFetchBlob from "react-native-fetch-blob";
 // import { filterFace } from './frs-service/filter-face';
 
 export interface Config {
     frs: SettingsFRS;
+    dgs: SettingsDGS;
 }
 const Config: Config = {
-    frs: Storage.get("settingsFRS")
+    frs: Storage.get("settingsFRS"),
+    dgs: Storage.get("settingsDGS"),
 }
 Storage.getSubject("settingsFRS").subscribe(d => Config.frs = d);
+Storage.getSubject("settingsDGS").subscribe(d => Config.dgs = d);
 export { Config };
 
 
@@ -27,7 +31,7 @@ export class FRSService {
     private sessionId: string;
     private sjLogined: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
     private sjRecovered: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-    private livestream: Observable<RecognizedUser | UnRecognizedUser>;
+    public livestream: Observable<RecognizedUser | UnRecognizedUser>;
     public sjLiveFace: Subject<RecognizedUser | UnRecognizedUser> = new Subject();
 
     constructor() {
@@ -41,6 +45,7 @@ export class FRSService {
                 //     await this.waitForLogin();
                 //     this.sjLiveFace.next(compared);
                 // }) );
+
         })();
     }
 
@@ -218,7 +223,6 @@ export class FRSService {
     private loggingIn: boolean = false;
     private maintainTimer: number = null;
     private login() {
-
         let tryLogin = async () => {
             if (this.loggingIn === true) return;
             const url = this.makeUrl("login");
@@ -280,6 +284,10 @@ export class FRSService {
             //     this.doWebsocketListen();
             // });
             
+        }
+        if (!Config.frs.ip || !Config.frs.apiPort || !Config.frs.socketPort) {
+            setTimeout(() => { this.login(); }, 1000);
+            return;
         }
         tryLogin();
     }
@@ -475,6 +483,42 @@ export class FRSService {
     //         });
     // }
     /////////////////////////////////
+
+    snapshot(image: string, resp: Response = null): Promise<string> {
+        return new Promise<string>( async (resolve, reject) => {
+            await this.waitForLogin();
+            var url: string = this.makeUrl(`snapshot/session_id=${this.sessionId}&image=${image}`);
+
+            try {
+                let res = await RNFetchBlob.fetch('GET', url);
+                let base64 = res.base64();
+                resolve(base64);
+                
+            } catch(e) {
+                console.log('error', e)
+                reject(e);
+            }
+        });
+    }
+
+    demographic(image: string): Promise<Demographic> {
+        return new Promise<Demographic>( async (resolve, reject) => {
+            const url = `http://${Config.dgs.ip}:${Config.dgs.apiPort}/demographic/ageGender`;
+            console.log('rul', url)
+            try {
+                let body = await (await fetch(url, {
+                    method: 'POST',
+                    body: JSON.stringify({ face_image64: image, margin: 0 })
+                })).json();
+                console.log('got result', body);
+                resolve(body);
+                
+            } catch(e) {
+                console.log('error', e)
+                reject(e);
+            }
+        });
+    }
 
     /// private helpers /////////////
     private makeUrl(func: string) {

@@ -70,3 +70,12 @@ export interface UnRecognizedUser {
      */
     valFaceId?: number;
 }
+
+export enum Gender {
+    male = "MALE",
+    female = "FEMALE"
+}
+export interface Demographic {
+    age: number;
+    gender: Gender;
+}

@@ -1,4 +1,10 @@
 rootProject.name = 'AttendanceClient'
+include ':react-native-face-detection'
+project(':react-native-face-detection').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-face-detection/android')
+include ':react-native-video'
+project(':react-native-video').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-video/android-exoplayer')
+include ':react-native-fetch-blob'
+project(':react-native-fetch-blob').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-fetch-blob/android')
 include ':react-native-shimmer'
 project(':react-native-shimmer').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-shimmer/android')
 include ':react-native-vector-icons'

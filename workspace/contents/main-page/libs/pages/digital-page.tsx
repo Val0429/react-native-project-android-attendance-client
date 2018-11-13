@@ -5,7 +5,7 @@ import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Rig
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import { Actions } from 'react-native-router-flux';
 import { rcImages } from '../../../../resources/images';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Iconion from 'react-native-vector-icons/Ionicons';
 import './../../../../services/frs-service';
 import { OutlineElement } from '../outline-element';
 import { Face } from '../face';
@@ -30,7 +30,7 @@ export class DigitalPage extends Component<Props> {
 
                     {/* Setup */}
                     <TouchableOpacity style={styles.setup_icon_touchable} activeOpacity={0.7} onPress={() => Actions.push('setup')}>
-                        <Icon name='cogs' style={styles.setup_icon} />
+                        <Iconion name='md-cog' style={styles.setup_icon} />
                     </TouchableOpacity>
 
                 </Content>

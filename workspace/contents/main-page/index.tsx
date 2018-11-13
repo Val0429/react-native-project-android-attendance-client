@@ -8,6 +8,7 @@ import { rcImages } from './../../resources/images';
 
 import { VideoPage } from './libs/pages/video-page';
 import { DigitalPage } from './libs/pages/digital-page';
+import { AttendanceTakingPage } from './libs/pages/attendance-taking-page';
 import { Video } from '../setup/libs/mode-selection/video';
 
 import Storage, { modesText, SettingsModes, Modes } from './../../config/storage';
@@ -42,6 +43,7 @@ export class MainPage extends Component<Props, States> {
             <Container>
                 { this.state.modes === Modes.Video && <VideoPage /> }
                 { this.state.modes === Modes.Digital && <DigitalPage /> }
+                { this.state.modes === Modes.Attendance && <AttendanceTakingPage /> }
             </Container>
         );
     }

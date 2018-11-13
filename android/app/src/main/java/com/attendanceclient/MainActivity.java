@@ -1,8 +1,19 @@
 package com.attendanceclient;
 
+import android.app.Activity;
+import android.os.Bundle;
+
 import com.facebook.react.ReactActivity;
 
 public class MainActivity extends ReactActivity {
+
+    public static Activity mActivity;
+
+    @Override
+    public void onCreate (Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mActivity = this;
+    }
 
     /**
      * Returns the name of the main component registered from JavaScript.
