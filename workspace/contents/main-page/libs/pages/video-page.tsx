@@ -31,35 +31,53 @@ export class VideoPage extends Component<Props, States> {
 
     private subscription: Subscription;
     private subscription2: Subscription;
+    private timer;
     componentDidMount() {
         this.subscription = frs.sjLiveFace.subscribe( (data) => {
             this.handleFace(data);
         });
         this.subscription2 = frs.livestream.subscribe();
+        this.timer = setInterval( () => {
+            this.setState( (prevState) => {
+                let changed = false;
+                let now = new Date().valueOf();
+                var faces = prevState.faces.map( (face) => {
+                    if (now - face.timestamp > 1000*10) {
+                        changed = true;
+                        return;
+                    }
+                    return face;
+                } );
+                if (!changed) return;
+                faces = faces.filter( (v) => v !== undefined );
+                return { faces };
+            });
+
+        }, 1000);
     }
     componentWillUnmount() {
         this.subscription.unsubscribe();
         this.subscription2.unsubscribe();
+        clearInterval(this.timer);
     }
 
     private handleFace(face: RecognizedUser | UnRecognizedUser) {
-        if (face.type === UserType.UnRecognized) return;
-        let idx = -1;
-        for (let i=0; i<this.state.faces.length; ++i) {
-            let thisface = this.state.faces[i];
-            if (face.valFaceId === thisface.valFaceId) {
-                idx = i;
-                break;
+        this.setState( (prevState) => {
+            let idx = -1;
+            for (let i=0; i<prevState.faces.length; ++i) {
+                let thisface = prevState.faces[i];
+                if (face.valFaceId === thisface.valFaceId) {
+                    idx = i;
+                    break;
+                }
             }
-        }
-
-        this.setState({
-            faces: [
-                ...this.state.faces.slice(0, idx),
-                { ...face, face_feature: undefined },
-                //...this.state.faces.slice(idx+1, this.state.faces.length)
-                ...this.state.faces.slice(idx+1, 8)
-            ]
+            return {
+                faces: [
+                    ...(idx > 0  ? prevState.faces.slice(0, idx) : []),
+                    { ...face, face_feature: undefined },
+                    ...prevState.faces.slice(idx+1, prevState.faces.length)
+                ]
+            }
         });
     }
 
@@ -158,7 +176,6 @@ const styles = EStyleSheet.create({
     face_area: {
         position: 'absolute',
         left: '5 rem', bottom: '3 rem',
-        height: '80 rem', width: '100%-10rem',
         flexDirection: 'row',
         alignItems: 'flex-end',
         // backgroundColor: 'red'

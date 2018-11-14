@@ -139,7 +139,7 @@ export function filterFace(compareCallback: (face: RecognizedUser | UnRecognized
                             let score = 0;
                             if (score < targetScore) continue;
                             /// replace
-                            val.timestamp = prev.timestamp;
+                            //val.timestamp = prev.timestamp;
                             val.valFaceId = prev.valFaceId;
                             tryCallback(val);
                             Object.assign(prev, val);
@@ -164,7 +164,7 @@ export function filterFace(compareCallback: (face: RecognizedUser | UnRecognized
                             let prev: RecognizedUser = indexType[i] as RecognizedUser;
                             if (prev.person_id !== personId) continue;
                             /// replace
-                            valrec.timestamp = prev.timestamp;
+                            //valrec.timestamp = prev.timestamp;
                             valrec.valFaceId = prev.valFaceId;
                             tryCallback(valrec);
                             Object.assign(prev, valrec);
@@ -186,7 +186,7 @@ export function filterFace(compareCallback: (face: RecognizedUser | UnRecognized
                             let highestScore: any = prev.highest_score || {};
                             if (valrec.person_info.fullname === highestScore.fullname && highestScore.score >= Config.fts.specialScoreForUnRecognizedFace) {
                                 /// replace this face
-                                valrec.timestamp = prev.timestamp;
+                                //valrec.timestamp = prev.timestamp;
                                 valrec.valFaceId = prev.valFaceId;
                                 tryCallback(valrec);
                                 Object.assign(prev, valrec);

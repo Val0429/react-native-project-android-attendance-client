@@ -20,6 +20,7 @@ export class Face extends Component<Props> {
         let user = this.props.user as RecognizedUser;
         let date = new Date(user.timestamp);
         let datestring = `${pad(date.getHours()-date.getTimezoneOffset()/8, 2)}:${pad(date.getMinutes(), 2)}:${pad(date.getSeconds(), 2)}`;
+        console.log('date', datestring, user.snapshot);
         return (
             <>
                 <Row style={styles.row_main} size={3.2}>
@@ -40,7 +41,7 @@ export class Face extends Component<Props> {
     getUnRecognizedFace() {
         let user = this.props.user as RecognizedUser;
         let date = new Date(user.timestamp);
-        let datestring = `${pad(date.getHours()-date.getTimezoneOffset()/8, 2)}:${pad(date.getMinutes(), 2)}:${pad(date.getSeconds(), 2)}`;
+        let datestring = `${date.getHours()}:${pad(date.getMinutes(), 2)}:${pad(date.getSeconds(), 2)}`;
         return (
             <>
                 <Row style={styles.row_main} size={3.2}>
@@ -70,8 +71,10 @@ export class Face extends Component<Props> {
 
 const styles = EStyleSheet.create({
     main: {
-        width: "48 rem",
-        height: "62 rem",
+        // width: "48 rem",
+        // height: "62 rem",
+        width: "41 rem",
+        height: "53 rem",
         backgroundColor: '#262626AA',
         color: "white",
         borderRadius: 8

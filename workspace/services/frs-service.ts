@@ -27,9 +27,10 @@ export class FRSService {
         (async () => {
             /// init main stream
             this.livestream = Observable.merge(sjRecognizedUser, sjUnRecognizedUser)
+                .share()
                 .pipe( filterFace( async (compared) => {
                     this.sjLiveFace.next(compared);
-                }) );
+                }) )
 
         })();
     }
