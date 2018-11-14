@@ -7,6 +7,8 @@ import { Actions } from 'react-native-router-flux';
 import { rcImages } from '../../../../resources/images';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Iconion from 'react-native-vector-icons/Ionicons';
+import frs, {RecognizedUser, UnRecognizedUser, UserType, Gender} from './../../../../services/frs-service';
+import { Subscription } from 'rxjs';
 
 import { OutlineElement } from '../outline-element';
 import { Face } from '../face';
@@ -14,10 +16,35 @@ import { Face } from '../face';
 import Shimmer from 'react-native-shimmer';
 
 interface Props {
-
+}
+interface States {
+    faces: (RecognizedUser | UnRecognizedUser)[];
 }
 
-export class VideoPage extends Component<Props> {
+export class VideoPage extends Component<Props, States> {
+    constructor(props) {
+        super(props);
+        this.state = {
+            faces: []
+        }
+    }
+
+    private subscription: Subscription;
+    componentDidMount() {
+        this.subscription = frs.livestream.subscribe( (data) => {
+            this.handleFace(data);
+        });
+    }
+    componentWillUnmount() {
+        this.subscription.unsubscribe();
+    }
+
+    private handleFace(face: RecognizedUser | UnRecognizedUser) {
+        this.setState({
+            faces: [face, ...this.state.faces]
+        });
+    }
+
     render() {
         return (
             <Container>
@@ -42,11 +69,11 @@ export class VideoPage extends Component<Props> {
 
                     {/* face area */}
                     <View style={styles.face_area}>
-                        <Face style={[styles.face_area_faces]} />
-                        <Face style={styles.face_area_faces} />
-                        <Face style={styles.face_area_faces} />
-                        <Face style={styles.face_area_faces} />
-                        <Face style={styles.face_area_faces} />
+                    {
+                        this.state.faces.map( (user) => {
+                            return <Face key={user.valFaceId} user={user} style={styles.face_area_faces} />
+                        })
+                    }
                     </View>
 
                     {/* Setup */}

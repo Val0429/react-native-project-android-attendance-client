@@ -3,29 +3,66 @@ import {Platform, Image, StyleProp, ViewStyle} from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import { View, Container, Thumbnail, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Text, Item, Input, H1 } from 'native-base';
 import { Col, Row, Grid } from 'react-native-easy-grid';
+import frs, {RecognizedUser, UnRecognizedUser, UserType, Gender} from './../../../services/frs-service';
 
 import { rcImages } from './../../../resources/images';
 
 interface Props {
+    user: RecognizedUser | UnRecognizedUser;
     style?: StyleProp<ViewStyle>;
 }
 
 export class Face extends Component<Props> {
+    getFace() {
+        return this.props.user.type === UserType.Recognized ? this.getRecognizedFace() : this.getUnRecognizedFace();
+    }
+    getRecognizedFace() {
+        let user = this.props.user as RecognizedUser;
+        let date = new Date(user.timestamp);
+        let datestring = `${pad(date.getHours()-date.getTimezoneOffset()/8, 2)}:${pad(date.getMinutes(), 2)}:${pad(date.getSeconds(), 2)}`;
+        return (
+            <React.Fragment>
+                <Row style={styles.row_main} size={3.2}>
+                    <Image style={styles.row_image_1} resizeMode="contain" source={{ uri: frs.snapshotUrl(this.props.user.snapshot) }} />
+                </Row>
+                <Row style={styles.row_main} size={1}>
+                    <Text style={[styles.row_text, styles.row_text_1_id]}>{user.person_info.employeeno}</Text>
+                </Row>
+                <Row style={[styles.row_main, styles.row_main_2]} size={0.8}>
+                    <Text style={[styles.row_text, styles.row_text_2_title]} numberOfLines={1}>{user.person_info.fullname}</Text>
+                </Row>
+                <Row style={[styles.row_main, styles.row_main_3]} size={1}>
+                    <Text style={styles.row_text}>{datestring}</Text>
+                </Row>
+            </React.Fragment>
+        );
+    }
+    getUnRecognizedFace() {
+        let user = this.props.user as RecognizedUser;
+        let date = new Date(user.timestamp);
+        let datestring = `${pad(date.getHours()-date.getTimezoneOffset()/8, 2)}:${pad(date.getMinutes(), 2)}:${pad(date.getSeconds(), 2)}`;
+        return (
+            <React.Fragment>
+                <Row style={styles.row_main} size={3.2}>
+                    <Image style={styles.row_image_1} resizeMode="contain" source={{ uri: frs.snapshotUrl(this.props.user.snapshot) }} />
+                </Row>
+                <Row style={styles.row_main} size={1}>
+                    <Text style={[styles.row_text, styles.row_text_1_id]}></Text>
+                </Row>
+                <Row style={[styles.row_main, styles.row_main_2]} size={0.8}>
+                    <Text style={[styles.row_text, styles.row_text_2_title]} numberOfLines={1}>No Match</Text>
+                </Row>
+                <Row style={[styles.row_main, styles.row_main_3]} size={1}>
+                    <Text style={styles.row_text}>{datestring}</Text>
+                </Row>
+            </React.Fragment>
+        );
+    }
+
     render() {
         return (
             <View padder={true} style={[styles.main, this.props.style]}>
-                <Row style={styles.row_main} size={3.2}>
-                    <Image style={styles.row_image_1} resizeMode="contain" source={rcImages.beauty} />
-                </Row>
-                <Row style={styles.row_main} size={1}>
-                    <Text style={[styles.row_text, styles.row_text_1_id]}>I-0011</Text>
-                </Row>
-                <Row style={[styles.row_main, styles.row_main_2]} size={0.8}>
-                    <Text style={[styles.row_text, styles.row_text_2_title]} numberOfLines={1}>Jasmine.Lin</Text>
-                </Row>
-                <Row style={[styles.row_main, styles.row_main_3]} size={1}>
-                    <Text style={styles.row_text}>12:05:20</Text>
-                </Row>
+                { this.getFace() }
             </View>
         );
     }
@@ -119,4 +156,9 @@ const styles = EStyleSheet.create({
     // }
 
 });
-  
+
+function pad(n, width, z?) {
+    z = z || '0';
+    n = n + '';
+    return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
+}
