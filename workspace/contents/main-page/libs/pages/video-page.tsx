@@ -12,20 +12,25 @@ import { Subscription } from 'rxjs';
 
 import { OutlineElement } from '../outline-element';
 import { Face } from '../face';
+import Storage, { SettingsVideo } from './../../../../config/storage';
 
 import Shimmer from 'react-native-shimmer';
 
 interface Props {
 }
 interface States {
-    faces: (RecognizedUser | UnRecognizedUser)[];
+    faces?: (RecognizedUser | UnRecognizedUser)[];
+    now?: Date;
 }
 
 export class VideoPage extends Component<Props, States> {
+    private config: SettingsVideo;
     constructor(props) {
         super(props);
+        this.config = Storage.get("settingsVideo");
         this.state = {
-            faces: []
+            faces: [],
+            now: new Date()
         }
     }
 
@@ -41,17 +46,17 @@ export class VideoPage extends Component<Props, States> {
             /// remove outdate faces
             this.setState( (prevState) => {
                 let changed = false;
-                let now = new Date().valueOf();
+                let now = new Date();
                 var faces = prevState.faces.map( (face) => {
-                    if (now - face.timestamp > 1000*30) {
+                    if (now.valueOf() - face.timestamp > 1000*30) {
                         changed = true;
                         return;
                     }
                     return face;
                 } );
-                if (!changed) return;
+                if (!changed) return {now};
                 faces = faces.filter( (v) => v !== undefined );
-                return { faces };
+                return { faces, now };
             });
 
         }, 1000);
@@ -62,6 +67,19 @@ export class VideoPage extends Component<Props, States> {
         clearInterval(this.timer);
     }
 
+    private getHourString(date: Date | number) {
+        if (typeof date === 'number') date = new Date(date);
+        return `${this.pad(date.getHours(), 2)}:${this.pad(date.getMinutes(), 2)}:${this.pad(date.getSeconds(), 2)}`;
+    }
+    private getDateString(date: Date | number) {
+        if (typeof date === 'number') date = new Date(date);
+        return `${date.getFullYear()}年${this.pad(date.getMonth()+1, 2)}月${this.pad(date.getDate(), 2)}日`;
+    }
+    private pad(n, width, z?) {
+        z = z || '0';
+        n = n + '';
+        return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
+    }
     private handleFace(face: RecognizedUser | UnRecognizedUser) {
         if (face.type === UserType.UnRecognized) return;
         this.setState( (prevState) => {
@@ -97,12 +115,12 @@ export class VideoPage extends Component<Props, States> {
 
                     {/* time */}
                     <OutlineElement style={styles.time_position} width={3} shadowRadius={5}>
-                        <H1 style={styles.time}>12:05:33</H1>
+                        <H1 style={styles.time}>{this.getHourString(this.state.now)}</H1>
                     </OutlineElement>
 
                     {/* date */}
                     <OutlineElement style={styles.date_position} width={3} shadowRadius={5}>
-                        <H1 style={styles.date}>2018年10月01日</H1>
+                        <H1 style={styles.date}>{this.getDateString(this.state.now)}</H1>
                     </OutlineElement>
 
                     {/* face area */}

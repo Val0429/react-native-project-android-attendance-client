@@ -24,7 +24,6 @@ export class Video extends Component<Props, Partial<SettingsVideo>> {
     private subscription;
     componentDidMount() {
         this.subscription = this.subject.subscribe( (value) => {
-            console.log('got', value);
             this.setState({...value});
         });
     }
@@ -72,7 +71,7 @@ export class Video extends Component<Props, Partial<SettingsVideo>> {
                     />
                 <ItemText
                     title="URI"
-                    value="H.264"
+                    { ...Storage.bind(this, "settingsVideo", "cameraUri") }
                     icon={<Button style={{ backgroundColor: "#BC913F" }}><IconOcticons style={[styles.listitem_icon, styles.listitem_icon_channel]} active name="device-camera-video" /></Button>}
                     />
 

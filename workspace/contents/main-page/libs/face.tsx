@@ -16,10 +16,20 @@ export class Face extends Component<Props> {
     getFace() {
         return this.props.user.type === UserType.Recognized ? this.getRecognizedFace() : this.getUnRecognizedFace();
     }
+
+    private getHourString(date: Date | number) {
+        if (typeof date === 'number') date = new Date(date);
+        return `${this.pad(date.getHours(), 2)}:${this.pad(date.getMinutes(), 2)}:${this.pad(date.getSeconds(), 2)}`;
+    }
+    private pad(n, width, z?) {
+        z = z || '0';
+        n = n + '';
+        return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
+    }
+
     getRecognizedFace() {
         let user = this.props.user as RecognizedUser;
-        let date = new Date(user.timestamp);
-        let datestring = `${pad(date.getHours()-date.getTimezoneOffset()/8, 2)}:${pad(date.getMinutes(), 2)}:${pad(date.getSeconds(), 2)}`;
+        let datestring = this.getHourString(user.timestamp);
         return (
             <>
                 <Row style={[styles.row_main]} size={3.2}>
@@ -39,8 +49,7 @@ export class Face extends Component<Props> {
     }
     getUnRecognizedFace() {
         let user = this.props.user as RecognizedUser;
-        let date = new Date(user.timestamp);
-        let datestring = `${date.getHours()}:${pad(date.getMinutes(), 2)}:${pad(date.getSeconds(), 2)}`;
+        let datestring = this.getHourString(user.timestamp);
         return (
             <>
                 <Row style={[styles.row_main]} size={3.2}>
@@ -178,8 +187,3 @@ const styles = EStyleSheet.create({
 
 });
 
-function pad(n, width, z?) {
-    z = z || '0';
-    n = n + '';
-    return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
-}
