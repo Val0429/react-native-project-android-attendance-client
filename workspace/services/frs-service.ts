@@ -292,6 +292,28 @@ export class FRSService {
         tryLogin();
     }
 
+    public pushFace(image: string): Promise<void> {
+        const url: string = this.makeUrl('verifyface');
+        var me = this;
+
+        return new Promise( async (resolve, reject) => {
+            let body = {
+                session_id: this.sessionId,
+                target_score: 0.8,
+                request_client: "attendance_client",
+                action_enable: 1,
+                source_id: "attendance_client",
+                location: "attendance_client",
+                image
+            };
+            let result = (await fetch(url, {
+                method: 'POST',
+                body: JSON.stringify(body)
+            })).text();
+            resolve();
+        });
+    }
+
     private maintainSession(): Promise<boolean> {
         const url: string = this.makeUrl('maintainsession');
         var me = this;
@@ -484,6 +506,10 @@ export class FRSService {
     // }
     /////////////////////////////////
 
+    snapshotUrl(image: string): string {
+        return this.makeUrl(`snapshot/session_id=${this.sessionId}&image=${image}`);
+    }
+
     snapshot(image: string, resp: Response = null): Promise<string> {
         return new Promise<string>( async (resolve, reject) => {
             await this.waitForLogin();
@@ -508,7 +534,7 @@ export class FRSService {
             try {
                 let body = await (await fetch(url, {
                     method: 'POST',
-                    body: JSON.stringify({ face_image64: image, margin: 0 })
+                    body: JSON.stringify({ face_image64: image, margin: 0.9 })
                 })).json();
                 console.log('got result', body);
                 resolve(body);

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Platform, View, Image, NativeModules, requireNativeComponent} from 'react-native';
+import {Platform, StatusBar, View, Image, NativeModules, requireNativeComponent} from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Text, Item, Input } from 'native-base';
 import { Col, Row, Grid } from 'react-native-easy-grid';
@@ -19,6 +19,7 @@ export class LoginContent extends Component<Props> {
 
         return (
             <Container>
+                <StatusBar hidden />
                 <Content bounces={false} contentContainerStyle={{flex: 1}} style={styles.content}>
                     <Grid>
                         {/* image */}
