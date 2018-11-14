@@ -2,7 +2,8 @@ import { Observable, Subject } from 'rxjs';
 import { Config } from './../config';
 import { UserType, RecognizedUser, UnRecognizedUser } from './core';
 //import { FaceFeatureCompare } from './../../modules/face-feature-compare';
-const FaceFeatureCompare: any = null;
+//const FaceFeatureCompare: any = null;
+import FaceFeatureCompare from 'react-native-feature-compare';
 
 interface Indexing {
     [channel: string]: {
@@ -92,7 +93,7 @@ export function filterFace(compareCallback: (face: RecognizedUser | UnRecognized
                 for (let data of all) subscriber.next(data);
             }
 
-            let subscription = source.subscribe( (value: RecognizedUser | UnRecognizedUser) => {
+            let subscription = source.subscribe( async (value: RecognizedUser | UnRecognizedUser) => {
                 /// 0) get keys, create default index
                 let { channel, type } = value;
                 let indexChannel = indexes[channel];
@@ -132,6 +133,9 @@ export function filterFace(compareCallback: (face: RecognizedUser | UnRecognized
                             let prebuffer = prev.face_feature;
                             /// todo
                             //let score = FaceFeatureCompare.sync(buffer, prebuffer);
+                            // let scorex = await FaceFeatureCompare.FeatureCompare(buffer, prebuffer);
+                            // console.log('buffer length', buffer.length, prebuffer.length)
+                            // console.log('score?', scorex);
                             let score = 0;
                             if (score < targetScore) continue;
                             /// replace
@@ -142,6 +146,7 @@ export function filterFace(compareCallback: (face: RecognizedUser | UnRecognized
                             return;
                         }
 
+                        tryCallback(val);
                         (indexType as UnRecognizedUser[]).push(val);
                         caches.push(val);
                         break;

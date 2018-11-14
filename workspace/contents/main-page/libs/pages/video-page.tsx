@@ -44,7 +44,7 @@ export class VideoPage extends Component<Props, States> {
 
     private handleFace(face: RecognizedUser | UnRecognizedUser) {
         let idx = -1;
-        for (let i=0; i<this.state.faces.length; --i) {
+        for (let i=0; i<this.state.faces.length; ++i) {
             let thisface = this.state.faces[i];
             if (face.valFaceId === thisface.valFaceId) {
                 idx = i;
@@ -55,8 +55,9 @@ export class VideoPage extends Component<Props, States> {
         this.setState({
             faces: [
                 ...this.state.faces.slice(0, idx),
-                face,
-                ...this.state.faces.slice(idx+1, this.state.faces.length)
+                { ...face, face_feature: undefined },
+                //...this.state.faces.slice(idx+1, this.state.faces.length)
+                ...this.state.faces.slice(idx+1, 8)
             ]
         });
     }

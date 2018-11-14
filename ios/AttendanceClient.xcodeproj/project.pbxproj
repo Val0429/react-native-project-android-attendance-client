@@ -71,6 +71,7 @@
 		1AF4CE9E49414F60AAEBC24F /* libRNFetchBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 50C9D60578A74C39824A5EDB /* libRNFetchBlob.a */; };
 		BA567607759849749A806B47 /* libRCTVideo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C65F38430F145A58BC5C2E3 /* libRCTVideo.a */; };
 		46413B0763C4406791C39BBF /* libRNFaceDetection.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 68FC704972FF484D8FF45C1C /* libRNFaceDetection.a */; };
+		CE78BE526D4244B2B4DBCCB3 /* libRNFeatureCompare.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 444672F3E3404E2E9426C36D /* libRNFeatureCompare.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -465,6 +466,8 @@
 		0C65F38430F145A58BC5C2E3 /* libRCTVideo.a */ = {isa = PBXFileReference; name = "libRCTVideo.a"; path = "libRCTVideo.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 		F847EB8833174524BDFE064E /* RNFaceDetection.xcodeproj */ = {isa = PBXFileReference; name = "RNFaceDetection.xcodeproj"; path = "../node_modules/react-native-face-detection/ios/RNFaceDetection.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
 		68FC704972FF484D8FF45C1C /* libRNFaceDetection.a */ = {isa = PBXFileReference; name = "libRNFaceDetection.a"; path = "libRNFaceDetection.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		64ED1F082F2B49B480AD48AC /* RNFeatureCompare.xcodeproj */ = {isa = PBXFileReference; name = "RNFeatureCompare.xcodeproj"; path = "../node_modules/react-native-feature-compare/ios/RNFeatureCompare.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		444672F3E3404E2E9426C36D /* libRNFeatureCompare.a */ = {isa = PBXFileReference; name = "libRNFeatureCompare.a"; path = "libRNFeatureCompare.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -497,6 +500,7 @@
 				1AF4CE9E49414F60AAEBC24F /* libRNFetchBlob.a in Frameworks */,
 				BA567607759849749A806B47 /* libRCTVideo.a in Frameworks */,
 				46413B0763C4406791C39BBF /* libRNFaceDetection.a in Frameworks */,
+				CE78BE526D4244B2B4DBCCB3 /* libRNFeatureCompare.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -762,6 +766,7 @@
 				B3A0B554392A4F5A918C48EC /* RNFetchBlob.xcodeproj */,
 				67DBF34C02D84F9EB3969EBE /* RCTVideo.xcodeproj */,
 				F847EB8833174524BDFE064E /* RNFaceDetection.xcodeproj */,
+				64ED1F082F2B49B480AD48AC /* RNFeatureCompare.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -1476,12 +1481,14 @@
 					"$(SRCROOT)/../node_modules/react-native-fetch-blob/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-video/ios",
 					"$(SRCROOT)/../node_modules/react-native-face-detection/ios",
+					"$(SRCROOT)/../node_modules/react-native-feature-compare/ios",
 				);
 				INFOPLIST_FILE = AttendanceClientTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1510,12 +1517,14 @@
 					"$(SRCROOT)/../node_modules/react-native-fetch-blob/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-video/ios",
 					"$(SRCROOT)/../node_modules/react-native-face-detection/ios",
+					"$(SRCROOT)/../node_modules/react-native-feature-compare/ios",
 				);
 				INFOPLIST_FILE = AttendanceClientTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1545,6 +1554,7 @@
 					"$(SRCROOT)/../node_modules/react-native-fetch-blob/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-video/ios",
 					"$(SRCROOT)/../node_modules/react-native-face-detection/ios",
+					"$(SRCROOT)/../node_modules/react-native-feature-compare/ios",
 				);
 				INFOPLIST_FILE = AttendanceClient/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1572,6 +1582,7 @@
 					"$(SRCROOT)/../node_modules/react-native-fetch-blob/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-video/ios",
 					"$(SRCROOT)/../node_modules/react-native-face-detection/ios",
+					"$(SRCROOT)/../node_modules/react-native-feature-compare/ios",
 				);
 				INFOPLIST_FILE = AttendanceClient/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1606,11 +1617,13 @@
 					"$(SRCROOT)/../node_modules/react-native-fetch-blob/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-video/ios",
 					"$(SRCROOT)/../node_modules/react-native-face-detection/ios",
+					"$(SRCROOT)/../node_modules/react-native-feature-compare/ios",
 				);
 				INFOPLIST_FILE = "AttendanceClient-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1648,11 +1661,13 @@
 					"$(SRCROOT)/../node_modules/react-native-fetch-blob/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-video/ios",
 					"$(SRCROOT)/../node_modules/react-native-face-detection/ios",
+					"$(SRCROOT)/../node_modules/react-native-feature-compare/ios",
 				);
 				INFOPLIST_FILE = "AttendanceClient-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1689,11 +1704,13 @@
 					"$(SRCROOT)/../node_modules/react-native-fetch-blob/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-video/ios",
 					"$(SRCROOT)/../node_modules/react-native-face-detection/ios",
+					"$(SRCROOT)/../node_modules/react-native-feature-compare/ios",
 				);
 				INFOPLIST_FILE = "AttendanceClient-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1730,11 +1747,13 @@
 					"$(SRCROOT)/../node_modules/react-native-fetch-blob/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-video/ios",
 					"$(SRCROOT)/../node_modules/react-native-face-detection/ios",
+					"$(SRCROOT)/../node_modules/react-native-feature-compare/ios",
 				);
 				INFOPLIST_FILE = "AttendanceClient-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",

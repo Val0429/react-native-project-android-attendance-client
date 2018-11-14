@@ -161,6 +161,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-feature-compare')
     compile project(':react-native-face-detection')
     compile project(':react-native-video')
     compile project(':react-native-fetch-blob')
