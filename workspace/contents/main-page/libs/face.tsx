@@ -21,7 +21,7 @@ export class Face extends Component<Props> {
         let date = new Date(user.timestamp);
         let datestring = `${pad(date.getHours()-date.getTimezoneOffset()/8, 2)}:${pad(date.getMinutes(), 2)}:${pad(date.getSeconds(), 2)}`;
         return (
-            <React.Fragment>
+            <>
                 <Row style={styles.row_main} size={3.2}>
                     <Image style={styles.row_image_1} resizeMode="contain" source={{ uri: frs.snapshotUrl(this.props.user.snapshot) }} />
                 </Row>
@@ -34,7 +34,7 @@ export class Face extends Component<Props> {
                 <Row style={[styles.row_main, styles.row_main_3]} size={1}>
                     <Text style={styles.row_text}>{datestring}</Text>
                 </Row>
-            </React.Fragment>
+            </>
         );
     }
     getUnRecognizedFace() {
@@ -42,7 +42,7 @@ export class Face extends Component<Props> {
         let date = new Date(user.timestamp);
         let datestring = `${pad(date.getHours()-date.getTimezoneOffset()/8, 2)}:${pad(date.getMinutes(), 2)}:${pad(date.getSeconds(), 2)}`;
         return (
-            <React.Fragment>
+            <>
                 <Row style={styles.row_main} size={3.2}>
                     <Image style={styles.row_image_1} resizeMode="contain" source={{ uri: frs.snapshotUrl(this.props.user.snapshot) }} />
                 </Row>
@@ -55,7 +55,7 @@ export class Face extends Component<Props> {
                 <Row style={[styles.row_main, styles.row_main_3]} size={1}>
                     <Text style={styles.row_text}>{datestring}</Text>
                 </Row>
-            </React.Fragment>
+            </>
         );
     }
 

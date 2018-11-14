@@ -2,23 +2,10 @@ import * as request from 'request';
 import { client } from 'websocket';
 import { Observable, BehaviorSubject, Subject, Observer } from 'rxjs';
 import { UserType, sjRecognizedUser, sjUnRecognizedUser, RecognizedUser, UnRecognizedUser, Gender, Demographic } from './frs-service/core';
-import Storage, {SettingsFRS, SettingsDGS} from './../config/storage';
 export * from './frs-service/core';
 import RNFetchBlob from "react-native-fetch-blob";
-// import { filterFace } from './frs-service/filter-face';
-
-export interface Config {
-    frs: SettingsFRS;
-    dgs: SettingsDGS;
-}
-const Config: Config = {
-    frs: Storage.get("settingsFRS"),
-    dgs: Storage.get("settingsDGS"),
-}
-Storage.getSubject("settingsFRS").subscribe(d => Config.frs = d);
-Storage.getSubject("settingsDGS").subscribe(d => Config.dgs = d);
-export { Config };
-
+import { filterFace } from './frs-service/filter-face';
+import { Config } from './config';
 
 export interface FetchOptions {
     excludeFaceFeature?: boolean;
@@ -40,11 +27,9 @@ export class FRSService {
         (async () => {
             /// init main stream
             this.livestream = Observable.merge(sjRecognizedUser, sjUnRecognizedUser)
-                // .pipe( filterFace( async (compared) => {
-                //     await this.waitForRecover();
-                //     await this.waitForLogin();
-                //     this.sjLiveFace.next(compared);
-                // }) );
+                .pipe( filterFace( async (compared) => {
+                    this.sjLiveFace.next(compared);
+                }) );
 
         })();
     }
@@ -538,7 +523,7 @@ export class FRSService {
                 })).json();
                 console.log('got result', body);
                 resolve(body);
-                
+
             } catch(e) {
                 console.log('error', e)
                 reject(e);

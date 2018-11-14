@@ -30,18 +30,34 @@ export class VideoPage extends Component<Props, States> {
     }
 
     private subscription: Subscription;
+    private subscription2: Subscription;
     componentDidMount() {
-        this.subscription = frs.livestream.subscribe( (data) => {
+        this.subscription = frs.sjLiveFace.subscribe( (data) => {
             this.handleFace(data);
         });
+        this.subscription2 = frs.livestream.subscribe();
     }
     componentWillUnmount() {
         this.subscription.unsubscribe();
+        this.subscription2.unsubscribe();
     }
 
     private handleFace(face: RecognizedUser | UnRecognizedUser) {
+        let idx = -1;
+        for (let i=0; i<this.state.faces.length; --i) {
+            let thisface = this.state.faces[i];
+            if (face.valFaceId === thisface.valFaceId) {
+                idx = i;
+                break;
+            }
+        }
+
         this.setState({
-            faces: [face, ...this.state.faces]
+            faces: [
+                ...this.state.faces.slice(0, idx),
+                face,
+                ...this.state.faces.slice(idx+1, this.state.faces.length)
+            ]
         });
     }
 

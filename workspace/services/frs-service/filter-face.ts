@@ -1,7 +1,8 @@
 import { Observable, Subject } from 'rxjs';
-import { Config } from 'core/config.gen';
+import { Config } from './../config';
 import { UserType, RecognizedUser, UnRecognizedUser } from './core';
-import { FaceFeatureCompare } from './../../modules/face-feature-compare';
+//import { FaceFeatureCompare } from './../../modules/face-feature-compare';
+const FaceFeatureCompare: any = null;
 
 interface Indexing {
     [channel: string]: {
@@ -100,7 +101,7 @@ export function filterFace(compareCallback: (face: RecognizedUser | UnRecognized
                 if (indexType == undefined) indexType = indexChannel[type] = [];
 
                 /// translate face feature as Buffer
-                value.face_feature = new Buffer(value.face_feature, 'binary') as any;
+                //value.face_feature = new Buffer(value.face_feature, 'binary') as any;
 
                 /// 1) replace or new
                 switch (type) {
@@ -109,7 +110,8 @@ export function filterFace(compareCallback: (face: RecognizedUser | UnRecognized
                         val.valFaceId = ++uniqueCount;
                         resolveCache(val.timestamp);
 
-                        let buffer = val.face_feature as any as Buffer;
+                        //let buffer = val.face_feature as any as Buffer;
+                        let buffer = val.face_feature;
                         /// elimate more unrecognized as recognized
                         let indexTypeR = indexChannel[UserType.Recognized] || [];
                         for (let i=indexTypeR.length-1; i>=0; --i) {
@@ -126,8 +128,11 @@ export function filterFace(compareCallback: (face: RecognizedUser | UnRecognized
                             let prev: UnRecognizedUser = indexType[i] as UnRecognizedUser;
                             // var buffer = new Buffer(val.face_feature, 'binary');
                             // var prebuffer = new Buffer(prev.face_feature, 'binary');
-                            let prebuffer = prev.face_feature as any as Buffer;
-                            let score = FaceFeatureCompare.sync(buffer, prebuffer);
+                            //let prebuffer = prev.face_feature as any as Buffer;
+                            let prebuffer = prev.face_feature;
+                            /// todo
+                            //let score = FaceFeatureCompare.sync(buffer, prebuffer);
+                            let score = 0;
                             if (score < targetScore) continue;
                             /// replace
                             val.timestamp = prev.timestamp;
