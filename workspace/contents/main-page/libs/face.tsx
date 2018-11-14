@@ -20,13 +20,12 @@ export class Face extends Component<Props> {
         let user = this.props.user as RecognizedUser;
         let date = new Date(user.timestamp);
         let datestring = `${pad(date.getHours()-date.getTimezoneOffset()/8, 2)}:${pad(date.getMinutes(), 2)}:${pad(date.getSeconds(), 2)}`;
-        console.log('date', datestring, user.snapshot);
         return (
             <>
-                <Row style={styles.row_main} size={3.2}>
+                <Row style={[styles.row_main]} size={3.2}>
                     <Image style={styles.row_image_1} resizeMode="contain" source={{ uri: frs.snapshotUrl(this.props.user.snapshot) }} />
                 </Row>
-                <Row style={styles.row_main} size={1}>
+                <Row style={[styles.row_main]} size={1}>
                     <Text style={[styles.row_text, styles.row_text_1_id]}>{user.person_info.employeeno}</Text>
                 </Row>
                 <Row style={[styles.row_main, styles.row_main_2]} size={0.8}>
@@ -44,10 +43,10 @@ export class Face extends Component<Props> {
         let datestring = `${date.getHours()}:${pad(date.getMinutes(), 2)}:${pad(date.getSeconds(), 2)}`;
         return (
             <>
-                <Row style={styles.row_main} size={3.2}>
+                <Row style={[styles.row_main]} size={3.2}>
                     <Image style={styles.row_image_1} resizeMode="contain" source={{ uri: frs.snapshotUrl(this.props.user.snapshot) }} />
                 </Row>
-                <Row style={styles.row_main} size={1}>
+                <Row style={[styles.row_main]} size={1}>
                     <Text style={[styles.row_text, styles.row_text_1_id]}></Text>
                 </Row>
                 <Row style={[styles.row_main, styles.row_main_2]} size={0.8}>
@@ -61,8 +60,20 @@ export class Face extends Component<Props> {
     }
 
     render() {
+        let user = this.props.user as RecognizedUser;
+        let group = (user.groups || []).reduce( (final, group) => {
+            if (final) return final;
+            return group.name;
+        }, undefined);
+
+        let baseStyle = [styles.main];
+        if (group) {
+            if (group === 'Guard' || group === 'VIP') baseStyle.push(styles.role_vip);
+            else if (group === 'Blacklist') baseStyle.push(styles.role_blacklist);
+        }
+
         return (
-            <View padder={true} style={[styles.main, this.props.style]}>
+            <View padder={true} style={[...baseStyle, this.props.style]}>
                 { this.getFace() }
             </View>
         );
@@ -78,6 +89,13 @@ const styles = EStyleSheet.create({
         backgroundColor: '#262626AA',
         color: "white",
         borderRadius: 8
+    },
+
+    role_vip: {
+        backgroundColor: '#FF8C00AA'
+    },
+    role_blacklist: {
+        backgroundColor: '#B22222AA'
     },
 
     row_main: {

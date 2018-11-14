@@ -38,11 +38,12 @@ export class VideoPage extends Component<Props, States> {
         });
         this.subscription2 = frs.livestream.subscribe();
         this.timer = setInterval( () => {
+            /// remove outdate faces
             this.setState( (prevState) => {
                 let changed = false;
                 let now = new Date().valueOf();
                 var faces = prevState.faces.map( (face) => {
-                    if (now - face.timestamp > 1000*10) {
+                    if (now - face.timestamp > 1000*30) {
                         changed = true;
                         return;
                     }
@@ -62,6 +63,7 @@ export class VideoPage extends Component<Props, States> {
     }
 
     private handleFace(face: RecognizedUser | UnRecognizedUser) {
+        if (face.type === UserType.UnRecognized) return;
         this.setState( (prevState) => {
             let idx = -1;
             for (let i=0; i<prevState.faces.length; ++i) {
