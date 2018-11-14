@@ -43,6 +43,7 @@ export class VideoPage extends Component<Props, States> {
     }
 
     private handleFace(face: RecognizedUser | UnRecognizedUser) {
+        if (face.type === UserType.UnRecognized) return;
         let idx = -1;
         for (let i=0; i<this.state.faces.length; ++i) {
             let thisface = this.state.faces[i];
