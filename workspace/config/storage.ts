@@ -21,8 +21,10 @@ export interface SettingsVideo {
     
     fromCamera?: boolean;
     cameraIp?: string;
+    cameraPort?: string;
     cameraAccount?: string;
     cameraPassword?: string;
+    cameraChannelId?: string;
     cameraUri?: string;
 }
 

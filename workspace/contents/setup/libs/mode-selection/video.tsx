@@ -55,18 +55,28 @@ export class Video extends Component<Props, Partial<SettingsVideo>> {
                     />
                 <ItemText
                     title="IP Address"
-                    value="192.168.1.110"
+                    { ...Storage.bind(this, "settingsVideo", "cameraIp") }
+                    icon={<Button style={{ backgroundColor: "#BC913F" }}><IconOcticons style={[styles.listitem_icon, styles.listitem_icon_channel]} active name="device-camera-video" /></Button>}
+                    />
+                <ItemText
+                    title="Port"
+                    { ...Storage.bind(this, "settingsVideo", "cameraPort") }
                     icon={<Button style={{ backgroundColor: "#BC913F" }}><IconOcticons style={[styles.listitem_icon, styles.listitem_icon_channel]} active name="device-camera-video" /></Button>}
                     />
                 <ItemText
                     title="Account"
-                    value="Admin"
+                    { ...Storage.bind(this, "settingsVideo", "cameraAccount") }
                     icon={<Button style={{ backgroundColor: "#BC913F" }}><IconOcticons style={[styles.listitem_icon, styles.listitem_icon_channel]} active name="device-camera-video" /></Button>}
                     />
                 <ItemText
                     title="Password"
-                    value="123456"
+                    { ...Storage.bind(this, "settingsVideo", "cameraPassword") }
                     secureTextEntry={true}
+                    icon={<Button style={{ backgroundColor: "#BC913F" }}><IconOcticons style={[styles.listitem_icon, styles.listitem_icon_channel]} active name="device-camera-video" /></Button>}
+                    />
+                <ItemText
+                    title="ChannelID"
+                    { ...Storage.bind(this, "settingsVideo", "cameraChannelId") }
                     icon={<Button style={{ backgroundColor: "#BC913F" }}><IconOcticons style={[styles.listitem_icon, styles.listitem_icon_channel]} active name="device-camera-video" /></Button>}
                     />
                 <ItemText

@@ -1,4 +1,6 @@
 rootProject.name = 'AttendanceClient'
+include ':react-native-stream-rtsp'
+project(':react-native-stream-rtsp').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-stream-rtsp/android')
 include ':react-native-feature-compare'
 project(':react-native-feature-compare').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-feature-compare/android')
 include ':react-native-face-detection'

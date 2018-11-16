@@ -9,6 +9,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Iconion from 'react-native-vector-icons/Ionicons';
 import frs, {RecognizedUser, UnRecognizedUser, UserType, Gender} from './../../../../services/frs-service';
 import { Subscription } from 'rxjs';
+import { VideoView } from 'react-native-stream-rtsp';
 
 import { OutlineElement } from '../outline-element';
 import { Face } from '../face';
@@ -25,9 +26,26 @@ interface States {
 
 export class VideoPage extends Component<Props, States> {
     private config: SettingsVideo;
+    private camset;
     constructor(props) {
         super(props);
+        
         this.config = Storage.get("settingsVideo");
+        if (this.config.cameraIp && this.config.cameraPort && this.config.cameraUri) {
+            this.camset = {
+                name: 'TEST-CAM',
+                ip: this.config.cameraIp,
+                port: +this.config.cameraPort,
+                account: this.config.cameraAccount,
+                password: this.config.cameraPassword,
+                model: 'TEST-CAM',
+                mac: '',
+                channelid: 0,
+                firmware: '',
+                uri: this.config.cameraUri
+            }
+        }
+
         this.state = {
             faces: [],
             now: new Date()
@@ -101,12 +119,24 @@ export class VideoPage extends Component<Props, States> {
         });
     }
 
+    private first: boolean = true;
     render() {
         return (
             <Container>
                 <Content bounces={false} contentContainerStyle={{flex: 1}} style={styles.content}>
                     {/* background image */}
-                    <Image source={rcImages.rtsp_test} resizeMode="cover" style={{flex: 1, width: '100%'}} />
+                    {/* <Image source={rcImages.rtsp_test} resizeMode="cover" style={{flex: 1, width: '100%'}} /> */}
+
+				<VideoView style={{flex: 1, width: '100%'}}
+					ref={(ref) => {
+                        if (ref && this.first && this.camset) {
+                            ref.Start([this.camset]);
+                            this.first = false;
+                        }
+                        // console.log('???', ref);
+                        // ref && ref.Start([TEST_CAM]);
+                    }}
+					/>
 
                     {/* company name */}
                     <Shimmer style={styles.company_title_position} duration={2600}>
@@ -216,3 +246,17 @@ const styles = EStyleSheet.create({
 
 });
   
+
+
+let TEST_CAM = {
+    name: 'TEST-CAM',
+    ip: '172.16.10.38',
+    port: 554,
+    account: 'admin',
+    password: '',
+    model: 'TEST-CAM',
+    mac: '',
+    channelid: 0,
+    firmware: '',
+    uri: '/live2.sdp'
+  }

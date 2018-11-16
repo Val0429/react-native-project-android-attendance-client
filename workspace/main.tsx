@@ -21,7 +21,6 @@ class App extends Component<any, any> {
         return this.state.ready ? (
             <Router>
                 <Stack key="root" hideNavBar={true}>
-                <Scene key="login" component={LoginContent} />
                     
                     <Scene key="login" component={LoginContent} />
                     <Scene key="main" component={MainPage} />

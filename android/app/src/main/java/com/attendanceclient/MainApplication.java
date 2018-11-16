@@ -3,6 +3,7 @@ package com.attendanceclient;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.isap.RNStreamRtspPackage;
 import com.isap.featurecompare.RNFeatureComparePackage;
 import com.facedetection.RNFaceDetectionPackage;
 import com.brentvatne.react.ReactVideoPackage;
@@ -35,7 +36,8 @@ public class MainApplication extends Application implements ReactApplication {
             new RNFetchBlobPackage(),
             new RNShimmerPackage(),
             new VectorIconsPackage(),
-            new CustomToastPackage()
+            new CustomToastPackage(),
+              new RNStreamRtspPackage()
       );
     }
 
