@@ -83,6 +83,8 @@ export class VideoPage extends Component<Props, States> {
         this.subscription.unsubscribe();
         this.subscription2.unsubscribe();
         clearInterval(this.timer);
+
+        this.thisref && this.thisref.Stop();
     }
 
     private getHourString(date: Date | number) {
@@ -120,6 +122,7 @@ export class VideoPage extends Component<Props, States> {
     }
 
     private first: boolean = true;
+    private thisref;
     render() {
         return (
             <Container>
@@ -130,6 +133,7 @@ export class VideoPage extends Component<Props, States> {
 				<VideoView style={{flex: 1, width: '100%'}}
 					ref={(ref) => {
                         if (ref && this.first && this.camset) {
+                            this.thisref = ref;
                             ref.Start([this.camset]);
                             this.first = false;
                         }
@@ -156,9 +160,10 @@ export class VideoPage extends Component<Props, States> {
                     {/* face area */}
                     <View style={styles.face_area}>
                     {
-                        this.state.faces.map( (user) => {
-                            return <Face key={user.valFaceId} user={user} style={styles.face_area_faces} />
-                        })
+                        <Face user={testface} style={styles.face_area_faces} />
+                        // this.state.faces.map( (user) => {
+                        //     return <Face key={user.valFaceId} user={user} style={styles.face_area_faces} />
+                        // })
                     }
                     </View>
 
@@ -260,3 +265,22 @@ let TEST_CAM = {
     firmware: '',
     uri: '/live2.sdp'
   }
+
+
+let testface = { type: 1,
+    person_info: { fullname: 'I-00044', employeeno: 'I-00044', cardno: '123456' },
+    last_recognized: 
+     { timestamp: 1542357389723,
+       face_id_number: 'jl5205xgKGbkVH5f5E7bVl1f' },
+    person_id: '5b7d489c9d34e0054692fd29',
+    score: 0.99237,
+    target_score: 0.9,
+    snapshot: 'i1542357395827_5f6286893f37ecfe.jpg',
+    channel: 'Camera_04_01',
+    timestamp: 1542357395828,
+    verify_face_id: '5bee81939b1074079691cc57',
+    action_enable: 1,
+    request_client_param: 'joh5qvmsmAbnLgWOlVj4zWZm',
+    groups: [ { name: 'Guard', group_id: '5be2f8809b10740796916a2c' } ],
+    valFaceId: 1,
+    face_feature: undefined };

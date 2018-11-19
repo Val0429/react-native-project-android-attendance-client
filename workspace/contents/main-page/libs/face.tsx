@@ -30,8 +30,19 @@ export class Face extends Component<Props> {
     getRecognizedFace() {
         let user = this.props.user as RecognizedUser;
         let datestring = this.getHourString(user.timestamp);
+        let group = (user.groups || []).reduce( (final, group) => {
+            if (final) return final;
+            return group.name;
+        }, undefined);
+
+        let baseStyle = [styles.main];
+        // if (group) {
+        //     if (group === 'Guard' || group === 'VIP') baseStyle.push(styles.role_vip);
+        //     else if (group === 'Blacklist') baseStyle.push(styles.role_blacklist);
+        // }
+
         return (
-            <>
+            <View padder={true} style={[...baseStyle, this.props.style]}>
                 <Row style={[styles.row_main]} size={3.2}>
                     <Image style={styles.row_image_1} resizeMode="contain" source={{ uri: frs.snapshotUrl(this.props.user.snapshot) }} />
                 </Row>
@@ -44,14 +55,15 @@ export class Face extends Component<Props> {
                 <Row style={[styles.row_main, styles.row_main_3]} size={1}>
                     <Text style={styles.row_text}>{datestring}</Text>
                 </Row>
-            </>
+            </View>
         );
     }
     getUnRecognizedFace() {
         let user = this.props.user as RecognizedUser;
         let datestring = this.getHourString(user.timestamp);
+
         return (
-            <>
+            <View padder={true} style={[...baseStyle, this.props.style]}>
                 <Row style={[styles.row_main]} size={3.2}>
                     <Image style={styles.row_image_1} resizeMode="contain" source={{ uri: frs.snapshotUrl(this.props.user.snapshot) }} />
                 </Row>
@@ -64,28 +76,18 @@ export class Face extends Component<Props> {
                 <Row style={[styles.row_main, styles.row_main_3]} size={1}>
                     <Text style={styles.row_text}>{datestring}</Text>
                 </Row>
-            </>
+            </View>
         );
     }
 
     render() {
-        let user = this.props.user as RecognizedUser;
-        let group = (user.groups || []).reduce( (final, group) => {
-            if (final) return final;
-            return group.name;
-        }, undefined);
+        return this.getFace();
 
-        let baseStyle = [styles.main];
-        if (group) {
-            if (group === 'Guard' || group === 'VIP') baseStyle.push(styles.role_vip);
-            else if (group === 'Blacklist') baseStyle.push(styles.role_blacklist);
-        }
-
-        return (
-            <View padder={true} style={[...baseStyle, this.props.style]}>
-                { this.getFace() }
-            </View>
-        );
+        // return (
+        //     <View padder={true} style={[...baseStyle, this.props.style]}>
+        //         { this.getFace() }
+        //     </View>
+        // );
     }
 }  
 
@@ -95,7 +97,7 @@ const styles = EStyleSheet.create({
         // height: "62 rem",
         width: "41 rem",
         height: "53 rem",
-        backgroundColor: '#262626AA',
+        backgroundColor: '#939798DD',
         color: "white",
         borderRadius: 8
     },
@@ -135,55 +137,7 @@ const styles = EStyleSheet.create({
     },
     row_text_2_title: {
         fontSize: '6.2 rem'
-    }
-
-    // content: {
-    //     backgroundColor: "$bgColor"
-    // },
-
-    // company_title_position: {
-    //     position: "absolute",
-    //     left: "6 rem", top: "6.5 rem"
-    // },
-
-    // company_title: {
-    //     $fontSize: "20 rem",
-    //     backgroundColor: '#26262688',
-    //     color: "white",
-    //     fontSize: "$fontSize",
-    //     lineHeight: "$fontSize * 1.3",
-    //     paddingLeft: "4 rem",
-    //     paddingRight: "4 rem",
-    //     borderRadius: "3 rem"
-    // },
-
-    // time_position: {
-    //     position: "absolute",
-    //     right: "4 rem",
-    //     top: "3 rem",
-    // },
-    // time: {
-    //     $fontSize: "24 rem",
-    //     backgroundColor: "transparent",
-    //     color: "black",
-    //     fontSize: "$fontSize",
-    //     lineHeight: "$fontSize * 1.1",
-    //     textShadowColor: 'rgba(255, 255, 255, 0.75)',
-    // },
-
-    // date_position: {
-    //     position: "absolute",
-    //     right: "7 rem",
-    //     top: "31 rem",
-    // },
-    // date: {
-    //     $fontSize: "11 rem",
-    //     backgroundColor: "transparent",
-    //     color: "black",
-    //     fontSize: "$fontSize",
-    //     lineHeight: "$fontSize * 1.1",
-    //     textShadowColor: 'rgba(255, 255, 255, 0.75)',
-    // }
+    },
 
 });
 
