@@ -46,6 +46,7 @@ export class AttendanceTakingPage extends Component<Props, States> {
     }
     componentWillUnmount() {
         this.subscription.unsubscribe();
+        this.thisref && this.thisref.stop();
     }
 
     private workflowStarted: boolean = false;
@@ -93,13 +94,20 @@ export class AttendanceTakingPage extends Component<Props, States> {
         frs.pushFace(base64);
     }
 
+    private first: boolean = true;
+    private thisref;
     render() {
         return (
             <Container>
                 <StatusBar hidden />
                 <Content bounces={false} contentContainerStyle={{flex: 1}} style={[styles.content]}>
-                    <FaceDetectionView key="FaceDetectionView" style={{width: 1, height: 1, position: "absolute"}} ref={(ref) => ref && ref.start(true)}
-                        onNativeCallback={(event) => {
+                    <FaceDetectionView key="FaceDetectionView" style={{width: 1, height: 1, position: "absolute"}} ref={(ref) => {
+                        if (ref && this.first) {
+                            this.thisref = ref;
+                            ref.start(true);
+                            this.first = false;
+                        }
+                    }} onNativeCallback={(event) => {
                             !this.workflowStarted && event.nativeEvent.image && this.pushFace(event.nativeEvent.image);
                         }}
                     />
