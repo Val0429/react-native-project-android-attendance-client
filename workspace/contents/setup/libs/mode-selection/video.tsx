@@ -7,7 +7,7 @@ import { Actions } from 'react-native-router-flux';
 import { rcImages } from './../../../../resources/images';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import IconOcticons from 'react-native-vector-icons/Octicons';
-import Storage, { SettingsVideo } from './../../../../config/storage';
+import { StorageInstance as Storage, SettingsVideo } from './../../../../config';
 import { ItemDivider, ItemSwitch, ItemText } from './../../../../../core/components/form';
 
 

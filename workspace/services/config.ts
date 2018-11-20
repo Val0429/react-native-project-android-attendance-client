@@ -1,4 +1,4 @@
-import Storage, {SettingsFRS, SettingsDGS} from './../config/storage';
+import {StorageInstance as Storage, SettingsFRS, SettingsDGS } from './../config';
 
 interface SettingsFTS {
     specialScoreForUnRecognizedFace: number;

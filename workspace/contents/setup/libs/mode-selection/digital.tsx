@@ -8,7 +8,7 @@ import { rcImages } from './../../../../resources/images';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import IconOcticons from 'react-native-vector-icons/Octicons';
 import { ItemDivider, ItemSwitch, ItemText } from './../../../../../core/components/form';
-import Storage, { SettingsDigital } from './../../../../config/storage';
+import { StorageInstance as Storage, SettingsDigital } from './../../../../config';
 
 interface Props {
 }

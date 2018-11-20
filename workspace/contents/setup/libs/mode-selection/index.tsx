@@ -8,7 +8,7 @@ import { rcImages } from './../../../../resources/images';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Icon2 from 'react-native-vector-icons/Ionicons';
 import Icon3 from 'react-native-vector-icons/SimpleLineIcons';
-import Storage, { modesText, SettingsModes } from './../../../../config/storage';
+import { StorageInstance as Storage, modesText, SettingsModes } from './../../../../config';
 
 import {Video} from './video';
 import {Digital} from './digital';

@@ -12,17 +12,17 @@
     "react-native": "0.57.4",
     "react-native-easy-grid": "0.2.0",
     "react-native-extended-stylesheet": "0.10.0",
+    "react-native-face-detection": "https://github.com/Val0429/react-native-face-detection.git",
+    "react-native-feature-compare": "https://github.com/Val0429/react-native-feature-compare.git",
     "react-native-fetch-blob": "^0.10.8",
     "react-native-router-flux": "4.0.5",
     "react-native-shimmer": "0.4.1",
+    "react-native-stream-rtsp": "https://github.com/Val0429/react-native-stream-rtsp.git",
     "react-native-vector-icons": "6.0.2",
     "react-native-video": "^3.2.1",
     "rxjs": "5.5.11",
-    "websocket": "1.0.28",
-
-    "react-native-face-detection": "https://github.com/Val0429/react-native-face-detection.git",
-    "react-native-stream-rtsp": "https://github.com/Val0429/react-native-stream-rtsp.git",
-    "react-native-feature-compare": "https://github.com/Val0429/react-native-feature-compare.git"
+    "typescript": "^3.1.6",
+    "websocket": "1.0.28"
   },
   "devDependencies": {
     "@babel/core": "7.0.0",

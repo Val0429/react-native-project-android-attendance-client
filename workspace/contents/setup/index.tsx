@@ -10,16 +10,17 @@ import { ItemDivider, ItemNavigate } from './../../../core/components/form';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Icon2 from 'react-native-vector-icons/Ionicons';
 import Icon3 from 'react-native-vector-icons/SimpleLineIcons';
-import Storage, { modesText, SettingsModes } from './../../config/storage';
+import { StorageInstance as Storage, modesText, SettingsModes } from './../../config';
 import { FRS } from './libs/frs';
 import { DGS } from './libs/dgs';
+import { Basic } from './libs/basic';
 
 interface Props {
 
 }
 
 interface Selection {
-    selection: "mode" | "frs" | "dgs";
+    selection: "mode" | "basic" | "frs" | "dgs";
 }
 
 type States = SettingsModes & Selection;
@@ -61,10 +62,13 @@ export class Setup extends Component<Props, States> {
                             </Header>
 
                             {/* ListItem - Modes */}
-                            <ItemDivider title="Basic Mode" />
-                            <ItemNavigate title="Mode Selection" last onPress={() => this.setState({selection: "mode"})}
+                            <ItemDivider title="Basic" />
+                            <ItemNavigate title="Mode Selection" onPress={() => this.setState({selection: "mode"})}
                                 value={modesText[this.state.modes]}
                                 icon={<Button style={{ backgroundColor: "#BC913F" }}><Icon style={styles.left_listitem_icon} active name="toggle-switch" /></Button>}
+                                />
+                            <ItemNavigate title="Basic" last onPress={() => this.setState({selection: "basic"}) }
+                                icon={<Button style={{ backgroundColor: "#A0A0ED" }}><Icon3 style={styles.left_listitem_icon} active name="screen-desktop" /></Button>}
                                 />
 
                             {/* Servers */}
@@ -86,6 +90,7 @@ export class Setup extends Component<Props, States> {
 
                         <Col size={1}>
                             { this.state.selection === "mode" && <ModeSelection style={styles.full_height} /> }
+                            { this.state.selection === "basic" && <Basic style={styles.full_height} /> }
                             { this.state.selection === "frs" && <FRS style={styles.full_height} /> }
                             { this.state.selection === "dgs" && <DGS style={styles.full_height} /> }
                         </Col>

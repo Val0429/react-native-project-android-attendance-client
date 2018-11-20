@@ -3,84 +3,20 @@ import { AsyncStorage as StoragePool } from 'react-native';
 // import StoragePool from 'react-native-sync-localstorage';
 import { Component } from 'react';
 import { BehaviorSubject } from 'rxjs';
+import { Storage } from './../../helpers/storage';
 
-export enum Modes {
-    Video = 0,
-    Digital = 1,
-    Attendance = 2
-}
-export const modesText = ["Video", "Digital Signage", "Attendance Taking"];
 
-export interface SettingsModes {
-    modes?: Modes;
-}
-
-export interface SettingsVideo {
-    fromFRS?: boolean;
-    FRSCH?: number;
-    
-    fromCamera?: boolean;
-    cameraIp?: string;
-    cameraPort?: string;
-    cameraAccount?: string;
-    cameraPassword?: string;
-    cameraChannelId?: string;
-    cameraUri?: string;
-}
-
-export enum VideoPlayMode {
-    all = 0,
-    single = 1
-}
-
-export interface SettingsAttendance {
-    location?: string;
-    faceDetectionTime?: number;
-    videoPlayMode?: VideoPlayMode;
-    ip?: string;
-    account?: string;
-    password?: string;
-    port?: number;
-}
-
-export interface SettingsDigital {
-    location?: string;
-}
-
-export enum DisplayList {
-    register = 0x0001,
-    unregister = 0x0002,
-    vip = 0x0004,
-    blacklist = 0x0008
-}
-
-export interface SettingsDisplay {
-    faceDisplayTime?: number;
-    faceMergeTime?: number;
-    displayFacePicture?: boolean;
-    companyName?: string;
-    textColor?: string;
-    VIPColor?: string;
-    blackListColor?: string;
-    displayList?: number;
-}
-
-export interface SettingsFRS {
-    ip?: string;
-    account?: string;
-    password?: string;
-    apiPort?: number;
-    socketPort?: number;
-}
-
-export interface SettingsDGS {
-    ip?: string;
-    account?: string;
-    password?: string;
-    apiPort?: number;
-}
+import settingsModes, { SettingsModes } from './storage/settings-modes';
+import settingsVideo, { SettingsVideo } from './storage/settings-video';
+import settingsDigital, { SettingsDigital } from './storage/settings-digital';
+import settingsAttendance, { SettingsAttendance } from './storage/settings-attendance';
+import settingsDisplay, { SettingsDisplay } from './storage/settings-display';
+import settingsFRS, { SettingsFRS } from './storage/settings-frs';
+import settingsDGS, { SettingsDGS } from './storage/settings-dgs';
+import settingsBasic, { SettingsBasic } from './storage/settings-basic';
 
 export interface IStorage {
+    settingsBasic: SettingsBasic;
     modes: SettingsModes;
     settingsVideo: SettingsVideo;
     settingsDigital: SettingsDigital;
@@ -91,82 +27,17 @@ export interface IStorage {
     settingsDGS: SettingsDGS;
 }
 
-export class Storage {
-    private maps: { [T in keyof IStorage]?: BehaviorSubject<IStorage[T]> } = {};
-    public ready: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-    constructor() {
-        (async () => {
-            let keys = await StoragePool.getAllKeys();
-            keys.forEach( async (key) => {
-                let data = JSON.parse(await StoragePool.getItem(key) || '{}');
-                let map = this.maps[key];
-                if (!map) this.maps[key] = new BehaviorSubject(data);
-                else map.next(data);
-            });
-            this.ready.next(true);
-        })();
-    }
+const storage: IStorage = {
+    settingsBasic,
+    modes: settingsModes,
+    settingsVideo,
+    settingsDigital,
+    settingsAttendance,
+    settingsDisplay,
 
-    getSubject<T extends keyof IStorage>(key: T): BehaviorSubject<IStorage[T]> {
-        let sj = this.maps[key];
-        if (!sj) sj = this.maps[key] = new BehaviorSubject({});
-        return sj;
-    }
-
-    get<T extends keyof IStorage>(key: T): IStorage[T] {
-        let sj = this.getSubject(key);
-        return sj.getValue();
-    }
-    set<T extends keyof IStorage>(key: T, value: IStorage[T]): void {
-        let sj = this.getSubject(key);
-        console.log('key', key, value);
-        StoragePool.setItem(key, JSON.stringify(value));
-        sj.next(value);
-    }
-    update<T extends keyof IStorage, U extends keyof IStorage[T]>(key: T, subkey: U, value: IStorage[T][U]) {
-        this.set(key, {...(this.get(key) as any), [subkey]: value});
-    }
-
-    bind<T extends keyof IStorage, U extends keyof IStorage[T]>(source: Component, key: T, data: U, validator?: Validator) {
-        return {
-            value: (source.state as any)[data],
-            onValueChange: (value) => {
-                if (validator &&
-                    ((validator instanceof RegExp) && !validator.test(value)) ||
-                    (validator && typeof validator === 'function' && !validator(value))
-                ) {
-                    source.setState({ [data]: value });
-                } else
-                    this.update(key, data, value);
-            }
-        }
-    }
+    settingsFRS,
+    settingsDGS
 }
 
-type Validator = RegExp | { (value: any): boolean };
-
-
-// export class Storage {
-//     private maps: { [T in keyof IStorage]?: BehaviorSubject<IStorage[T]> } = {};
-    
-//     getSubject<T extends keyof IStorage>(key: T): BehaviorSubject<IStorage[T]> {
-//         let sj = this.maps[key];
-//         console.log('start up?', key, SyncStorage.getItem(key))
-//         if (!sj) sj = this.maps[key] = new BehaviorSubject(JSON.parse( SyncStorage.getItem(key) || '{}' ));
-//         return sj;
-//     }
-
-//     get<T extends keyof IStorage>(key: T): IStorage[T] {
-//         let sj = this.getSubject(key);
-//         return sj.getValue();
-//     }
-//     set<T extends keyof IStorage>(key: T, value: IStorage[T]): void {
-//         let sj = this.getSubject(key);
-//         console.log('save?', key, value)
-//         SyncStorage.setItem(key, JSON.stringify(value));
-//         console.log('aftr save', key, SyncStorage.getItem(key));
-//         sj.next(value);
-//     }
-// }
-
-export default new Storage();
+const StorageInstance = new Storage(storage);
+export { StorageInstance }

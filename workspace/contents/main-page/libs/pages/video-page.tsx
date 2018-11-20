@@ -13,7 +13,7 @@ import { VideoView } from 'react-native-stream-rtsp';
 
 import { OutlineElement } from '../outline-element';
 import { Face } from '../face';
-import Storage, { SettingsVideo } from './../../../../config/storage';
+import { StorageInstance as Storage, SettingsVideo } from './../../../../config';
 
 import Shimmer from 'react-native-shimmer';
 

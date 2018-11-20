@@ -8,7 +8,7 @@ import { rcImages } from './../../../resources/images';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import IconOcticons from 'react-native-vector-icons/Octicons';
 import { ItemDivider, ItemSwitch, ItemText } from './../../../../core/components/form';
-import Storage, { SettingsFRS } from './../../../config/storage';
+import { StorageInstance as Storage, SettingsFRS } from './../../../config';
 
 interface Props {
     style?: ViewStyle;

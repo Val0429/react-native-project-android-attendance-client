@@ -11,7 +11,7 @@ import { DigitalPage } from './libs/pages/digital-page';
 import { AttendanceTakingPage } from './libs/pages/attendance-taking-page';
 import { Video } from '../setup/libs/mode-selection/video';
 
-import Storage, { modesText, SettingsModes, Modes } from './../../config/storage';
+import { StorageInstance as Storage, modesText, SettingsModes, Modes } from './../../config';
 
 interface Props {
 
