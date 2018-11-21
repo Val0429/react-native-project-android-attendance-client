@@ -13,18 +13,19 @@ import { VideoView } from 'react-native-stream-rtsp';
 
 import { OutlineElement } from '../outline-element';
 import { Face } from '../face';
-import { StorageInstance as Storage, SettingsVideo } from './../../../../config';
+import { StorageInstance as Storage, SettingsVideo, SettingsBasic } from './../../../../config';
+import { ConnectDecorator } from './../../../../../helpers/storage/connect';
 
 import Shimmer from 'react-native-shimmer';
 
 
-interface Props {
-}
+type Props = SettingsBasic;
 interface States {
     faces?: (RecognizedUser | UnRecognizedUser)[];
     now?: Date;
 }
 
+@Connect(Storage, "settingsBasic")
 export class VideoPage extends Component<Props, States> {
     private config: SettingsVideo;
     private camset;
@@ -145,7 +146,7 @@ export class VideoPage extends Component<Props, States> {
 
                     {/* company name */}
                     <Shimmer style={styles.company_title_position} duration={2600}>
-                        <H1 style={styles.company_title}>旭人科技股份有限公司</H1>
+                        <H1 style={styles.company_title}>{this.props.companyName || "旭人科技股份有限公司"}</H1>
                     </Shimmer>
 
                     {/* time */}
@@ -161,10 +162,10 @@ export class VideoPage extends Component<Props, States> {
                     {/* face area */}
                     <View style={styles.face_area}>
                     {
-                        <Face user={testface} style={styles.face_area_faces} />
-                        // this.state.faces.map( (user) => {
-                        //     return <Face key={user.valFaceId} user={user} style={styles.face_area_faces} />
-                        // })
+                        // <Face user={testface} style={styles.face_area_faces} />
+                        this.state.faces.map( (user) => {
+                            return <Face key={user.valFaceId} user={user} style={styles.face_area_faces} />
+                        })
                     }
                     </View>
 
@@ -178,6 +179,8 @@ export class VideoPage extends Component<Props, States> {
         );
     }
 }
+// const VideoPage = Connect(Storage, "settingsBasic")(CVideoPage);
+// export { VideoPage }
 
 const styles = EStyleSheet.create({
     content: {
