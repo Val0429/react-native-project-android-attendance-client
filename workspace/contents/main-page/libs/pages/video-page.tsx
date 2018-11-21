@@ -17,6 +17,7 @@ import { StorageInstance as Storage, SettingsVideo } from './../../../../config'
 
 import Shimmer from 'react-native-shimmer';
 
+
 interface Props {
 }
 interface States {
@@ -176,7 +177,7 @@ export class VideoPage extends Component<Props, States> {
             </Container>
         );
     }
-}  
+}
 
 const styles = EStyleSheet.create({
     content: {
@@ -251,7 +252,6 @@ const styles = EStyleSheet.create({
 
 });
   
-
 
 let TEST_CAM = {
     name: 'TEST-CAM',

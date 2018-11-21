@@ -15,7 +15,6 @@ interface Props {
 }
 
 type States = SettingsBasic;
-
 export class Basic extends Component<Props, States> {
     constructor(props) {
         super(props);
