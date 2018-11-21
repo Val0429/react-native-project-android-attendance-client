@@ -23,7 +23,7 @@ export function Connect<T extends Storage<any>, K extends keyof ExtractS<T>>(sto
             }
             render() {
                 return (
-                    <Class {...this.state} />
+                    <Class {...this.props} {...this.state} />
                 );
             }
         }
