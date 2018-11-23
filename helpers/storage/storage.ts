@@ -15,7 +15,10 @@ export class Storage<T extends Object> {
             }
             for (let key in tmp) {
                 let output: any = tmp[key] || {};
-                this.maps[key] = new BehaviorSubject(output);
+                if (this.maps[key])
+                    this.maps[key].next(output);
+                else
+                    this.maps[key] = new BehaviorSubject(output);
             }
             this.ready.next(true);
         })();
@@ -39,7 +42,7 @@ export class Storage<T extends Object> {
             .scan( (final, value) => {
                 return { ...final as any, ...value as any }
             })
-            .switchMap( o => Observable.of(o).delay(50) )
+            .switchMap( o => Observable.of(o) /* .delay(10) */ )
     }
 
     get<K extends keyof T>(key: K): T[K] {
@@ -55,6 +58,23 @@ export class Storage<T extends Object> {
         this.set(key, {...(this.get(key) as any), [subkey]: value});
     }
 
+    connect<K extends keyof T, U extends keyof T[K]>(source: Component, key: K, data: U, validator?: Validator) {
+        return {
+            value: (source.props as any)[data],
+            onValueChange: (value) => {
+                if (validator &&
+                    ((validator instanceof RegExp) && !validator.test(value)) ||
+                    (validator && typeof validator === 'function' && !validator(value))
+                ) {
+                    /// test failed
+                    return;
+                } else
+                    this.update(key, data, value);
+            }
+        }
+    }
+
+    /// deprecated
     bind<K extends keyof T, U extends keyof T[K]>(source: Component, key: K, data: U, validator?: Validator) {
         return {
             value: (source.state as any)[data],

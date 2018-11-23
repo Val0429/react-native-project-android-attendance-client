@@ -59,16 +59,18 @@ export class Face extends Component<Props> {
         );
     }
     getUnRecognizedFace() {
-        let user = this.props.user as RecognizedUser;
+        let user = this.props.user as UnRecognizedUser;
         let datestring = this.getHourString(user.timestamp);
 
+        let baseStyle = [styles.main];
+        
         return (
             <View padder={true} style={[...baseStyle, this.props.style]}>
                 <Row style={[styles.row_main]} size={3.2}>
                     <Image style={styles.row_image_1} resizeMode="contain" source={{ uri: frs.snapshotUrl(this.props.user.snapshot) }} />
                 </Row>
                 <Row style={[styles.row_main]} size={1}>
-                    <Text style={[styles.row_text, styles.row_text_1_id]}></Text>
+                    <Text style={[styles.row_text, styles.row_text_1_id]}>{user.highest_score.score}</Text>
                 </Row>
                 <Row style={[styles.row_main, styles.row_main_2]} size={0.8}>
                     <Text style={[styles.row_text, styles.row_text_2_title]} numberOfLines={1}>No Match</Text>

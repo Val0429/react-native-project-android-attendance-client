@@ -14,7 +14,7 @@ const Config: IConfig = {
     frs: Storage.get("settingsFRS"),
     dgs: Storage.get("settingsDGS"),
     fts: {
-        specialScoreForUnRecognizedFace: 0.8,
+        specialScoreForUnRecognizedFace: 0.6,
         throttleKeepSameFaceSeconds: 15
     }
 }

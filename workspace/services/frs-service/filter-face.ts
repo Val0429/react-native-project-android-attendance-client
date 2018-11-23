@@ -127,16 +127,8 @@ export function filterFace(compareCallback: (face: RecognizedUser | UnRecognized
                         /// compare the rest unrecognized as same face
                         for (let i=indexType.length-1; i>=0; --i) {
                             let prev: UnRecognizedUser = indexType[i] as UnRecognizedUser;
-                            // var buffer = new Buffer(val.face_feature, 'binary');
-                            // var prebuffer = new Buffer(prev.face_feature, 'binary');
-                            //let prebuffer = prev.face_feature as any as Buffer;
                             let prebuffer = prev.face_feature;
-                            /// todo
-                            //let score = FaceFeatureCompare.sync(buffer, prebuffer);
-                            // let scorex = await FaceFeatureCompare.FeatureCompare(buffer, prebuffer);
-                            // console.log('buffer length', buffer.length, prebuffer.length)
-                            // console.log('score?', scorex);
-                            let score = 0;
+                            let score = JSON.parse(await FaceFeatureCompare.FeatureCompare(buffer, prebuffer)).score;
                             if (score < targetScore) continue;
                             /// replace
                             //val.timestamp = prev.timestamp;

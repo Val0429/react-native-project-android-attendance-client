@@ -6,6 +6,7 @@ export * from './frs-service/core';
 import RNFetchBlob from "react-native-fetch-blob";
 import { filterFace } from './frs-service/filter-face';
 import { Config } from './config';
+import { StorageInstance as Storage } from './../config/storage';
 
 export interface FetchOptions {
     excludeFaceFeature?: boolean;
@@ -272,6 +273,7 @@ export class FRSService {
             
         }
         if (!Config.frs.ip || !Config.frs.apiPort || !Config.frs.socketPort) {
+            console.log('!', Config, Storage.get("settingsFRS"));
             setTimeout(() => { this.login(); }, 1000);
             return;
         }

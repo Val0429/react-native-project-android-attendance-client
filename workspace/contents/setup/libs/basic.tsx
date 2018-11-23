@@ -9,27 +9,18 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import IconOcticons from 'react-native-vector-icons/Octicons';
 import { ItemDivider, ItemSwitch, ItemText } from './../../../../core/components/form';
 import { StorageInstance as Storage, SettingsBasic } from './../../../config';
+import { Connect } from './../../../../helpers/storage/connect';
 
-interface Props {
+type Props = {
     style?: ViewStyle;
-}
+} & SettingsBasic;
 
 type States = SettingsBasic;
+@Connect(Storage, "settingsBasic")
 export class Basic extends Component<Props, States> {
     constructor(props) {
         super(props);
         this.state = {};
-    }
-
-    private subject = Storage.getSubject("settingsBasic");
-    private subscription;
-    componentDidMount() {
-        this.subscription = this.subject.subscribe( (value) => {
-            this.setState({...value});
-        });
-    }
-    componentWillUnmount() {
-        this.subscription.unsubscribe();
     }
 
     render() {
@@ -43,14 +34,15 @@ export class Basic extends Component<Props, States> {
                 <ItemDivider title="General" />
                 <ItemText
                     title="Company Name"
-                    { ...Storage.bind(this, "settingsBasic", "companyName") }
+                    { ...Storage.connect(this, "settingsBasic", "companyName") }
                     icon={<Button style={{ backgroundColor: "#BC913F" }}><IconOcticons style={[styles.listitem_icon, styles.listitem_icon_channel]} active name="device-camera-video" /></Button>}
                     />
 
             </Container>
         );
     }
-}  
+}
+
 
 const styles = EStyleSheet.create({
     listitem_icon: {

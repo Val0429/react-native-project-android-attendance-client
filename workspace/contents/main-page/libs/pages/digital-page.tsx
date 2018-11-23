@@ -9,14 +9,35 @@ import Iconion from 'react-native-vector-icons/Ionicons';
 import './../../../../services/frs-service';
 import { OutlineElement } from '../outline-element';
 import { Face } from '../face';
+import { Observable } from 'rxjs';
 
 import Shimmer from 'react-native-shimmer';
+
+const weatherAPI = "https://api.darksky.net/forecast/bc828de5d93bc25e236acc3e9dd9fb4f/25.0375,121.5637";
+const weatherLanguage = "zh-tw";
+const weatherIcon = "https://darksky.net/images/weather-icons/";
 
 interface Props {
 
 }
 
 export class DigitalPage extends Component<Props> {
+    private subscription;
+    componentDidMount() {
+        this.subscription = Observable.timer(0, 10*60*1000)
+            .subscribe( async () => {
+                let url = `${weatherAPI}?exclude=hourly&units=ca&lang=${weatherLanguage}`;
+                let result = await (await fetch(url, {
+                    method: 'GET'
+                })).json();
+                console.log('here', result);
+                    
+            } );
+    }
+    componentWillUnmount() {
+        this.subscription && this.subscription.unsubscribe();
+    }
+
     render() {
         return (
             <Container>
@@ -49,15 +70,15 @@ const styles = EStyleSheet.create({
         top: "32%",
         left: "4%",
         color: "#9ACE32",
-        fontSize: "32 rem"
+        fontSize: "26 rem"
     },
 
     incoming: {
         position: "absolute",
-        bottom: "15%",
+        bottom: "22%",
         left: "4%",
         color: "black",
-        fontSize: "32 rem",
+        fontSize: "26 rem",
         fontWeight: "bold"
     },
 
