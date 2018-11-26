@@ -1,7 +1,6 @@
 
 {
-	"buildFiles" : [ "/react-native/AttendanceClient/android/app/CMakeLists.txt" ],
-	"cFileExtensions" : [ "c" ],
+	"buildFiles" : [ "/Users/valliu/Downloads/face_comp/android/app/CMakeLists.txt" ],
 	"cleanCommands" : 
 	[
 		"/Users/valliu/Library/Android/sdk/cmake/3.6.4111459/bin/cmake --build /react-native/AttendanceClient/android/app/.externalNativeBuild/cmake/debug/x86 --target clean"
@@ -9,208 +8,64 @@
 	"cppFileExtensions" : [ "cpp" ],
 	"libraries" : 
 	{
-		"AACDecoder-Debug-x86" : 
+		"FeatureCompareAndroid-Debug-x86" : 
 		{
 			"abi" : "x86",
-			"artifactName" : "AACDecoder",
-			"buildCommand" : "/Users/valliu/Library/Android/sdk/cmake/3.6.4111459/bin/cmake --build /react-native/AttendanceClient/android/app/.externalNativeBuild/cmake/debug/x86 --target AACDecoder",
+			"artifactName" : "FeatureCompareAndroid",
+			"buildType" : "debug",
+			"output" : "/Users/valliu/Downloads/face_comp/android/app/src/main/jniLibs/x86/libFeatureCompareAndroid.so",
+			"toolchain" : "2123791275690776460"
+		},
+		"FeatureCompareInterface-Debug-x86" : 
+		{
+			"abi" : "x86",
+			"artifactName" : "FeatureCompareInterface",
+			"buildCommand" : "/Users/valliu/Library/Android/sdk/cmake/3.6.4111459/bin/cmake --build /react-native/AttendanceClient/android/app/.externalNativeBuild/cmake/debug/x86 --target FeatureCompareInterface",
 			"buildType" : "debug",
 			"files" : 
 			[
 				
 				{
-					"flags" : "  --target=i686-none-linux-android --gcc-toolchain=/Users/valliu/Library/Android/sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/darwin-x86_64 --sysroot=/Users/valliu/Library/Android/sdk/ndk-bundle/sysroot  -DAACDecoder_EXPORTS -I../../../../src/main/cpp/FFMPEG/include -I../../../../src/main/cpp/AACDecoder -I../../../../src/main/cpp/AACDecoder/faad2/include -I../../../../src/main/cpp/AACDecoder/faad2/libfaad -I../../../../src/main/cpp/G711Decoder -I../../../../src/main/cpp/G726Decoder -I../../../../src/main/cpp/OpenSSL -isystem /Users/valliu/Library/Android/sdk/ndk-bundle/sources/cxx-stl/gnu-libstdc++/4.9/include -isystem /Users/valliu/Library/Android/sdk/ndk-bundle/sources/cxx-stl/gnu-libstdc++/4.9/libs/x86/include -isystem /Users/valliu/Library/Android/sdk/ndk-bundle/sources/cxx-stl/gnu-libstdc++/4.9/include/backward  -isystem /Users/valliu/Library/Android/sdk/ndk-bundle/sysroot/usr/include/i686-linux-android -D__ANDROID_API__=16 -g -DANDROID -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -mstackrealign -Wa,--noexecstack -Wformat -Werror=format-security   -O0 -fno-limit-debug-info  -fPIC    -c ",
-					"src" : "/react-native/AttendanceClient/android/app/src/main/cpp/AACDecoder/AACDecoder.cpp",
+					"flags" : "  --target=i686-none-linux-android --gcc-toolchain=/Users/valliu/Library/Android/sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/darwin-x86_64 --sysroot=/Users/valliu/Library/Android/sdk/ndk-bundle/sysroot  -DFeatureCompareInterface_EXPORTS -I/Users/valliu/Downloads/face_comp/android/app/src/main/cpp/include -isystem /Users/valliu/Library/Android/sdk/ndk-bundle/sources/cxx-stl/gnu-libstdc++/4.9/include -isystem /Users/valliu/Library/Android/sdk/ndk-bundle/sources/cxx-stl/gnu-libstdc++/4.9/libs/x86/include -isystem /Users/valliu/Library/Android/sdk/ndk-bundle/sources/cxx-stl/gnu-libstdc++/4.9/include/backward  -isystem /Users/valliu/Library/Android/sdk/ndk-bundle/sysroot/usr/include/i686-linux-android -D__ANDROID_API__=21 -g -DANDROID -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -mstackrealign -Wa,--noexecstack -Wformat -Werror=format-security   -O0 -fno-limit-debug-info  -fPIC    -c ",
+					"src" : "/Users/valliu/Downloads/face_comp/android/app/src/main/cpp/FeatureCompareInterface.cpp",
 					"workingDirectory" : "/react-native/AttendanceClient/android/app/.externalNativeBuild/cmake/debug/x86"
 				}
 			],
-			"output" : "/react-native/AttendanceClient/android/app/build/intermediates/cmake/debug/obj/x86/libAACDecoder.so",
+			"output" : "/react-native/AttendanceClient/android/app/build/intermediates/cmake/debug/obj/x86/libFeatureCompareInterface.so",
 			"toolchain" : "2123791275690776460"
 		},
-		"DLinkCrypto-Debug-x86" : 
+		"Liveness-Debug-x86" : 
 		{
 			"abi" : "x86",
-			"artifactName" : "DLinkCrypto",
-			"buildCommand" : "/Users/valliu/Library/Android/sdk/cmake/3.6.4111459/bin/cmake --build /react-native/AttendanceClient/android/app/.externalNativeBuild/cmake/debug/x86 --target DLinkCrypto",
+			"artifactName" : "Liveness",
+			"buildType" : "debug",
+			"output" : "/Users/valliu/Downloads/face_comp/android/app/src/main/jniLibs/x86/libLiveness.so",
+			"toolchain" : "2123791275690776460"
+		},
+		"LivenessInterface-Debug-x86" : 
+		{
+			"abi" : "x86",
+			"artifactName" : "LivenessInterface",
+			"buildCommand" : "/Users/valliu/Library/Android/sdk/cmake/3.6.4111459/bin/cmake --build /react-native/AttendanceClient/android/app/.externalNativeBuild/cmake/debug/x86 --target LivenessInterface",
 			"buildType" : "debug",
 			"files" : 
 			[
 				
 				{
-					"flags" : "  --target=i686-none-linux-android --gcc-toolchain=/Users/valliu/Library/Android/sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/darwin-x86_64 --sysroot=/Users/valliu/Library/Android/sdk/ndk-bundle/sysroot  -DDLinkCrypto_EXPORTS -I../../../../src/main/cpp/FFMPEG/include -I../../../../src/main/cpp/AACDecoder -I../../../../src/main/cpp/AACDecoder/faad2/include -I../../../../src/main/cpp/AACDecoder/faad2/libfaad -I../../../../src/main/cpp/G711Decoder -I../../../../src/main/cpp/G726Decoder -I../../../../src/main/cpp/OpenSSL -isystem /Users/valliu/Library/Android/sdk/ndk-bundle/sources/cxx-stl/gnu-libstdc++/4.9/include -isystem /Users/valliu/Library/Android/sdk/ndk-bundle/sources/cxx-stl/gnu-libstdc++/4.9/libs/x86/include -isystem /Users/valliu/Library/Android/sdk/ndk-bundle/sources/cxx-stl/gnu-libstdc++/4.9/include/backward  -isystem /Users/valliu/Library/Android/sdk/ndk-bundle/sysroot/usr/include/i686-linux-android -D__ANDROID_API__=16 -g -DANDROID -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -mstackrealign -Wa,--noexecstack -Wformat -Werror=format-security   -O0 -fno-limit-debug-info  -fPIC    -c ",
-					"src" : "/react-native/AttendanceClient/android/app/src/main/cpp/OpenSSL/DLinkCrypto.cpp",
+					"flags" : "  --target=i686-none-linux-android --gcc-toolchain=/Users/valliu/Library/Android/sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/darwin-x86_64 --sysroot=/Users/valliu/Library/Android/sdk/ndk-bundle/sysroot  -DLivenessInterface_EXPORTS -I/Users/valliu/Downloads/face_comp/android/app/src/main/cpp/include -isystem /Users/valliu/Library/Android/sdk/ndk-bundle/sources/cxx-stl/gnu-libstdc++/4.9/include -isystem /Users/valliu/Library/Android/sdk/ndk-bundle/sources/cxx-stl/gnu-libstdc++/4.9/libs/x86/include -isystem /Users/valliu/Library/Android/sdk/ndk-bundle/sources/cxx-stl/gnu-libstdc++/4.9/include/backward  -isystem /Users/valliu/Library/Android/sdk/ndk-bundle/sysroot/usr/include/i686-linux-android -D__ANDROID_API__=21 -g -DANDROID -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -mstackrealign -Wa,--noexecstack -Wformat -Werror=format-security   -O0 -fno-limit-debug-info  -fPIC    -c ",
+					"src" : "/Users/valliu/Downloads/face_comp/android/app/src/main/cpp/LivenessInterface.cpp",
 					"workingDirectory" : "/react-native/AttendanceClient/android/app/.externalNativeBuild/cmake/debug/x86"
 				}
 			],
-			"output" : "/react-native/AttendanceClient/android/app/build/intermediates/cmake/debug/obj/x86/libDLinkCrypto.so",
+			"output" : "/react-native/AttendanceClient/android/app/build/intermediates/cmake/debug/obj/x86/libLivenessInterface.so",
 			"toolchain" : "2123791275690776460"
 		},
-		"DecoderInterface-Debug-x86" : 
+		"opencv_java3-Debug-x86" : 
 		{
 			"abi" : "x86",
-			"artifactName" : "DecoderInterface",
-			"buildCommand" : "/Users/valliu/Library/Android/sdk/cmake/3.6.4111459/bin/cmake --build /react-native/AttendanceClient/android/app/.externalNativeBuild/cmake/debug/x86 --target DecoderInterface",
+			"artifactName" : "opencv_java3",
 			"buildType" : "debug",
-			"files" : 
-			[
-				
-				{
-					"flags" : "  --target=i686-none-linux-android --gcc-toolchain=/Users/valliu/Library/Android/sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/darwin-x86_64 --sysroot=/Users/valliu/Library/Android/sdk/ndk-bundle/sysroot -DDecoderInterface_EXPORTS -I../../../../src/main/cpp/FFMPEG/include -I../../../../src/main/cpp/AACDecoder -I../../../../src/main/cpp/AACDecoder/faad2/include -I../../../../src/main/cpp/AACDecoder/faad2/libfaad -I../../../../src/main/cpp/G711Decoder -I../../../../src/main/cpp/G726Decoder -I../../../../src/main/cpp/OpenSSL  -isystem /Users/valliu/Library/Android/sdk/ndk-bundle/sysroot/usr/include/i686-linux-android -D__ANDROID_API__=16 -g -DANDROID -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -mstackrealign -Wa,--noexecstack -Wformat -Werror=format-security  -O0 -fno-limit-debug-info  -fPIC      -c ",
-					"src" : "/react-native/AttendanceClient/android/app/src/main/cpp/FFMPEG/DecoderInterface.c",
-					"workingDirectory" : "/react-native/AttendanceClient/android/app/.externalNativeBuild/cmake/debug/x86"
-				}
-			],
-			"output" : "/react-native/AttendanceClient/android/app/build/intermediates/cmake/debug/obj/x86/libDecoderInterface.so",
-			"toolchain" : "2123791275690776460"
-		},
-		"G711Decoder-Debug-x86" : 
-		{
-			"abi" : "x86",
-			"artifactName" : "G711Decoder",
-			"buildCommand" : "/Users/valliu/Library/Android/sdk/cmake/3.6.4111459/bin/cmake --build /react-native/AttendanceClient/android/app/.externalNativeBuild/cmake/debug/x86 --target G711Decoder",
-			"buildType" : "debug",
-			"files" : 
-			[
-				
-				{
-					"flags" : "  --target=i686-none-linux-android --gcc-toolchain=/Users/valliu/Library/Android/sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/darwin-x86_64 --sysroot=/Users/valliu/Library/Android/sdk/ndk-bundle/sysroot  -DG711Decoder_EXPORTS -I../../../../src/main/cpp/FFMPEG/include -I../../../../src/main/cpp/AACDecoder -I../../../../src/main/cpp/AACDecoder/faad2/include -I../../../../src/main/cpp/AACDecoder/faad2/libfaad -I../../../../src/main/cpp/G711Decoder -I../../../../src/main/cpp/G726Decoder -I../../../../src/main/cpp/OpenSSL -isystem /Users/valliu/Library/Android/sdk/ndk-bundle/sources/cxx-stl/gnu-libstdc++/4.9/include -isystem /Users/valliu/Library/Android/sdk/ndk-bundle/sources/cxx-stl/gnu-libstdc++/4.9/libs/x86/include -isystem /Users/valliu/Library/Android/sdk/ndk-bundle/sources/cxx-stl/gnu-libstdc++/4.9/include/backward  -isystem /Users/valliu/Library/Android/sdk/ndk-bundle/sysroot/usr/include/i686-linux-android -D__ANDROID_API__=16 -g -DANDROID -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -mstackrealign -Wa,--noexecstack -Wformat -Werror=format-security   -O0 -fno-limit-debug-info  -fPIC    -c ",
-					"src" : "/react-native/AttendanceClient/android/app/src/main/cpp/G711Decoder/G711Decoder.cpp",
-					"workingDirectory" : "/react-native/AttendanceClient/android/app/.externalNativeBuild/cmake/debug/x86"
-				}
-			],
-			"output" : "/react-native/AttendanceClient/android/app/build/intermediates/cmake/debug/obj/x86/libG711Decoder.so",
-			"toolchain" : "2123791275690776460"
-		},
-		"G726Decoder-Debug-x86" : 
-		{
-			"abi" : "x86",
-			"artifactName" : "G726Decoder",
-			"buildCommand" : "/Users/valliu/Library/Android/sdk/cmake/3.6.4111459/bin/cmake --build /react-native/AttendanceClient/android/app/.externalNativeBuild/cmake/debug/x86 --target G726Decoder",
-			"buildType" : "debug",
-			"files" : 
-			[
-				
-				{
-					"flags" : "  --target=i686-none-linux-android --gcc-toolchain=/Users/valliu/Library/Android/sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/darwin-x86_64 --sysroot=/Users/valliu/Library/Android/sdk/ndk-bundle/sysroot  -DG726Decoder_EXPORTS -I../../../../src/main/cpp/FFMPEG/include -I../../../../src/main/cpp/AACDecoder -I../../../../src/main/cpp/AACDecoder/faad2/include -I../../../../src/main/cpp/AACDecoder/faad2/libfaad -I../../../../src/main/cpp/G711Decoder -I../../../../src/main/cpp/G726Decoder -I../../../../src/main/cpp/OpenSSL -isystem /Users/valliu/Library/Android/sdk/ndk-bundle/sources/cxx-stl/gnu-libstdc++/4.9/include -isystem /Users/valliu/Library/Android/sdk/ndk-bundle/sources/cxx-stl/gnu-libstdc++/4.9/libs/x86/include -isystem /Users/valliu/Library/Android/sdk/ndk-bundle/sources/cxx-stl/gnu-libstdc++/4.9/include/backward  -isystem /Users/valliu/Library/Android/sdk/ndk-bundle/sysroot/usr/include/i686-linux-android -D__ANDROID_API__=16 -g -DANDROID -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -mstackrealign -Wa,--noexecstack -Wformat -Werror=format-security   -O0 -fno-limit-debug-info  -fPIC    -c ",
-					"src" : "/react-native/AttendanceClient/android/app/src/main/cpp/G726Decoder/G726Decoder.cpp",
-					"workingDirectory" : "/react-native/AttendanceClient/android/app/.externalNativeBuild/cmake/debug/x86"
-				}
-			],
-			"output" : "/react-native/AttendanceClient/android/app/build/intermediates/cmake/debug/obj/x86/libG726Decoder.so",
-			"toolchain" : "2123791275690776460"
-		},
-		"RtspConnector-Debug-x86" : 
-		{
-			"abi" : "x86",
-			"artifactName" : "RtspConnector",
-			"buildCommand" : "/Users/valliu/Library/Android/sdk/cmake/3.6.4111459/bin/cmake --build /react-native/AttendanceClient/android/app/.externalNativeBuild/cmake/debug/x86 --target RtspConnector",
-			"buildType" : "debug",
-			"files" : 
-			[
-				
-				{
-					"flags" : "  --target=i686-none-linux-android --gcc-toolchain=/Users/valliu/Library/Android/sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/darwin-x86_64 --sysroot=/Users/valliu/Library/Android/sdk/ndk-bundle/sysroot  -DRtspConnector_EXPORTS -I../../../../src/main/cpp/FFMPEG/include -I../../../../src/main/cpp/AACDecoder -I../../../../src/main/cpp/AACDecoder/faad2/include -I../../../../src/main/cpp/AACDecoder/faad2/libfaad -I../../../../src/main/cpp/G711Decoder -I../../../../src/main/cpp/G726Decoder -I../../../../src/main/cpp/OpenSSL -isystem /Users/valliu/Library/Android/sdk/ndk-bundle/sources/cxx-stl/gnu-libstdc++/4.9/include -isystem /Users/valliu/Library/Android/sdk/ndk-bundle/sources/cxx-stl/gnu-libstdc++/4.9/libs/x86/include -isystem /Users/valliu/Library/Android/sdk/ndk-bundle/sources/cxx-stl/gnu-libstdc++/4.9/include/backward  -isystem /Users/valliu/Library/Android/sdk/ndk-bundle/sysroot/usr/include/i686-linux-android -D__ANDROID_API__=16 -g -DANDROID -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -mstackrealign -Wa,--noexecstack -Wformat -Werror=format-security   -O0 -fno-limit-debug-info  -fPIC    -c ",
-					"src" : "/react-native/AttendanceClient/android/app/src/main/cpp/FFMPEG/RtspConnector.cpp",
-					"workingDirectory" : "/react-native/AttendanceClient/android/app/.externalNativeBuild/cmake/debug/x86"
-				}
-			],
-			"output" : "/react-native/AttendanceClient/android/app/build/intermediates/cmake/debug/obj/x86/libRtspConnector.so",
-			"toolchain" : "2123791275690776460"
-		},
-		"avcodec-56-Debug-x86" : 
-		{
-			"abi" : "x86",
-			"artifactName" : "avcodec-56",
-			"buildType" : "debug",
-			"output" : "/react-native/AttendanceClient/android/app/src/main/jniLibs/x86/libavcodec-56.so",
-			"toolchain" : "2123791275690776460"
-		},
-		"avdevice-56-Debug-x86" : 
-		{
-			"abi" : "x86",
-			"artifactName" : "avdevice-56",
-			"buildType" : "debug",
-			"output" : "/react-native/AttendanceClient/android/app/src/main/jniLibs/x86/libavdevice-56.so",
-			"toolchain" : "2123791275690776460"
-		},
-		"avfilter-5-Debug-x86" : 
-		{
-			"abi" : "x86",
-			"artifactName" : "avfilter-5",
-			"buildType" : "debug",
-			"output" : "/react-native/AttendanceClient/android/app/src/main/jniLibs/x86/libavfilter-5.so",
-			"toolchain" : "2123791275690776460"
-		},
-		"avformat-56-Debug-x86" : 
-		{
-			"abi" : "x86",
-			"artifactName" : "avformat-56",
-			"buildType" : "debug",
-			"output" : "/react-native/AttendanceClient/android/app/src/main/jniLibs/x86/libavformat-56.so",
-			"toolchain" : "2123791275690776460"
-		},
-		"avutil-54-Debug-x86" : 
-		{
-			"abi" : "x86",
-			"artifactName" : "avutil-54",
-			"buildType" : "debug",
-			"output" : "/react-native/AttendanceClient/android/app/src/main/jniLibs/x86/libavutil-54.so",
-			"toolchain" : "2123791275690776460"
-		},
-		"crypto-Debug-x86" : 
-		{
-			"abi" : "x86",
-			"artifactName" : "crypto",
-			"buildType" : "debug",
-			"output" : "/react-native/AttendanceClient/android/app/src/main/jniLibs/x86/libcrypto.a",
-			"toolchain" : "2123791275690776460"
-		},
-		"faad2-Debug-x86" : 
-		{
-			"abi" : "x86",
-			"artifactName" : "faad2",
-			"buildType" : "debug",
-			"output" : "/react-native/AttendanceClient/android/app/src/main/jniLibs/x86/libfaad2.so",
-			"toolchain" : "2123791275690776460"
-		},
-		"g711-Debug-x86" : 
-		{
-			"abi" : "x86",
-			"artifactName" : "g711",
-			"buildType" : "debug",
-			"output" : "/react-native/AttendanceClient/android/app/src/main/jniLibs/x86/libG711Decoder.so",
-			"toolchain" : "2123791275690776460"
-		},
-		"g726-Debug-x86" : 
-		{
-			"abi" : "x86",
-			"artifactName" : "g726",
-			"buildType" : "debug",
-			"output" : "/react-native/AttendanceClient/android/app/src/main/jniLibs/x86/libG726Decoder.so",
-			"toolchain" : "2123791275690776460"
-		},
-		"ssl-Debug-x86" : 
-		{
-			"abi" : "x86",
-			"artifactName" : "ssl",
-			"buildType" : "debug",
-			"output" : "/react-native/AttendanceClient/android/app/src/main/jniLibs/x86/libssl.a",
-			"toolchain" : "2123791275690776460"
-		},
-		"swresample-1-Debug-x86" : 
-		{
-			"abi" : "x86",
-			"artifactName" : "swresample-1",
-			"buildType" : "debug",
-			"output" : "/react-native/AttendanceClient/android/app/src/main/jniLibs/x86/libswresample-1.so",
-			"toolchain" : "2123791275690776460"
-		},
-		"swscale-3-Debug-x86" : 
-		{
-			"abi" : "x86",
-			"artifactName" : "swscale-3",
-			"buildType" : "debug",
-			"output" : "/react-native/AttendanceClient/android/app/src/main/jniLibs/x86/libswscale-3.so",
+			"output" : "/Users/valliu/Downloads/face_comp/android/app/src/main/jniLibs/x86/libopencv_java3.so",
 			"toolchain" : "2123791275690776460"
 		}
 	},

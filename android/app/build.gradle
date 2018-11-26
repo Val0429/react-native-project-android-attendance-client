@@ -99,7 +99,7 @@ repositories {
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
-    buildToolsVersion rootProject.ext.buildToolsVersion
+    buildToolsVersion '28.0.3'
 
     defaultConfig {
         applicationId "com.attendanceclient"
@@ -161,13 +161,13 @@ android {
 }
 
 dependencies {
-    compile project(':react-native-stream-rtsp')
-    compile project(':react-native-feature-compare')
-    compile project(':react-native-face-detection')
-    compile project(':react-native-video')
-    compile project(':react-native-fetch-blob')
-    compile project(':react-native-shimmer')
-    compile project(':react-native-vector-icons')
+    implementation project(':react-native-stream-rtsp')
+    implementation project(':react-native-feature-compare')
+    implementation project(':react-native-face-detection')
+    implementation project(':react-native-video')
+    implementation project(':react-native-fetch-blob')
+    implementation project(':react-native-shimmer')
+    implementation project(':react-native-vector-icons')
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "com.android.support:appcompat-v7:25.1.0"
     implementation "com.facebook.react:react-native:+"  // From node_modules

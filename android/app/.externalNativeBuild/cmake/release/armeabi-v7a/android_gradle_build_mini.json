@@ -1,106 +1,37 @@
 {
   "buildFiles": [
-    "/react-native/AttendanceClient/android/app/CMakeLists.txt"
+    "/Users/valliu/Downloads/face_comp/android/app/CMakeLists.txt"
   ],
   "cleanCommands": [
     "/Users/valliu/Library/Android/sdk/cmake/3.6.4111459/bin/cmake --build /react-native/AttendanceClient/android/app/.externalNativeBuild/cmake/release/armeabi-v7a --target clean"
   ],
   "libraries": {
-    "swscale-3-Release-armeabi-v7a": {
-      "artifactName": "swscale-3",
+    "LivenessInterface-Release-armeabi-v7a": {
+      "artifactName": "LivenessInterface",
+      "buildCommand": "/Users/valliu/Library/Android/sdk/cmake/3.6.4111459/bin/cmake --build /react-native/AttendanceClient/android/app/.externalNativeBuild/cmake/release/armeabi-v7a --target LivenessInterface",
       "abi": "armeabi-v7a",
-      "output": "/react-native/AttendanceClient/android/app/src/main/jniLibs/armeabi-v7a/libswscale-3.so"
+      "output": "/react-native/AttendanceClient/android/app/build/intermediates/cmake/release/obj/armeabi-v7a/libLivenessInterface.so"
     },
-    "g711-Release-armeabi-v7a": {
-      "artifactName": "g711",
+    "opencv_java3-Release-armeabi-v7a": {
+      "artifactName": "opencv_java3",
       "abi": "armeabi-v7a",
-      "output": "/react-native/AttendanceClient/android/app/src/main/jniLibs/armeabi-v7a/libG711Decoder.so"
+      "output": "/Users/valliu/Downloads/face_comp/android/app/src/main/jniLibs/armeabi-v7a/libopencv_java3.so"
     },
-    "g726-Release-armeabi-v7a": {
-      "artifactName": "g726",
+    "FeatureCompareInterface-Release-armeabi-v7a": {
+      "artifactName": "FeatureCompareInterface",
+      "buildCommand": "/Users/valliu/Library/Android/sdk/cmake/3.6.4111459/bin/cmake --build /react-native/AttendanceClient/android/app/.externalNativeBuild/cmake/release/armeabi-v7a --target FeatureCompareInterface",
       "abi": "armeabi-v7a",
-      "output": "/react-native/AttendanceClient/android/app/src/main/jniLibs/armeabi-v7a/libG726Decoder.so"
+      "output": "/react-native/AttendanceClient/android/app/build/intermediates/cmake/release/obj/armeabi-v7a/libFeatureCompareInterface.so"
     },
-    "ssl-Release-armeabi-v7a": {
-      "artifactName": "ssl",
+    "Liveness-Release-armeabi-v7a": {
+      "artifactName": "Liveness",
       "abi": "armeabi-v7a",
-      "output": "/react-native/AttendanceClient/android/app/src/main/jniLibs/armeabi-v7a/libssl.a"
+      "output": "/Users/valliu/Downloads/face_comp/android/app/src/main/jniLibs/armeabi-v7a/libLiveness.so"
     },
-    "avutil-54-Release-armeabi-v7a": {
-      "artifactName": "avutil-54",
+    "FeatureCompareAndroid-Release-armeabi-v7a": {
+      "artifactName": "FeatureCompareAndroid",
       "abi": "armeabi-v7a",
-      "output": "/react-native/AttendanceClient/android/app/src/main/jniLibs/armeabi-v7a/libavutil-54.so"
-    },
-    "DLinkCrypto-Release-armeabi-v7a": {
-      "artifactName": "DLinkCrypto",
-      "buildCommand": "/Users/valliu/Library/Android/sdk/cmake/3.6.4111459/bin/cmake --build /react-native/AttendanceClient/android/app/.externalNativeBuild/cmake/release/armeabi-v7a --target DLinkCrypto",
-      "abi": "armeabi-v7a",
-      "output": "/react-native/AttendanceClient/android/app/build/intermediates/cmake/release/obj/armeabi-v7a/libDLinkCrypto.so"
-    },
-    "G726Decoder-Release-armeabi-v7a": {
-      "artifactName": "G726Decoder",
-      "buildCommand": "/Users/valliu/Library/Android/sdk/cmake/3.6.4111459/bin/cmake --build /react-native/AttendanceClient/android/app/.externalNativeBuild/cmake/release/armeabi-v7a --target G726Decoder",
-      "abi": "armeabi-v7a",
-      "output": "/react-native/AttendanceClient/android/app/build/intermediates/cmake/release/obj/armeabi-v7a/libG726Decoder.so"
-    },
-    "crypto-Release-armeabi-v7a": {
-      "artifactName": "crypto",
-      "abi": "armeabi-v7a",
-      "output": "/react-native/AttendanceClient/android/app/src/main/jniLibs/armeabi-v7a/libcrypto.a"
-    },
-    "G711Decoder-Release-armeabi-v7a": {
-      "artifactName": "G711Decoder",
-      "buildCommand": "/Users/valliu/Library/Android/sdk/cmake/3.6.4111459/bin/cmake --build /react-native/AttendanceClient/android/app/.externalNativeBuild/cmake/release/armeabi-v7a --target G711Decoder",
-      "abi": "armeabi-v7a",
-      "output": "/react-native/AttendanceClient/android/app/build/intermediates/cmake/release/obj/armeabi-v7a/libG711Decoder.so"
-    },
-    "faad2-Release-armeabi-v7a": {
-      "artifactName": "faad2",
-      "abi": "armeabi-v7a",
-      "output": "/react-native/AttendanceClient/android/app/src/main/jniLibs/armeabi-v7a/libfaad2.so"
-    },
-    "avfilter-5-Release-armeabi-v7a": {
-      "artifactName": "avfilter-5",
-      "abi": "armeabi-v7a",
-      "output": "/react-native/AttendanceClient/android/app/src/main/jniLibs/armeabi-v7a/libavfilter-5.so"
-    },
-    "avformat-56-Release-armeabi-v7a": {
-      "artifactName": "avformat-56",
-      "abi": "armeabi-v7a",
-      "output": "/react-native/AttendanceClient/android/app/src/main/jniLibs/armeabi-v7a/libavformat-56.so"
-    },
-    "avcodec-56-Release-armeabi-v7a": {
-      "artifactName": "avcodec-56",
-      "abi": "armeabi-v7a",
-      "output": "/react-native/AttendanceClient/android/app/src/main/jniLibs/armeabi-v7a/libavcodec-56.so"
-    },
-    "avdevice-56-Release-armeabi-v7a": {
-      "artifactName": "avdevice-56",
-      "abi": "armeabi-v7a",
-      "output": "/react-native/AttendanceClient/android/app/src/main/jniLibs/armeabi-v7a/libavdevice-56.so"
-    },
-    "RtspConnector-Release-armeabi-v7a": {
-      "artifactName": "RtspConnector",
-      "buildCommand": "/Users/valliu/Library/Android/sdk/cmake/3.6.4111459/bin/cmake --build /react-native/AttendanceClient/android/app/.externalNativeBuild/cmake/release/armeabi-v7a --target RtspConnector",
-      "abi": "armeabi-v7a",
-      "output": "/react-native/AttendanceClient/android/app/build/intermediates/cmake/release/obj/armeabi-v7a/libRtspConnector.so"
-    },
-    "AACDecoder-Release-armeabi-v7a": {
-      "artifactName": "AACDecoder",
-      "buildCommand": "/Users/valliu/Library/Android/sdk/cmake/3.6.4111459/bin/cmake --build /react-native/AttendanceClient/android/app/.externalNativeBuild/cmake/release/armeabi-v7a --target AACDecoder",
-      "abi": "armeabi-v7a",
-      "output": "/react-native/AttendanceClient/android/app/build/intermediates/cmake/release/obj/armeabi-v7a/libAACDecoder.so"
-    },
-    "DecoderInterface-Release-armeabi-v7a": {
-      "artifactName": "DecoderInterface",
-      "buildCommand": "/Users/valliu/Library/Android/sdk/cmake/3.6.4111459/bin/cmake --build /react-native/AttendanceClient/android/app/.externalNativeBuild/cmake/release/armeabi-v7a --target DecoderInterface",
-      "abi": "armeabi-v7a",
-      "output": "/react-native/AttendanceClient/android/app/build/intermediates/cmake/release/obj/armeabi-v7a/libDecoderInterface.so"
-    },
-    "swresample-1-Release-armeabi-v7a": {
-      "artifactName": "swresample-1",
-      "abi": "armeabi-v7a",
-      "output": "/react-native/AttendanceClient/android/app/src/main/jniLibs/armeabi-v7a/libswresample-1.so"
+      "output": "/Users/valliu/Downloads/face_comp/android/app/src/main/jniLibs/armeabi-v7a/libFeatureCompareAndroid.so"
     }
   }
 }

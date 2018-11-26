@@ -1,8 +1,4 @@
 /react-native/AttendanceClient/android/app/.externalNativeBuild/cmake/release/x86/CMakeFiles/edit_cache.dir
-/react-native/AttendanceClient/android/app/.externalNativeBuild/cmake/release/x86/CMakeFiles/G726Decoder.dir
-/react-native/AttendanceClient/android/app/.externalNativeBuild/cmake/release/x86/CMakeFiles/G711Decoder.dir
-/react-native/AttendanceClient/android/app/.externalNativeBuild/cmake/release/x86/CMakeFiles/AACDecoder.dir
 /react-native/AttendanceClient/android/app/.externalNativeBuild/cmake/release/x86/CMakeFiles/rebuild_cache.dir
-/react-native/AttendanceClient/android/app/.externalNativeBuild/cmake/release/x86/CMakeFiles/DecoderInterface.dir
-/react-native/AttendanceClient/android/app/.externalNativeBuild/cmake/release/x86/CMakeFiles/RtspConnector.dir
-/react-native/AttendanceClient/android/app/.externalNativeBuild/cmake/release/x86/CMakeFiles/DLinkCrypto.dir
+/react-native/AttendanceClient/android/app/.externalNativeBuild/cmake/release/x86/CMakeFiles/FeatureCompareInterface.dir
+/react-native/AttendanceClient/android/app/.externalNativeBuild/cmake/release/x86/CMakeFiles/LivenessInterface.dir

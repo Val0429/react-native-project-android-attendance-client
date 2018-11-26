@@ -1,4 +1,4 @@
-# Install script for directory: /react-native/AttendanceClient/android/app
+# Install script for directory: /Users/valliu/Downloads/face_comp/android/app
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
