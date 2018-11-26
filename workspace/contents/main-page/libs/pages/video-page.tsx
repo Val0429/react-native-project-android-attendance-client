@@ -21,7 +21,7 @@ import Shimmer from 'react-native-shimmer';
 
 type Props = SettingsBasic;
 interface States {
-    faces?: (RecognizedUser | UnRecognizedUser)[];
+    faces?: ((RecognizedUser | UnRecognizedUser) & {touchtime: number})[];
     now?: Date;
 }
 
@@ -68,7 +68,7 @@ export class VideoPage extends Component<Props, States> {
                 let changed = false;
                 let now = new Date();
                 var faces = prevState.faces.map( (face) => {
-                    if (now.valueOf() - face.timestamp > 1000*30) {
+                    if (now.valueOf() - face.touchtime > 1000*30) {
                         changed = true;
                         return;
                     }
@@ -103,7 +103,6 @@ export class VideoPage extends Component<Props, States> {
         return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
     }
     private handleFace(face: RecognizedUser | UnRecognizedUser) {
-        //if (face.type === UserType.UnRecognized) return;
         this.setState( (prevState) => {
             let idx = -1;
             for (let i=0; i<prevState.faces.length; ++i) {
@@ -116,7 +115,7 @@ export class VideoPage extends Component<Props, States> {
             return {
                 faces: [
                     ...(idx > 0  ? prevState.faces.slice(0, idx) : []),
-                    { ...face, face_feature: undefined },
+                    { ...face, face_feature: undefined, touchtime: new Date().valueOf() },
                     ...prevState.faces.slice(idx+1, prevState.faces.length)
                 ]
             }
