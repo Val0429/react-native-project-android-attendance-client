@@ -1,4 +1,0 @@
-/react-native/AttendanceClient/android/app/.externalNativeBuild/cmake/release/armeabi-v7a/CMakeFiles/edit_cache.dir
-/react-native/AttendanceClient/android/app/.externalNativeBuild/cmake/release/armeabi-v7a/CMakeFiles/rebuild_cache.dir
-/react-native/AttendanceClient/android/app/.externalNativeBuild/cmake/release/armeabi-v7a/CMakeFiles/FeatureCompareInterface.dir
-/react-native/AttendanceClient/android/app/.externalNativeBuild/cmake/release/armeabi-v7a/CMakeFiles/LivenessInterface.dir
