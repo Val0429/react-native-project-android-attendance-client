@@ -10,6 +10,7 @@ import './../../../../services/frs-service';
 import { OutlineElement } from '../outline-element';
 import { Face } from '../face';
 import { Observable } from 'rxjs';
+import frs, { UserType } from './../../../../services/frs-service';
 
 import Shimmer from 'react-native-shimmer';
 
@@ -21,8 +22,25 @@ interface Props {
 
 }
 
-export class DigitalPage extends Component<Props> {
+interface States {
+    welcome?: string;
+    incoming?: string;
+
+    temperature?: number;
+    weatherIcon?: string;
+    weatherText?: string;
+
+    weatherDescription?: string;
+}
+
+export class DigitalPage extends Component<Props, States> {
+    constructor(props) {
+        super(props);
+        this.state = {};
+    }
+
     private subscription;
+    private subscription2;
     componentDidMount() {
         this.subscription = Observable.timer(0, 10*60*1000)
             .subscribe( async () => {
@@ -31,11 +49,62 @@ export class DigitalPage extends Component<Props> {
                     method: 'GET'
                 })).json();
                 console.log('here', result);
+
+                /// welcome
+                let welcomeMap = [
+                    { start: 5, end: 11, message: "Good Morning!\r\n美好的一天開始！" },
+                    { start: 11, end: 18, message: "Good Afternoon!\r\n記得多喝水！" },
+                    { start: 18, end: 22, message: "Good Evening!\r\n要記得吃飯！" },
+                ];
+                let welcomeOther = "Good Night!\r\n時間晚了，明天見！";
+                function pickWelcome() {
+                    let date = new Date();
+                    let hour = date.getHours();
+                    let welcomeMessage = welcomeOther;
+                    for (let unit of welcomeMap) {
+                        if (hour >= unit.start && hour < unit.end) {
+                            welcomeMessage = unit.message;
+                            break;
+                        }
+                    }
+                    return welcomeMessage;
+                }
+                let welcome = pickWelcome();
+
+                /// temperature
+                let temperature = result.currently.temperature;
+
+                /// weather icon
+                let weatherIcon = `https://darksky.net/images/weather-icons/${result.currently.icon}.png`;
+
+                /// weather text
+                let weatherText = result.currently.summary;
+
+                /// weather description
+                let weatherDescription = result.daily.summary;
+
+                this.setState({
+                    welcome,
+                    temperature,
+                    weatherText,
+                    weatherIcon,
+                    weatherDescription
+                })
                     
             } );
+
+        this.subscription2 = frs.sjLiveFace.subscribe( (data) => {
+            if (data.type === UserType.Recognized) {
+                this.setState({
+                    incoming: data.person_info.fullname
+                });
+            }
+        });
+                
     }
     componentWillUnmount() {
         this.subscription && this.subscription.unsubscribe();
+        this.subscription2 && this.subscription2.unsubscribe();
     }
 
     render() {
@@ -45,9 +114,17 @@ export class DigitalPage extends Component<Props> {
                     {/* background image */}
                     <Image source={rcImages.digital_bk} resizeMode="stretch" style={{flex: 1, width: '100%'}} />
 
-                    <Text style={styles.welcome}>Good Morning!{"\r\n"}美好的一天開始！</Text>
+                    <Text style={styles.welcome}>{this.state.welcome}</Text>
 
-                    <Text style={styles.incoming}>Jack</Text>
+                    <Text style={styles.incoming}>{this.state.incoming}</Text>
+
+                    <Text style={styles.temperature}>{this.state.temperature ? `${Math.floor(this.state.temperature)}°` : ''}</Text>
+
+                    <Text style={styles.weather_text}>{this.state.weatherText}</Text>
+
+                    <Text style={styles.weather_description}>{this.state.weatherDescription}</Text>
+
+                    { this.state.weatherIcon && <Image resizeMode="contain" source={{uri: this.state.weatherIcon}} style={styles.weather_icon} /> }
 
                     {/* Setup */}
                     <TouchableOpacity style={styles.setup_icon_touchable} activeOpacity={0.7} onPress={() => Actions.push('setup')}>
@@ -58,7 +135,7 @@ export class DigitalPage extends Component<Props> {
             </Container>
         );
     }
-}  
+}
 
 const styles = EStyleSheet.create({
     content: {
@@ -70,7 +147,7 @@ const styles = EStyleSheet.create({
         top: "32%",
         left: "4%",
         color: "#9ACE32",
-        fontSize: "26 rem"
+        fontSize: "30 rem"
     },
 
     incoming: {
@@ -78,8 +155,46 @@ const styles = EStyleSheet.create({
         bottom: "22%",
         left: "4%",
         color: "black",
-        fontSize: "26 rem",
+        fontSize: "28 rem",
         fontWeight: "bold"
+    },
+
+    temperature: {
+        position: "absolute",
+        top: "30%",
+        right: "7%",
+        color: "black",
+        fontSize: "20 rem",
+        fontWeight: "bold"
+    },
+
+    weather_icon: {
+        position: "absolute",
+        top: "36%",
+        right: "13%",
+        width: "50 rem",
+        height: "50 rem"
+    },
+
+    weather_text: {
+        position: "absolute",
+        top: "55%",
+        right: "9.5%",
+        color: "black",
+        fontSize: "20 rem",
+        width: "80 rem",
+        textAlign: "center"
+    },
+
+    weather_description: {
+        position: "absolute",
+        top: "70%",
+        right: "3%",
+        color: "black",
+        fontSize: "10 rem",
+        width: "130 rem",
+        textAlign: "center",
+        fontStyle: "italic"
     },
 
     setup_icon_touchable: {

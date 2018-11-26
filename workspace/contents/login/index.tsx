@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Platform, StatusBar, View, Image, NativeModules, requireNativeComponent} from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
-import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Text, Item, Input } from 'native-base';
+import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Text, Item, Input, Label } from 'native-base';
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import { Actions } from 'react-native-router-flux';
 import { rcImages } from './../../resources/images';
@@ -13,9 +13,6 @@ interface Props {
 
 export class LoginContent extends Component<Props> {
     render() {
-        // NativeModules.ToastExample.show('Awesome', NativeModules.ToastExample.SHORT);
-        // NativeModules.ToastExample.measureLayout(0, 0)
-        //     .then( data => NativeModules.ToastExample.show(JSON.stringify(data), NativeModules.ToastExample.SHORT) );
 
         return (
             <Container>

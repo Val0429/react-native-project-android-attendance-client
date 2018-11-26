@@ -5,9 +5,9 @@
     "@babel/typescript"
   ],
   "plugins": [
+    "@babel/transform-flow-strip-types",
     ["@babel/plugin-proposal-decorators", {"legacy": true}],
     ["@babel/proposal-class-properties", {"loose": true}],
-    "@babel/transform-flow-strip-types",
     "@babel/proposal-object-rest-spread"
   ]
 }
