@@ -5,14 +5,16 @@ export enum VideoPlayMode {
 
 export interface SettingsAttendance {
     location?: string;
-    faceDetectionTime?: number;
+    faceDetectionTime?: string;
     videoPlayMode?: VideoPlayMode;
     ip?: string;
     account?: string;
     password?: string;
-    port?: number;
+    port?: string;
 }
 
-const value: SettingsAttendance = {}
+const value: SettingsAttendance = {
+    faceDetectionTime: "30"
+}
 
 export default value;

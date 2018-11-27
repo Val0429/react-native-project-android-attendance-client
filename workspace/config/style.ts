@@ -5,7 +5,7 @@ EStyleSheet.build({
     $rem:
         Math.min(
             Dimensions.get('window').width / 380,
-            Dimensions.get('window').height / 280
+            Dimensions.get('window').height / 220
         ),
     $bgColor: "#191F2C"
 });

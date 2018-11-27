@@ -65,10 +65,10 @@ export class Setup extends Component<Props, States> {
                             <ItemDivider title="Basic" />
                             <ItemNavigate title="Mode Selection" onPress={() => this.setState({selection: "mode"})}
                                 value={modesText[this.state.modes]}
-                                icon={<Button style={{ backgroundColor: "#BC913F" }}><Icon style={styles.left_listitem_icon} active name="toggle-switch" /></Button>}
+                                icon={<Button style={{ backgroundColor: "#3CB371" }}><Icon style={styles.left_listitem_icon} active name="toggle-switch" /></Button>}
                                 />
-                            <ItemNavigate title="Basic" last onPress={() => this.setState({selection: "basic"}) }
-                                icon={<Button style={{ backgroundColor: "#A0A0ED" }}><Icon3 style={styles.left_listitem_icon} active name="screen-desktop" /></Button>}
+                            <ItemNavigate title="Display" last onPress={() => this.setState({selection: "basic"}) }
+                                icon={<Button style={{ backgroundColor: "#EE82EE" }}><Icon3 style={styles.left_listitem_icon} active name="screen-desktop" /></Button>}
                                 />
 
                             {/* Servers */}
@@ -78,12 +78,6 @@ export class Setup extends Component<Props, States> {
                                 />
                             <ItemNavigate title="Demographic" last onPress={() => this.setState({selection: "dgs"}) }
                                 icon={<Button style={{ backgroundColor: "#A0A0ED" }}><Icon style={styles.left_listitem_icon} active name="face" /></Button>}
-                                />
-
-                            {/* ListItem - Display */}
-                            <ItemDivider title="Others" />
-                            <ItemNavigate title="Display" last
-                                icon={<Button style={{ backgroundColor: "#CD45BC" }}><Icon3 style={styles.left_listitem_icon} active name="screen-desktop" /></Button>}
                                 />
 
                         </Col>

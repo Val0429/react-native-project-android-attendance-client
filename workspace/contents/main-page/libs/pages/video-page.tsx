@@ -68,7 +68,7 @@ export class VideoPage extends Component<Props, States> {
                 let changed = false;
                 let now = new Date();
                 var faces = prevState.faces.map( (face) => {
-                    if (now.valueOf() - face.touchtime > 1000*30) {
+                    if (now.valueOf() - face.touchtime > 1000*(+this.config.faceKeepingTime)) {
                         changed = true;
                         return;
                     }
@@ -163,7 +163,6 @@ export class VideoPage extends Component<Props, States> {
                     {/* face area */}
                     <View style={styles.face_area}>
                     {
-                        // <Face user={testface} style={styles.face_area_faces} />
                         this.state.faces.map( (user) => {
                             return <Face key={user.valFaceId} user={user} style={styles.face_area_faces} />
                         })
@@ -271,7 +270,7 @@ let TEST_CAM = {
   }
 
 
-let testface = { type: 1,
+let testregistered = { type: 1,
     person_info: { fullname: 'I-00044', employeeno: 'I-00044', cardno: '123456' },
     last_recognized: 
      { timestamp: 1542357389723,
@@ -285,6 +284,82 @@ let testface = { type: 1,
     verify_face_id: '5bee81939b1074079691cc57',
     action_enable: 1,
     request_client_param: 'joh5qvmsmAbnLgWOlVj4zWZm',
-    groups: [ { name: 'Guard', group_id: '5be2f8809b10740796916a2c' } ],
+    groups: [],
+    valFaceId: 1,
+    face_feature: undefined };  
+
+let testvip = { type: 1,
+    person_info: { fullname: 'I-00044', employeeno: 'I-00044', cardno: '123456' },
+    last_recognized: 
+     { timestamp: 1542357389723,
+       face_id_number: 'jl5205xgKGbkVH5f5E7bVl1f' },
+    person_id: '5b7d489c9d34e0054692fd29',
+    score: 0.99237,
+    target_score: 0.9,
+    snapshot: 'i1542357395827_5f6286893f37ecfe.jpg',
+    channel: 'Camera_04_01',
+    timestamp: 1542357395828,
+    verify_face_id: '5bee81939b1074079691cc57',
+    action_enable: 1,
+    request_client_param: 'joh5qvmsmAbnLgWOlVj4zWZm',
+    groups: [ { name: 'VIP', group_id: '5be2f8809b10740796916a2c' } ],
     valFaceId: 1,
     face_feature: undefined };
+
+let testblacklist = { type: 1,
+    person_info: { fullname: 'I-00044', employeeno: 'I-00044', cardno: '123456' },
+    last_recognized: 
+        { timestamp: 1542357389723,
+        face_id_number: 'jl5205xgKGbkVH5f5E7bVl1f' },
+    person_id: '5b7d489c9d34e0054692fd29',
+    score: 0.99237,
+    target_score: 0.9,
+    snapshot: 'i1542357395827_5f6286893f37ecfe.jpg',
+    channel: 'Camera_04_01',
+    timestamp: 1542357395828,
+    verify_face_id: '5bee81939b1074079691cc57',
+    action_enable: 1,
+    request_client_param: 'joh5qvmsmAbnLgWOlVj4zWZm',
+    groups: [ { name: 'Blacklist', group_id: '5be2f8809b10740796916a2c' } ],
+    valFaceId: 1,
+    face_feature: undefined };    
+
+let testvisitor = { type: 1,
+    person_info: { fullname: 'I-00044', employeeno: 'I-00044', cardno: '123456' },
+    last_recognized: 
+        { timestamp: 1542357389723,
+        face_id_number: 'jl5205xgKGbkVH5f5E7bVl1f' },
+    person_id: '5b7d489c9d34e0054692fd29',
+    score: 0.99237,
+    target_score: 0.9,
+    snapshot: 'i1542357395827_5f6286893f37ecfe.jpg',
+    channel: 'Camera_04_01',
+    timestamp: 1542357395828,
+    verify_face_id: '5bee81939b1074079691cc57',
+    action_enable: 1,
+    request_client_param: 'joh5qvmsmAbnLgWOlVj4zWZm',
+    groups: [ { name: 'Visitor', group_id: '5be2f8809b10740796916a2c' } ],
+    valFaceId: 1,
+    face_feature: undefined };        
+
+let teststranger = { type: 0,
+        person_info: { fullname: 'I-00044', employeeno: 'I-00044', cardno: '123456' },
+        highest_score: {
+            score: 0.7,
+            name: "Val"
+        },
+        last_recognized: 
+            { timestamp: 1542357389723,
+            face_id_number: 'jl5205xgKGbkVH5f5E7bVl1f' },
+        person_id: '5b7d489c9d34e0054692fd29',
+        score: 0.99237,
+        target_score: 0.9,
+        snapshot: 'i1542357395827_5f6286893f37ecfe.jpg',
+        channel: 'Camera_04_01',
+        timestamp: 1542357395828,
+        verify_face_id: '5bee81939b1074079691cc57',
+        action_enable: 1,
+        request_client_param: 'joh5qvmsmAbnLgWOlVj4zWZm',
+        groups: [ { name: 'Blacklist', group_id: '5be2f8809b10740796916a2c' } ],
+        valFaceId: 1,
+        face_feature: undefined };    

@@ -35,7 +35,7 @@ export class Basic extends Component<Props, States> {
                 <ItemText
                     title="Company Name"
                     { ...Storage.connect(this, "settingsBasic", "companyName") }
-                    icon={<Button style={{ backgroundColor: "#BC913F" }}><IconOcticons style={[styles.listitem_icon, styles.listitem_icon_channel]} active name="device-camera-video" /></Button>}
+                    icon={<Button style={{ backgroundColor: "#FF8C00" }}><Icon style={[styles.listitem_icon, styles.listitem_icon_channel]} active name="office" /></Button>}
                     />
 
             </Container>

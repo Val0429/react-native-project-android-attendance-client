@@ -36,10 +36,11 @@ export class Face extends Component<Props> {
         }, undefined);
 
         let baseStyle = [styles.main];
-        // if (group) {
-        //     if (group === 'Guard' || group === 'VIP') baseStyle.push(styles.role_vip);
-        //     else if (group === 'Blacklist') baseStyle.push(styles.role_blacklist);
-        // }
+        if (group) {
+            if (group === 'VIP') baseStyle.push(styles.role_vip);
+            else if (group === 'Blacklist') baseStyle.push(styles.role_blacklist);
+            else if (group === 'Visitor') baseStyle.push(styles.role_visitor);
+        }
 
         return (
             <View padder={true} style={[...baseStyle, this.props.style]}>
@@ -62,7 +63,7 @@ export class Face extends Component<Props> {
         let user = this.props.user as UnRecognizedUser;
         let datestring = this.getHourString(user.timestamp);
 
-        let baseStyle = [styles.main];
+        let baseStyle = [styles.main, styles.role_stranger];
         
         return (
             <View padder={true} style={[...baseStyle, this.props.style]}>
@@ -109,6 +110,12 @@ const styles = EStyleSheet.create({
     },
     role_blacklist: {
         backgroundColor: '#B22222AA'
+    },
+    role_visitor: {
+        backgroundColor: '#2E8B57AA'
+    },
+    role_stranger: {
+        backgroundColor: '#1D2073AA'
     },
 
     row_main: {

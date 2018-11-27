@@ -37,17 +37,17 @@ export class Attendance extends Component<Props, States> {
             <Container>
                 {/* General */}
                 <ItemDivider title="General" />
-                <ItemText
+                {/* <ItemText
                     title="Location"
                     { ...Storage.bind(this, "settingsAttendance", "location") }
                     icon={<Button style={{ backgroundColor: "#BC913F" }}><IconOcticons style={[styles.listitem_icon, styles.listitem_icon_channel]} active name="device-camera-video" /></Button>}
-                    />
+                    /> */}
 
-                <ItemText
-                    title="Face Detection Time (Seconds)"
+                {/* <ItemText
+                    title="Face Keeping Time (Seconds)"
                     { ...Storage.bind(this, "settingsAttendance", "faceDetectionTime", /^[0-9]+$/) }
-                    icon={<Button style={{ backgroundColor: "#BC913F" }}><IconOcticons style={[styles.listitem_icon, styles.listitem_icon_channel]} active name="device-camera-video" /></Button>}
-                    />
+                    icon={<Button style={{ backgroundColor: "#FF8C00" }}><Icon style={[styles.listitem_icon, styles.listitem_icon_channel]} active name="timer" /></Button>}
+                    /> */}
             </Container>
         );
     }

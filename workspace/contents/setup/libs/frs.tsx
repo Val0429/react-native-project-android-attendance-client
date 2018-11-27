@@ -45,32 +45,32 @@ export class FRS extends Component<Props, States> {
                 <ItemText
                     title="IP"
                     { ...Storage.bind(this, "settingsFRS", "ip") }
-                    icon={<Button style={{ backgroundColor: "#BC913F" }}><IconOcticons style={[styles.listitem_icon, styles.listitem_icon_channel]} active name="device-camera-video" /></Button>}
+                    icon={<Button style={{ backgroundColor: "#87CEFA" }}><Icon style={[styles.listitem_icon, styles.listitem_icon_channel]} active name="access-point-network" /></Button>}
                     />
 
                 <ItemText
                     title="Account"
                     { ...Storage.bind(this, "settingsFRS", "account") }
-                    icon={<Button style={{ backgroundColor: "#BC913F" }}><IconOcticons style={[styles.listitem_icon, styles.listitem_icon_channel]} active name="device-camera-video" /></Button>}
+                    icon={<Button style={{ backgroundColor: "#6A5ACD" }}><Icon style={[styles.listitem_icon, styles.listitem_icon_channel]} active name="account" /></Button>}
                     />
 
                 <ItemText
                     title="Password"
                     secureTextEntry={true}
                     { ...Storage.bind(this, "settingsFRS", "password") }
-                    icon={<Button style={{ backgroundColor: "#BC913F" }}><IconOcticons style={[styles.listitem_icon, styles.listitem_icon_channel]} active name="device-camera-video" /></Button>}
+                    icon={<Button style={{ backgroundColor: "#6A5ACD" }}><Icon style={[styles.listitem_icon, styles.listitem_icon_channel]} active name="onepassword" /></Button>}
                     />
 
                 <ItemText
                     title="API Port"
                     { ...Storage.bind(this, "settingsFRS", "apiPort") }
-                    icon={<Button style={{ backgroundColor: "#BC913F" }}><IconOcticons style={[styles.listitem_icon, styles.listitem_icon_channel]} active name="device-camera-video" /></Button>}
+                    icon={<Button style={{ backgroundColor: "#87CEFA" }}><Icon style={[styles.listitem_icon, styles.listitem_icon_channel]} active name="folder-network" /></Button>}
                     />
 
                 <ItemText
                     title="Socket Port"
                     { ...Storage.bind(this, "settingsFRS", "socketPort") }
-                    icon={<Button style={{ backgroundColor: "#BC913F" }}><IconOcticons style={[styles.listitem_icon, styles.listitem_icon_channel]} active name="device-camera-video" /></Button>}
+                    icon={<Button style={{ backgroundColor: "#87CEFA" }}><Icon style={[styles.listitem_icon, styles.listitem_icon_channel]} active name="folder-network" /></Button>}
                     />
 
             </Container>

@@ -11,8 +11,11 @@ export interface SettingsVideo {
     cameraUri?: string;
 
     hideStranger?: boolean;
+    faceKeepingTime?: string;
 }
 
-const value: SettingsVideo = {};
+const value: SettingsVideo = {
+    faceKeepingTime: "30"
+};
 
 export default value;

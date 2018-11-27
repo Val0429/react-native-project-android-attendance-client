@@ -8,7 +8,7 @@ import { rcImages } from './../../../../resources/images';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import IconOcticons from 'react-native-vector-icons/Octicons';
 import { StorageInstance as Storage, SettingsVideo } from './../../../../config';
-import { ItemDivider, ItemSwitch, ItemText } from './../../../../../core/components/form';
+import { ItemDivider, ItemSwitch, ItemText, ItemColor } from './../../../../../core/components/form';
 
 
 interface Props {
@@ -41,38 +41,75 @@ export class Video extends Component<Props, Partial<SettingsVideo>> {
                 <ItemText
                     title="IP Address"
                     { ...Storage.bind(this, "settingsVideo", "cameraIp") }
-                    icon={<Button style={{ backgroundColor: "#BC913F" }}><IconOcticons style={[styles.listitem_icon, styles.listitem_icon_channel]} active name="device-camera-video" /></Button>}
+                    icon={<Button style={{ backgroundColor: "#87CEFA" }}><Icon style={[styles.listitem_icon, styles.listitem_icon_channel]} active name="access-point-network" /></Button>}
                     />
                 <ItemText
                     title="Port"
                     { ...Storage.bind(this, "settingsVideo", "cameraPort") }
-                    icon={<Button style={{ backgroundColor: "#BC913F" }}><IconOcticons style={[styles.listitem_icon, styles.listitem_icon_channel]} active name="device-camera-video" /></Button>}
+                    icon={<Button style={{ backgroundColor: "#87CEFA" }}><Icon style={[styles.listitem_icon, styles.listitem_icon_channel]} active name="folder-network" /></Button>}
                     />
                 <ItemText
                     title="Account"
                     { ...Storage.bind(this, "settingsVideo", "cameraAccount") }
-                    icon={<Button style={{ backgroundColor: "#BC913F" }}><IconOcticons style={[styles.listitem_icon, styles.listitem_icon_channel]} active name="device-camera-video" /></Button>}
+                    icon={<Button style={{ backgroundColor: "#6A5ACD" }}><Icon style={[styles.listitem_icon, styles.listitem_icon_channel]} active name="account" /></Button>}
                     />
                 <ItemText
                     title="Password"
                     { ...Storage.bind(this, "settingsVideo", "cameraPassword") }
                     secureTextEntry={true}
-                    icon={<Button style={{ backgroundColor: "#BC913F" }}><IconOcticons style={[styles.listitem_icon, styles.listitem_icon_channel]} active name="device-camera-video" /></Button>}
+                    icon={<Button style={{ backgroundColor: "#6A5ACD" }}><Icon style={[styles.listitem_icon, styles.listitem_icon_channel]} active name="onepassword" /></Button>}
                     />
-                <ItemText
+                <ItemText last
                     title="URI"
                     { ...Storage.bind(this, "settingsVideo", "cameraUri") }
-                    icon={<Button style={{ backgroundColor: "#BC913F" }}><IconOcticons style={[styles.listitem_icon, styles.listitem_icon_channel]} active name="device-camera-video" /></Button>}
+                    icon={<Button style={{ backgroundColor: "#87CEFA" }}><Icon style={[styles.listitem_icon, styles.listitem_icon_channel]} active name="comment-text-outline" /></Button>}
                     />
 
                 {/* Display */}
                 <ItemDivider title="Display" />
-                <ItemSwitch
+                <ItemSwitch last
                     title="Hide Stranger"
                     { ...Storage.bind(this, "settingsVideo", "hideStranger") }
-                    icon={<Button style={{ backgroundColor: "#BC913F" }}><Icon style={styles.listitem_icon} active name="toggle-switch" /></Button>}
+                    icon={<Button style={{ backgroundColor: "#3CB371" }}><Icon style={styles.listitem_icon} active name="toggle-switch" /></Button>}
                     />
-                
+                <ItemText
+                    title="Face Keeping Time (Seconds)"
+                    { ...Storage.bind(this, "settingsVideo", "faceKeepingTime", /^[0-9]+$/) }
+                    icon={<Button style={{ backgroundColor: "#FF8C00" }}><Icon style={[styles.listitem_icon, styles.listitem_icon_channel]} active name="timer" /></Button>}
+                    />
+
+                {/* Legends */}
+                <ItemDivider title="Legends" />
+                <ItemColor
+                    title="VIP"
+                    color="#FF8C00AA"
+                    colorTitle="Orange"
+                    icon={<Button style={{ backgroundColor: "#FF8C00AA" }}><Icon style={styles.listitem_icon} active name="human-male" /></Button>}
+                    />
+                <ItemColor
+                    title="Blacklist"
+                    color="#B22222AA"
+                    colorTitle="Red"
+                    icon={<Button style={{ backgroundColor: "#B22222AA" }}><Icon style={styles.listitem_icon} active name="human-male" /></Button>}
+                    />
+                <ItemColor
+                    title="Registered (No Group)"
+                    color="#939798DD"
+                    colorTitle="Gray"
+                    icon={<Button style={{ backgroundColor: "#939798DD" }}><Icon style={styles.listitem_icon} active name="human-male" /></Button>}
+                    />
+                <ItemColor
+                    title="Visitor"
+                    color="#2E8B57AA"
+                    colorTitle="Green"
+                    icon={<Button style={{ backgroundColor: "#2E8B57AA" }}><Icon style={styles.listitem_icon} active name="human-male" /></Button>}
+                    />
+                <ItemColor last
+                    title="Stranger"
+                    color="#1D2073AA"
+                    colorTitle="Dark Blue"
+                    icon={<Button style={{ backgroundColor: "#1D2073AA" }}><Icon style={styles.listitem_icon} active name="human-male" /></Button>}
+                    />
 
                 {/* FRS Source */}
                 {/* <ItemDivider title="FRS Source" />

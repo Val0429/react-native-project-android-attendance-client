@@ -42,6 +42,7 @@ export class DigitalPage extends Component<Props, States> {
 
     private subscription;
     private subscription2;
+    private subscription3;
     componentDidMount() {
         this.subscription = Observable.timer(0, 10*60*1000)
             .subscribe( async () => {
@@ -100,11 +101,13 @@ export class DigitalPage extends Component<Props, States> {
                 });
             }
         });
+        this.subscription3 = frs.livestream.subscribe();        
                 
     }
     componentWillUnmount() {
         this.subscription && this.subscription.unsubscribe();
         this.subscription2 && this.subscription2.unsubscribe();
+        this.subscription3 && this.subscription3.unsubscribe();
     }
 
     render() {
@@ -147,7 +150,7 @@ const styles = EStyleSheet.create({
         top: "32%",
         left: "4%",
         color: "#9ACE32",
-        fontSize: "30 rem"
+        fontSize: "32 rem"
     },
 
     incoming: {
@@ -191,7 +194,7 @@ const styles = EStyleSheet.create({
         top: "70%",
         right: "3%",
         color: "black",
-        fontSize: "10 rem",
+        fontSize: "8 rem",
         width: "130 rem",
         textAlign: "center",
         fontStyle: "italic"
