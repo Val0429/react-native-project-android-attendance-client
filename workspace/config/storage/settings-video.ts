@@ -9,6 +9,8 @@ export interface SettingsVideo {
     cameraPassword?: string;
     cameraChannelId?: string;
     cameraUri?: string;
+
+    hideStranger?: boolean;
 }
 
 const value: SettingsVideo = {};

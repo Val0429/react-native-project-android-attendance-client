@@ -11,16 +11,16 @@ import { OutlineElement } from '../outline-element';
 import { Face } from '../face';
 import { Observable } from 'rxjs';
 import frs, { UserType } from './../../../../services/frs-service';
+import { StorageInstance as Storage, SettingsDigital } from './../../../../config';
+import { Connect } from './../../../../../helpers/storage/connect';
 
 import Shimmer from 'react-native-shimmer';
 
-const weatherAPI = "https://api.darksky.net/forecast/bc828de5d93bc25e236acc3e9dd9fb4f/25.0375,121.5637";
+const weatherAPI = "https://api.darksky.net/forecast/bc828de5d93bc25e236acc3e9dd9fb4f";
 const weatherLanguage = "zh-tw";
 const weatherIcon = "https://darksky.net/images/weather-icons/";
 
-interface Props {
-
-}
+type Props = SettingsDigital;
 
 interface States {
     welcome?: string;
@@ -33,6 +33,7 @@ interface States {
     weatherDescription?: string;
 }
 
+@Connect(Storage, "settingsDigital")
 export class DigitalPage extends Component<Props, States> {
     constructor(props) {
         super(props);
@@ -44,11 +45,10 @@ export class DigitalPage extends Component<Props, States> {
     componentDidMount() {
         this.subscription = Observable.timer(0, 10*60*1000)
             .subscribe( async () => {
-                let url = `${weatherAPI}?exclude=hourly&units=ca&lang=${weatherLanguage}`;
+                let url = `${weatherAPI}/${this.props.latitude},${this.props.longitude}?exclude=hourly&units=ca&lang=${weatherLanguage}`;
                 let result = await (await fetch(url, {
                     method: 'GET'
                 })).json();
-                console.log('here', result);
 
                 /// welcome
                 let welcomeMap = [

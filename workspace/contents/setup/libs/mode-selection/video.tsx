@@ -34,8 +34,48 @@ export class Video extends Component<Props, Partial<SettingsVideo>> {
     render() {
         return (
             <Container>
+                <Button warning full><Text uppercase={false}>Warning: restart required to make change to this page take effect.</Text></Button>
+
+                {/* RTSP Source */}
+                <ItemDivider title="RTSP Source" />
+                <ItemText
+                    title="IP Address"
+                    { ...Storage.bind(this, "settingsVideo", "cameraIp") }
+                    icon={<Button style={{ backgroundColor: "#BC913F" }}><IconOcticons style={[styles.listitem_icon, styles.listitem_icon_channel]} active name="device-camera-video" /></Button>}
+                    />
+                <ItemText
+                    title="Port"
+                    { ...Storage.bind(this, "settingsVideo", "cameraPort") }
+                    icon={<Button style={{ backgroundColor: "#BC913F" }}><IconOcticons style={[styles.listitem_icon, styles.listitem_icon_channel]} active name="device-camera-video" /></Button>}
+                    />
+                <ItemText
+                    title="Account"
+                    { ...Storage.bind(this, "settingsVideo", "cameraAccount") }
+                    icon={<Button style={{ backgroundColor: "#BC913F" }}><IconOcticons style={[styles.listitem_icon, styles.listitem_icon_channel]} active name="device-camera-video" /></Button>}
+                    />
+                <ItemText
+                    title="Password"
+                    { ...Storage.bind(this, "settingsVideo", "cameraPassword") }
+                    secureTextEntry={true}
+                    icon={<Button style={{ backgroundColor: "#BC913F" }}><IconOcticons style={[styles.listitem_icon, styles.listitem_icon_channel]} active name="device-camera-video" /></Button>}
+                    />
+                <ItemText
+                    title="URI"
+                    { ...Storage.bind(this, "settingsVideo", "cameraUri") }
+                    icon={<Button style={{ backgroundColor: "#BC913F" }}><IconOcticons style={[styles.listitem_icon, styles.listitem_icon_channel]} active name="device-camera-video" /></Button>}
+                    />
+
+                {/* Display */}
+                <ItemDivider title="Display" />
+                <ItemSwitch
+                    title="Hide Stranger"
+                    { ...Storage.bind(this, "settingsVideo", "hideStranger") }
+                    icon={<Button style={{ backgroundColor: "#BC913F" }}><Icon style={styles.listitem_icon} active name="toggle-switch" /></Button>}
+                    />
+                
+
                 {/* FRS Source */}
-                <ItemDivider title="FRS Source" />
+                {/* <ItemDivider title="FRS Source" />
                 <ItemSwitch
                     title="Enable"
                     { ...Storage.bind(this, "settingsVideo", "fromFRS") }
@@ -45,10 +85,10 @@ export class Video extends Component<Props, Partial<SettingsVideo>> {
                     title="Channel"
                     { ...Storage.bind(this, "settingsVideo", "FRSCH", /^[0-9]+$/) }
                     icon={<Button style={{ backgroundColor: "#BC913F" }}><IconOcticons style={[styles.listitem_icon, styles.listitem_icon_channel]} active name="device-camera-video" /></Button>}
-                    />
+                    /> */}
 
                 {/* Camera Source */}
-                <ItemDivider title="Camera Source" />
+                {/* <ItemDivider title="Camera Source" />
                 <ItemSwitch
                     title="Enable"
                     icon={<Button style={{ backgroundColor: "#BC913F" }}><Icon style={styles.listitem_icon} active name="toggle-switch" /></Button>}
@@ -83,7 +123,7 @@ export class Video extends Component<Props, Partial<SettingsVideo>> {
                     title="URI"
                     { ...Storage.bind(this, "settingsVideo", "cameraUri") }
                     icon={<Button style={{ backgroundColor: "#BC913F" }}><IconOcticons style={[styles.listitem_icon, styles.listitem_icon_channel]} active name="device-camera-video" /></Button>}
-                    />
+                    /> */}
 
             </Container>
         );

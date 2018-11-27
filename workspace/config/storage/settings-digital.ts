@@ -1,7 +1,11 @@
 export interface SettingsDigital {
-    location?: string;
+    latitude?: string;
+    longitude?: string;
 }
 
-const value: SettingsDigital = {};
+const value: SettingsDigital = {
+    latitude: "25.0375",
+    longitude: "121.5637"
+};
 
 export default value;

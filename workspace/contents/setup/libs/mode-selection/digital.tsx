@@ -38,8 +38,13 @@ export class Digital extends Component<Props, States> {
                 {/* General */}
                 <ItemDivider title="General" />
                 <ItemText
-                    title="Location"
-                    { ...Storage.bind(this, "settingsDigital", "location") }
+                    title="Latitude"
+                    { ...Storage.bind(this, "settingsDigital", "latitude") }
+                    icon={<Button style={{ backgroundColor: "#BC913F" }}><IconOcticons style={[styles.listitem_icon, styles.listitem_icon_channel]} active name="device-camera-video" /></Button>}
+                    />
+                <ItemText
+                    title="Longitude"
+                    { ...Storage.bind(this, "settingsDigital", "longitude") }
                     icon={<Button style={{ backgroundColor: "#BC913F" }}><IconOcticons style={[styles.listitem_icon, styles.listitem_icon_channel]} active name="device-camera-video" /></Button>}
                     />
             </Container>
