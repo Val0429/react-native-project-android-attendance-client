@@ -147,7 +147,7 @@ const styles = EStyleSheet.create({
 
     welcome: {
         position: "absolute",
-        top: "32%",
+        top: "30%",
         left: "4%",
         color: "#9ACE32",
         fontSize: "32 rem"
@@ -155,10 +155,10 @@ const styles = EStyleSheet.create({
 
     incoming: {
         position: "absolute",
-        bottom: "22%",
+        top: "70%",
         left: "4%",
         color: "black",
-        fontSize: "28 rem",
+        fontSize: "34 rem",
         fontWeight: "bold"
     },
 

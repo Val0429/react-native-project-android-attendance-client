@@ -7,6 +7,8 @@ import { Actions } from 'react-native-router-flux';
 import { rcImages } from './../../resources/images';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
+let package = require('./../../../package.json');
+
 interface Props {
 
 }
@@ -26,12 +28,13 @@ export class LoginContent extends Component<Props> {
                         {/* title */}
                         <Row size={0.7} style={[styles.row_base, styles.row_2_title]}>
                             <Text style={styles.title}>Attendance Client</Text>
+                            <Text style={styles.version}>{`v${package.version}`}</Text>
                         </Row>
                         {/* form */}
-                        <Row size={4} style={[styles.row_base, styles.row_3_form]}>
+                        <Row size={2.5} style={[styles.row_base, styles.row_3_form]}>
                             <Col size={1.5} />
                             <Col size={1}>
-                                <Item style={styles.item}>
+                                {/* <Item style={styles.item}>
                                     <Icon name='security-account' style={styles.item_icon} />
                                     <Input style={styles.item_input} placeholder='Account'/>
                                 </Item>
@@ -39,11 +42,11 @@ export class LoginContent extends Component<Props> {
                                 <Item last style={styles.item}>
                                     <Icon name='security' style={styles.item_icon} />
                                     <Input secureTextEntry={true} style={styles.item_input} placeholder='Password'/>
-                                </Item>
+                                </Item> */}
 
                                 <Button style={styles.item_button} primary full onPress={() => Actions.push('main')}>
                                     <Icon name='login' style={[styles.item_icon, {fontSize: 32, marginTop: 1}]} />
-                                    <Text style={styles.item_input}>Login</Text>
+                                    <Text style={styles.item_input}>Start</Text>
                                 </Button>
                             </Col>
                             <Col size={1.5} />
@@ -76,6 +79,10 @@ const styles = EStyleSheet.create({
     title: {
         fontFamily: 'FontAwesome',
         fontSize: "18 rem",
+        color: 'white'
+    },
+    version: {
+        marginLeft: '5rem',
         color: 'white'
     },
 

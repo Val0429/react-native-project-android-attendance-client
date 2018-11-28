@@ -1,7 +1,7 @@
 const rcImages = {
     attendance: require('./attendance.png'),
     rtsp_test: require('./rtsp-test.jpg'),
-    digital_bk: require('./digital_bk.png'),
+    digital_bk: require('./digital_bk.jpg'),
 
     beauty: require('./beauty.jpg'),
 
