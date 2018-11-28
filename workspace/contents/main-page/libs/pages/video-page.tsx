@@ -19,13 +19,17 @@ import { Connect, ConnectObservables } from './../../../../../helpers/storage/co
 import Shimmer from 'react-native-shimmer';
 
 
-type Props = SettingsBasic;
+interface Props {
+    settingsBasic: SettingsBasic;
+}
 interface States {
     faces?: ((RecognizedUser | UnRecognizedUser) & {touchtime: number})[];
     now?: Date;
 }
 
-@Connect(Storage, "settingsBasic")
+@ConnectObservables({
+    settingsBasic: Storage.getSubject("settingsBasic")
+})
 export class VideoPage extends Component<Props, States> {
     private config: SettingsVideo;
     private camset;
@@ -147,7 +151,7 @@ export class VideoPage extends Component<Props, States> {
 
                     {/* company name */}
                     <Shimmer style={styles.company_title_position} duration={2600}>
-                        <H1 style={styles.company_title}>{this.props.companyName || "旭人科技股份有限公司"}</H1>
+                        <H1 style={styles.company_title}>{this.props.settingsBasic.companyName || "旭人科技股份有限公司"}</H1>
                     </Shimmer>
 
                     {/* time */}

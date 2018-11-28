@@ -37,15 +37,16 @@ export interface IConnectObservables {
     [index: string]: Observable<any>;
 }
 export function ConnectObservables(obs: IConnectObservables, delay: number = undefined) {
+    let keys = Object.keys(obs);
     return function<U extends Component>(Class: { new (...args): U }): { new (...args): U } {
         let o = class extends Component< ExtractC<U> > {
             private subscription;
             constructor(props) {
                 super(props);
                 this.state = {};
+                for (let key of keys) this.state[key] = {};
             }
             componentDidMount() {
-                let keys = Object.keys(obs);
                 let observables = keys.map( key => obs[key] );
 
                 this.subscription = Observable.from(observables)
