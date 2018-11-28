@@ -14,7 +14,7 @@ import { VideoView } from 'react-native-stream-rtsp';
 import { OutlineElement } from '../outline-element';
 import { Face } from '../face';
 import { StorageInstance as Storage, SettingsVideo, SettingsBasic } from './../../../../config';
-import { Connect } from './../../../../../helpers/storage/connect';
+import { Connect, ConnectObservables } from './../../../../../helpers/storage/connect';
 
 import Shimmer from 'react-native-shimmer';
 

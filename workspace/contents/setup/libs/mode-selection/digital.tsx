@@ -35,8 +35,8 @@ export class Digital extends Component<Props, States> {
     render() {
         return (
             <Container>
-                {/* General */}
-                <ItemDivider title="General" />
+                {/* Location */}
+                <ItemDivider title="My Location" />
                 <ItemText
                     title="Latitude"
                     { ...Storage.bind(this, "settingsDigital", "latitude") }
