@@ -5,7 +5,7 @@ import { UserType, sjRecognizedUser, sjUnRecognizedUser, RecognizedUser, UnRecog
 export * from './frs-service/core';
 import RNFetchBlob from "react-native-fetch-blob";
 import { filterFace } from './frs-service/filter-face';
-import { Config } from './config';
+import { Config } from './frs-service/config';
 import { StorageInstance as Storage } from './../config/storage';
 
 export interface FetchOptions {

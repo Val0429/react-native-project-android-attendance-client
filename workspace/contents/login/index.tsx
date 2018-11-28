@@ -1,18 +1,23 @@
 import React, {Component} from 'react';
 import {Platform, StatusBar, View, Image, NativeModules, requireNativeComponent} from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
-import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Text, Item, Input, Label } from 'native-base';
+import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Text, Item, Input, Label, Picker } from 'native-base';
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import { Actions } from 'react-native-router-flux';
 import { rcImages } from './../../resources/images';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { ConnectObservables } from './../../../helpers/storage/connect';
+import lang, { _ } from './../../../core/lang';
 
 let package = require('./../../../package.json');
 
 interface Props {
-
+    lang: string;
 }
 
+@ConnectObservables({
+    lang: lang.getLangObservable()
+})
 export class LoginContent extends Component<Props> {
     render() {
 
@@ -44,9 +49,28 @@ export class LoginContent extends Component<Props> {
                                     <Input secureTextEntry={true} style={styles.item_input} placeholder='Password'/>
                                 </Item> */}
 
+                                <View style={{width: 200, height: 40, backgroundColor: 'white', borderRadius: 4, alignSelf: 'center', justifyContent: 'center'}}>
+                                    <Picker
+                                        note
+                                        mode="dropdown"
+                                        style={{width: 200, height: 40, color: 'black'}}
+                                        selectedValue={this.props.lang}
+                                        onValueChange={(value) => lang.setLang(value)}
+                                        >
+                                        { 
+                                            (() => {
+                                                let list = lang.list();
+                                                return Object.keys(list).map( (key) => {
+                                                    return <Picker.Item key={key} label={list[key]} value={key} />
+                                                })
+                                            })()
+                                        }
+                                    </Picker>
+                                </View>
+
                                 <Button style={styles.item_button} primary full onPress={() => Actions.push('main')}>
                                     <Icon name='login' style={[styles.item_icon, {fontSize: 32, marginTop: 1}]} />
-                                    <Text style={styles.item_input}>Start</Text>
+                                    <Text style={styles.item_input}>{_("w_Start")}</Text>
                                 </Button>
                             </Col>
                             <Col size={1.5} />
