@@ -31,7 +31,7 @@ export class Basic extends Component<Props, States> {
                 </Header>
 
                 {/* General */}
-                <ItemDivider title="General" />
+                <ItemDivider title="Personal Info" />
                 <ItemText
                     title="Company Name"
                     { ...Storage.connect(this, "settingsBasic", "companyName") }

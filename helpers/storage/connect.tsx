@@ -73,3 +73,9 @@ export function ConnectObservables(obs: IConnectObservables, delay: number = und
         return o as any;
     }
 }
+
+export function ConnectIsEmpty(data: any) {
+    if (data === undefined || data === null) return true;
+    if (typeof data === 'object' && Object.keys(data).length === 0) return true;
+    return false;
+}

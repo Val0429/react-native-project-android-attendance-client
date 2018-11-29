@@ -85,12 +85,6 @@ export class Face extends Component<Props> {
 
     render() {
         return this.getFace();
-
-        // return (
-        //     <View padder={true} style={[...baseStyle, this.props.style]}>
-        //         { this.getFace() }
-        //     </View>
-        // );
     }
 }  
 

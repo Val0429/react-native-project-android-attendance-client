@@ -5,7 +5,7 @@ type ClassToInterface<T> = {
     [P in keyof T]: T[P];
 }
 type ILang = ClassToInterface<LangBase>;
-const defaultLang = "en-us";
+export const defaultLang = "en-us";
 
 let langMap: { [index: string]: [string, ILang] } = {};
 export function RegisterLang(name: string, description: string) {

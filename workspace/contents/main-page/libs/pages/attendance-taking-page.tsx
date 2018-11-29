@@ -35,17 +35,20 @@ export class AttendanceTakingPage extends Component<Props, States> {
     }
 
     private subscription: Subscription;
+    private subscriptionx: Subscription;
     private subscription2: Subscription;
     componentDidMount() {
         this.subscription = frs.sjLiveFace.subscribe( (data) => {
             this.handleFace(data);
         });
+        this.subscriptionx = frs.livestream.subscribe();        
         this.subscription2 = sjWorkflowFinished.subscribe( (data) => {
             this.workflowStarted = false;
         });
     }
     componentWillUnmount() {
         this.subscription.unsubscribe();
+        this.subscriptionx.unsubscribe();
         this.thisref && this.thisref.stop();
     }
 

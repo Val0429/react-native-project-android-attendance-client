@@ -10,17 +10,21 @@ import Iconion from 'react-native-vector-icons/Ionicons';
 import frs, {RecognizedUser, UnRecognizedUser, UserType, Gender} from './../../../../services/frs-service';
 import { Subscription } from 'rxjs';
 import { VideoView } from 'react-native-stream-rtsp';
+import moment from 'moment';
+import 'moment/min/locales';
 
 import { OutlineElement } from '../outline-element';
 import { Face } from '../face';
 import { StorageInstance as Storage, SettingsVideo, SettingsBasic } from './../../../../config';
-import { Connect, ConnectObservables } from './../../../../../helpers/storage/connect';
+import { Connect, ConnectObservables, ConnectIsEmpty } from './../../../../../helpers/storage/connect';
+import lang from './../../../../../core/lang';
 
 import Shimmer from 'react-native-shimmer';
 
 
 interface Props {
     settingsBasic: SettingsBasic;
+    lang: string;
 }
 interface States {
     faces?: ((RecognizedUser | UnRecognizedUser) & {touchtime: number})[];
@@ -28,7 +32,8 @@ interface States {
 }
 
 @ConnectObservables({
-    settingsBasic: Storage.getSubject("settingsBasic")
+    settingsBasic: Storage.getSubject("settingsBasic"),
+    lang: lang.getLangObservable()
 })
 export class VideoPage extends Component<Props, States> {
     private config: SettingsVideo;
@@ -98,8 +103,10 @@ export class VideoPage extends Component<Props, States> {
         return `${this.pad(date.getHours(), 2)}:${this.pad(date.getMinutes(), 2)}:${this.pad(date.getSeconds(), 2)}`;
     }
     private getDateString(date: Date | number) {
+        if (ConnectIsEmpty(this.props.lang)) return;
         if (typeof date === 'number') date = new Date(date);
-        return `${date.getFullYear()}年${this.pad(date.getMonth()+1, 2)}月${this.pad(date.getDate(), 2)}日`;
+        moment.locale(this.props.lang);
+        return moment().format('LL');
     }
     private pad(n, width, z?) {
         z = z || '0';

@@ -1,4 +1,4 @@
 import './en-us';
 import './zh-tw';
-import './jp';
+import './ja-jp';
 import './zh-cn';
