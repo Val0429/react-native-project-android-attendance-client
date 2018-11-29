@@ -70,7 +70,7 @@ export class ModeSelection extends Component<Props, States> {
                 <Content>
                     { this.state.modes === 0 && <Video /> }
                     { this.state.modes === 1 && <Digital /> }
-                    { this.state.modes === 2 && <Attendance /> }
+                    {/* { this.state.modes === 2 && <Attendance /> } */}
                 </Content>
             </Container>
         );
