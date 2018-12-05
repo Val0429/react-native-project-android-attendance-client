@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import { Router, Stack, Scene, Actions } from 'react-native-router-flux';
+import './resources/lang';
 import { StorageInstance as Storage } from './config';
 
 import { LoginContent } from './contents/login';

@@ -12,15 +12,24 @@ import { Face } from '../face';
 import { Observable } from 'rxjs';
 import frs, { UserType } from './../../../../services/frs-service';
 import { StorageInstance as Storage, SettingsDigital } from './../../../../config';
-import { Connect } from './../../../../../helpers/storage/connect';
+import { Connect, ConnectObservables, ConnectIsEmpty } from './../../../../../helpers/storage/connect';
+import lang, { defaultLang } from './../../../../../core/lang';
 
 import Shimmer from 'react-native-shimmer';
 
 const weatherAPI = "https://api.darksky.net/forecast/bc828de5d93bc25e236acc3e9dd9fb4f";
-const weatherLanguage = "zh-tw";
+//const weatherLanguage = "zh-tw";
 const weatherIcon = "https://darksky.net/images/weather-icons/";
 
-type Props = SettingsDigital;
+const weatherMapping = {
+    "zh-tw": true, "zh-cn": true,
+    "en-us": "en", "ja-jp": "ja"
+}
+
+type Props = {
+    settingsDigital: SettingsDigital;
+    lang: string;
+}
 
 interface States {
     welcome?: string;
@@ -33,7 +42,11 @@ interface States {
     weatherDescription?: string;
 }
 
-@Connect(Storage, "settingsDigital")
+//@Connect(Storage, "settingsDigital")
+@ConnectObservables({
+    "settingsDigital": Storage.getObservable("settingsDigital"),
+    "lang": lang.getLangObservable()
+})
 export class DigitalPage extends Component<Props, States> {
     constructor(props) {
         super(props);
@@ -46,7 +59,16 @@ export class DigitalPage extends Component<Props, States> {
     componentDidMount() {
         this.subscription = Observable.timer(0, 10*60*1000)
             .subscribe( async () => {
-                let url = `${weatherAPI}/${this.props.latitude},${this.props.longitude}?exclude=hourly&units=ca&lang=${weatherLanguage}`;
+                if (ConnectIsEmpty(this.props.lang)) return;
+                function doWeatherMapping(lang: string) {
+                    let result = weatherMapping[lang];
+                    if (!result) return weatherMapping[defaultLang];
+                    if (result === true) return lang;
+                    return result;
+                }
+                let weatherLanguage = doWeatherMapping(this.props.lang);
+
+                let url = `${weatherAPI}/${this.props.settingsDigital.latitude},${this.props.settingsDigital.longitude}?exclude=hourly&units=ca&lang=${weatherLanguage}`;
                 let result = await (await fetch(url, {
                     method: 'GET'
                 })).json();
@@ -123,7 +145,7 @@ export class DigitalPage extends Component<Props, States> {
 
                     <Text style={styles.temperature}>{this.state.temperature ? `${Math.floor(this.state.temperature)}°` : ''}</Text>
 
-                    <Text style={styles.weather_text}>{this.state.weatherText}</Text>
+                    <Text numberOfLines={1} style={styles.weather_text}>{this.state.weatherText}</Text>
 
                     <Text style={styles.weather_description}>{this.state.weatherDescription}</Text>
 
@@ -147,7 +169,7 @@ const styles = EStyleSheet.create({
 
     welcome: {
         position: "absolute",
-        top: "32%",
+        top: "30%",
         left: "4%",
         color: "#9ACE32",
         fontSize: "32 rem"
@@ -155,10 +177,10 @@ const styles = EStyleSheet.create({
 
     incoming: {
         position: "absolute",
-        bottom: "22%",
+        top: "70%",
         left: "4%",
         color: "black",
-        fontSize: "28 rem",
+        fontSize: "34 rem",
         fontWeight: "bold"
     },
 
@@ -182,10 +204,11 @@ const styles = EStyleSheet.create({
     weather_text: {
         position: "absolute",
         top: "55%",
-        right: "9.5%",
+        right: "6.1%",
         color: "black",
+        width: "100 rem",
         fontSize: "20 rem",
-        width: "80 rem",
+        textAlignVertical: "center",
         textAlign: "center"
     },
 

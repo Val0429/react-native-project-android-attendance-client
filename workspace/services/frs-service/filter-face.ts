@@ -1,5 +1,5 @@
 import { Observable, Subject } from 'rxjs';
-import { Config } from './../config';
+import { Config } from './config';
 import { UserType, RecognizedUser, UnRecognizedUser } from './core';
 //import { FaceFeatureCompare } from './../../modules/face-feature-compare';
 //const FaceFeatureCompare: any = null;

@@ -3,7 +3,8 @@ export enum Modes {
     Digital = 1,
     Attendance = 2
 }
-export const modesText = ["Video", "Digital Signage", "Attendance Taking"];
+//export const modesText = ["Video", "Digital Signage", "Attendance Taking"];
+export const modesText = ["Video", "Digital Signage"];
 
 export interface SettingsModes {
     modes?: Modes;

@@ -10,22 +10,31 @@ import Iconion from 'react-native-vector-icons/Ionicons';
 import frs, {RecognizedUser, UnRecognizedUser, UserType, Gender} from './../../../../services/frs-service';
 import { Subscription } from 'rxjs';
 import { VideoView } from 'react-native-stream-rtsp';
+import moment from 'moment';
+import 'moment/min/locales';
 
 import { OutlineElement } from '../outline-element';
 import { Face } from '../face';
 import { StorageInstance as Storage, SettingsVideo, SettingsBasic } from './../../../../config';
-import { Connect } from './../../../../../helpers/storage/connect';
+import { Connect, ConnectObservables, ConnectIsEmpty } from './../../../../../helpers/storage/connect';
+import lang from './../../../../../core/lang';
 
 import Shimmer from 'react-native-shimmer';
 
 
-type Props = SettingsBasic;
+interface Props {
+    settingsBasic: SettingsBasic;
+    lang: string;
+}
 interface States {
     faces?: ((RecognizedUser | UnRecognizedUser) & {touchtime: number})[];
     now?: Date;
 }
 
-@Connect(Storage, "settingsBasic")
+@ConnectObservables({
+    settingsBasic: Storage.getSubject("settingsBasic"),
+    lang: lang.getLangObservable()
+})
 export class VideoPage extends Component<Props, States> {
     private config: SettingsVideo;
     private camset;
@@ -94,8 +103,16 @@ export class VideoPage extends Component<Props, States> {
         return `${this.pad(date.getHours(), 2)}:${this.pad(date.getMinutes(), 2)}:${this.pad(date.getSeconds(), 2)}`;
     }
     private getDateString(date: Date | number) {
+        if (ConnectIsEmpty(this.props.lang)) return;
         if (typeof date === 'number') date = new Date(date);
-        return `${date.getFullYear()}年${this.pad(date.getMonth()+1, 2)}月${this.pad(date.getDate(), 2)}日`;
+        /// to extract first part of lang
+        let lang = this.props.lang;
+        if (lang.indexOf("zh") < 0) {
+            let regex = /^([a-z]+)\-?/i;
+            lang = lang.match(regex)[1];
+        }
+        moment.locale(lang);
+        return moment().format('LL');
     }
     private pad(n, width, z?) {
         z = z || '0';
@@ -147,7 +164,7 @@ export class VideoPage extends Component<Props, States> {
 
                     {/* company name */}
                     <Shimmer style={styles.company_title_position} duration={2600}>
-                        <H1 style={styles.company_title}>{this.props.companyName || "旭人科技股份有限公司"}</H1>
+                        <H1 style={styles.company_title}>{this.props.settingsBasic.companyName || "旭人科技股份有限公司"}</H1>
                     </Shimmer>
 
                     {/* time */}
