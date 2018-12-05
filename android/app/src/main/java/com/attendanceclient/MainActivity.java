@@ -5,6 +5,8 @@ import android.os.Bundle;
 
 import com.facebook.react.ReactActivity;
 
+import java.io.File;
+
 public class MainActivity extends ReactActivity {
 
     public static Activity mActivity;
@@ -13,6 +15,12 @@ public class MainActivity extends ReactActivity {
     public void onCreate (Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mActivity = this;
+
+        Thread.setDefaultUncaughtExceptionHandler(new CrashHandler(this));
+
+        if (getIntent().getBooleanExtra("crash", false)) {
+            FileUtils.createSDDir(FileUtils.getDiskCacheDir(this) + "/crash_notify/");
+        }
     }
 
     /**
