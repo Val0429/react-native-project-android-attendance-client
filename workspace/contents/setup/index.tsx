@@ -10,38 +10,34 @@ import { ItemDivider, ItemNavigate } from './../../../core/components/form';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Icon2 from 'react-native-vector-icons/Ionicons';
 import Icon3 from 'react-native-vector-icons/SimpleLineIcons';
-import { StorageInstance as Storage, modesText, SettingsModes } from './../../config';
+import { StorageInstance as Storage, modesText, SettingsModes, makeIcon } from './../../config';
 import { FRS } from './libs/frs';
 import { DGS } from './libs/dgs';
 import { Basic } from './libs/basic';
+import { ConnectObservables } from './../../../helpers/storage/connect';
+import lang, { _ } from './../../../core/lang';
 
 interface Props {
-
+    modes: SettingsModes;
+    lang: string;
 }
 
 interface Selection {
     selection: "mode" | "basic" | "frs" | "dgs";
 }
 
-type States = SettingsModes & Selection;
+type States = Selection;
 
+@ConnectObservables({
+    modes: Storage.getObservable("modes"),
+    lang: lang.getLangObservable()
+})
 export class Setup extends Component<Props, States> {
     constructor(props) {
         super(props);
         this.state = {
             selection: "mode"
         };
-    }
-
-    private subject = Storage.getSubject("modes");
-    private subscription;
-    componentDidMount() {
-        this.subscription = this.subject.subscribe( (value) => {
-            this.setState({...value});
-        });
-    }
-    componentWillUnmount() {
-        this.subscription.unsubscribe();
     }
 
     render() {
@@ -57,27 +53,28 @@ export class Setup extends Component<Props, States> {
                                     </Button>
                                 </Left>
                                 <Body>
-                                    <Title>Settings</Title>
+                                    <Title>{_("w_Settings")}</Title>
                                 </Body>
                             </Header>
 
                             {/* ListItem - Modes */}
-                            <ItemDivider title="Basic" />
-                            <ItemNavigate title="Mode Selection" onPress={() => this.setState({selection: "mode"})}
-                                value={modesText[this.state.modes]}
-                                icon={<Button style={{ backgroundColor: "#3CB371" }}><Icon style={styles.left_listitem_icon} active name="toggle-switch" /></Button>}
+                            <ItemDivider title={_("w_General")} />
+                            <ItemNavigate title={_("w_ModeSelection")} onPress={() => this.setState({selection: "mode"})}
+                                value={modesText[this.props.modes.modes]}
+                                icon={makeIcon(Icon, "toggle-switch")}
                                 />
-                            <ItemNavigate title="Display" last onPress={() => this.setState({selection: "basic"}) }
-                                icon={<Button style={{ backgroundColor: "#EE82EE" }}><Icon3 style={styles.left_listitem_icon} active name="screen-desktop" /></Button>}
+
+                            <ItemNavigate title={_("w_Display")} last onPress={() => this.setState({selection: "basic"}) }
+                                icon={makeIcon(Icon3, "screen-desktop")}
                                 />
 
                             {/* Servers */}
-                            <ItemDivider title="Servers" />
+                            <ItemDivider title={_("w_Server")} />
                             <ItemNavigate title="FRS" last onPress={() => this.setState({selection: "frs"}) }
-                                icon={<Button style={{ backgroundColor: "#A0A0ED" }}><Icon style={styles.left_listitem_icon} active name="face" /></Button>}
+                                icon={makeIcon(Icon, "face")}
                                 />
                             <ItemNavigate title="Demographic" last onPress={() => this.setState({selection: "dgs"}) }
-                                icon={<Button style={{ backgroundColor: "#A0A0ED" }}><Icon style={styles.left_listitem_icon} active name="face" /></Button>}
+                                icon={makeIcon(Icon, "face")}
                                 />
 
                         </Col>

@@ -8,7 +8,7 @@ import { rcImages } from './../../../resources/images';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import IconOcticons from 'react-native-vector-icons/Octicons';
 import { ItemDivider, ItemSwitch, ItemText } from './../../../../core/components/form';
-import { StorageInstance as Storage, SettingsBasic } from './../../../config';
+import { StorageInstance as Storage, SettingsBasic, makeIcon } from './../../../config';
 import { Connect } from './../../../../helpers/storage/connect';
 
 type Props = {
@@ -35,7 +35,7 @@ export class Basic extends Component<Props, States> {
                 <ItemText
                     title="Company Name"
                     { ...Storage.connect(this, "settingsBasic", "companyName") }
-                    icon={<Button style={{ backgroundColor: "#FF8C00" }}><Icon style={[styles.listitem_icon, styles.listitem_icon_channel]} active name="office" /></Button>}
+                    icon={makeIcon(Icon, "office")}                    
                     />
 
             </Container>

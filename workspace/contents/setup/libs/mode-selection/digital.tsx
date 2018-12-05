@@ -8,7 +8,7 @@ import { rcImages } from './../../../../resources/images';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import IconOcticons from 'react-native-vector-icons/Octicons';
 import { ItemDivider, ItemSwitch, ItemText } from './../../../../../core/components/form';
-import { StorageInstance as Storage, SettingsDigital } from './../../../../config';
+import { StorageInstance as Storage, SettingsDigital, makeIcon } from './../../../../config';
 
 interface Props {
 }
@@ -40,12 +40,12 @@ export class Digital extends Component<Props, States> {
                 <ItemText
                     title="Latitude"
                     { ...Storage.bind(this, "settingsDigital", "latitude") }
-                    icon={<Button style={{ backgroundColor: "#2E8B57" }}><Icon style={[styles.listitem_icon, styles.listitem_icon_channel]} active name="access-point" /></Button>}
+                    icon={makeIcon(Icon, "access-point")}
                     />
                 <ItemText
                     title="Longitude"
                     { ...Storage.bind(this, "settingsDigital", "longitude") }
-                    icon={<Button style={{ backgroundColor: "#556B2F" }}><Icon style={[styles.listitem_icon, styles.listitem_icon_channel]} active name="access-point" /></Button>}
+                    icon={makeIcon(Icon, "access-point")}
                     />
             </Container>
         );

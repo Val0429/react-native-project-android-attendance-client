@@ -8,7 +8,7 @@ import { rcImages } from './../../../resources/images';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import IconOcticons from 'react-native-vector-icons/Octicons';
 import { ItemDivider, ItemSwitch, ItemText } from './../../../../core/components/form';
-import { StorageInstance as Storage, SettingsDGS } from './../../../config';
+import { StorageInstance as Storage, SettingsDGS, makeIcon } from './../../../config';
 
 interface Props {
     style?: ViewStyle;
@@ -45,26 +45,26 @@ export class DGS extends Component<Props, States> {
                 <ItemText
                     title="IP"
                     { ...Storage.bind(this, "settingsDGS", "ip") }
-                    icon={<Button style={{ backgroundColor: "#87CEFA" }}><Icon style={[styles.listitem_icon, styles.listitem_icon_channel]} active name="access-point-network" /></Button>}
+                    icon={makeIcon(Icon, "access-point-network")}
                     />
 
                 <ItemText
                     title="Account"
                     { ...Storage.bind(this, "settingsDGS", "account") }
-                    icon={<Button style={{ backgroundColor: "#6A5ACD" }}><Icon style={[styles.listitem_icon, styles.listitem_icon_channel]} active name="account" /></Button>}
+                    icon={makeIcon(Icon, "account")}                    
                     />
 
                 <ItemText
                     title="Password"
                     secureTextEntry={true}
                     { ...Storage.bind(this, "settingsDGS", "password") }
-                    icon={<Button style={{ backgroundColor: "#6A5ACD" }}><Icon style={[styles.listitem_icon, styles.listitem_icon_channel]} active name="onepassword" /></Button>}
+                    icon={makeIcon(Icon, "onepassword")}                    
                     />
 
                 <ItemText
                     title="API Port"
                     { ...Storage.bind(this, "settingsDGS", "apiPort") }
-                    icon={<Button style={{ backgroundColor: "#87CEFA" }}><Icon style={[styles.listitem_icon, styles.listitem_icon_channel]} active name="folder-network" /></Button>}
+                    icon={makeIcon(Icon, "folder-network")}                    
                     />
 
             </Container>

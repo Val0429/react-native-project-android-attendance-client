@@ -7,7 +7,7 @@ import { Actions } from 'react-native-router-flux';
 import { rcImages } from './../../../../resources/images';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import IconOcticons from 'react-native-vector-icons/Octicons';
-import { StorageInstance as Storage, SettingsVideo } from './../../../../config';
+import { StorageInstance as Storage, SettingsVideo, makeIcon } from './../../../../config';
 import { ItemDivider, ItemSwitch, ItemText, ItemColor } from './../../../../../core/components/form';
 
 
@@ -41,28 +41,28 @@ export class Video extends Component<Props, Partial<SettingsVideo>> {
                 <ItemText
                     title="IP Address"
                     { ...Storage.bind(this, "settingsVideo", "cameraIp") }
-                    icon={<Button style={{ backgroundColor: "#87CEFA" }}><Icon style={[styles.listitem_icon, styles.listitem_icon_channel]} active name="access-point-network" /></Button>}
+                    icon={makeIcon(Icon, "access-point-network")}                                        
                     />
                 <ItemText
                     title="Port"
                     { ...Storage.bind(this, "settingsVideo", "cameraPort") }
-                    icon={<Button style={{ backgroundColor: "#87CEFA" }}><Icon style={[styles.listitem_icon, styles.listitem_icon_channel]} active name="folder-network" /></Button>}
+                    icon={makeIcon(Icon, "folder-network")}                                        
                     />
                 <ItemText
                     title="Account"
                     { ...Storage.bind(this, "settingsVideo", "cameraAccount") }
-                    icon={<Button style={{ backgroundColor: "#6A5ACD" }}><Icon style={[styles.listitem_icon, styles.listitem_icon_channel]} active name="account" /></Button>}
+                    icon={makeIcon(Icon, "account")}                                        
                     />
                 <ItemText
                     title="Password"
                     { ...Storage.bind(this, "settingsVideo", "cameraPassword") }
                     secureTextEntry={true}
-                    icon={<Button style={{ backgroundColor: "#6A5ACD" }}><Icon style={[styles.listitem_icon, styles.listitem_icon_channel]} active name="onepassword" /></Button>}
+                    icon={makeIcon(Icon, "onepassword")}                                        
                     />
                 <ItemText last
                     title="URI"
                     { ...Storage.bind(this, "settingsVideo", "cameraUri") }
-                    icon={<Button style={{ backgroundColor: "#87CEFA" }}><Icon style={[styles.listitem_icon, styles.listitem_icon_channel]} active name="comment-text-outline" /></Button>}
+                    icon={makeIcon(Icon, "comment-text-outline")}
                     />
 
                 {/* Display */}
@@ -70,12 +70,12 @@ export class Video extends Component<Props, Partial<SettingsVideo>> {
                 <ItemSwitch last
                     title="Hide Stranger"
                     { ...Storage.bind(this, "settingsVideo", "hideStranger") }
-                    icon={<Button style={{ backgroundColor: "#3CB371" }}><Icon style={styles.listitem_icon} active name="toggle-switch" /></Button>}
+                    icon={makeIcon(Icon, "toggle-switch")}
                     />
                 <ItemText
                     title="Face Keeping Time (Seconds)"
                     { ...Storage.bind(this, "settingsVideo", "faceKeepingTime", /^[0-9]+$/) }
-                    icon={<Button style={{ backgroundColor: "#FF8C00" }}><Icon style={[styles.listitem_icon, styles.listitem_icon_channel]} active name="timer" /></Button>}
+                    icon={makeIcon(Icon, "timer")}
                     />
 
                 {/* Legends */}

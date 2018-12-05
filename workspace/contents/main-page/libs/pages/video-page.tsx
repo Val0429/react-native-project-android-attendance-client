@@ -105,7 +105,13 @@ export class VideoPage extends Component<Props, States> {
     private getDateString(date: Date | number) {
         if (ConnectIsEmpty(this.props.lang)) return;
         if (typeof date === 'number') date = new Date(date);
-        moment.locale(this.props.lang);
+        /// to extract first part of lang
+        let lang = this.props.lang;
+        if (lang.indexOf("zh") < 0) {
+            let regex = /^([a-z]+)\-?/i;
+            lang = lang.match(regex)[1];
+        }
+        moment.locale(lang);
         return moment().format('LL');
     }
     private pad(n, width, z?) {
