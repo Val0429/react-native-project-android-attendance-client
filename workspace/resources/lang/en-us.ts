@@ -8,6 +8,8 @@ export default class LangObject {
     w_Server = "Server";
     w_Settings = "Settings";
     w_Start = "Start";
+
+    m_LoginFRSFailed = "Login into FRS failed.";
 }
 
 type ClassToInterface<T> = {

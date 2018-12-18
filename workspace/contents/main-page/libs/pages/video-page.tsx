@@ -17,7 +17,7 @@ import { OutlineElement } from '../outline-element';
 import { Face } from '../face';
 import { StorageInstance as Storage, SettingsVideo, SettingsBasic } from './../../../../config';
 import { Connect, ConnectObservables, ConnectIsEmpty } from './../../../../../helpers/storage/connect';
-import lang from './../../../../../core/lang';
+import lang, { _ } from './../../../../../core/lang';
 
 import Shimmer from 'react-native-shimmer';
 
@@ -93,6 +93,7 @@ export class VideoPage extends Component<Props, States> {
     componentWillUnmount() {
         this.subscription.unsubscribe();
         this.subscription2.unsubscribe();
+
         clearInterval(this.timer);
 
         this.thisref && this.thisref.Stop();
@@ -157,8 +158,6 @@ export class VideoPage extends Component<Props, States> {
                             ref.Start([this.camset]);
                             this.first = false;
                         }
-                        // console.log('???', ref);
-                        // ref && ref.Start([TEST_CAM]);
                     }}
 					/>
 

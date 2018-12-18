@@ -9,4 +9,6 @@ export default class LangObject implements ILang {
     w_Server = "เซิร์ฟเวอร์";
     w_Settings = "การตั้งค่า";
     w_Start = "เริ่มต้น";
+
+    m_LoginFRSFailed = "เข้าสู่ระบบ FRS ล้มเหลว";
 }

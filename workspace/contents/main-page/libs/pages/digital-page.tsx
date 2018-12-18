@@ -13,7 +13,7 @@ import { Observable, Subject } from 'rxjs';
 import frs, { UserType } from './../../../../services/frs-service';
 import { StorageInstance as Storage, SettingsDigital, SettingsBasic } from './../../../../config';
 import { Connect, ConnectObservables, ConnectIsEmpty } from './../../../../../helpers/storage/connect';
-import lang, { defaultLang } from './../../../../../core/lang';
+import lang, { defaultLang, _ } from './../../../../../core/lang';
 
 import Shimmer from 'react-native-shimmer';
 import moment from 'moment';

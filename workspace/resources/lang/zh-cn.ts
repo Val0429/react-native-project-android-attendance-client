@@ -9,4 +9,6 @@ export default class LangObject implements ILang {
     w_Server = "服务器";
     w_Settings = "设置";
     w_Start = "开始";
+
+    m_LoginFRSFailed = "FRS登入失败。";    
 }

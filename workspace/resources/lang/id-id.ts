@@ -9,4 +9,6 @@ export default class LangObject implements ILang {
     w_Server = "Server";
     w_Settings = "Pengaturan";
     w_Start = "Mulai";
+
+    m_LoginFRSFailed = "Login ke FRS gagal.";
 }

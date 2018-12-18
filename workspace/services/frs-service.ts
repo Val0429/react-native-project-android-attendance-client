@@ -21,6 +21,7 @@ export class FRSService {
     private sjRecovered: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
     public livestream: Observable<RecognizedUser | UnRecognizedUser>;
     public sjLiveFace: Subject<RecognizedUser | UnRecognizedUser> = new Subject();
+    public sjFRSLoginResult: Subject<boolean> = new Subject<boolean>();
 
     constructor() {
         this.login();
@@ -215,19 +216,23 @@ export class FRSService {
             const url = this.makeUrl("login");
             this.loggingIn = true;
             try {
-                let buffer = await fetch(url, {
-                    method: 'POST',
-                    headers: {
-                        Accept: "application/json",
-                        "Content-Type": 'application/json',
-                        Connection: "close",
-                    },
-                    body: JSON.stringify({ username: Config.frs.account, password: Config.frs.password })
-                });
+                let buffer = await Promise.race([ fetch(url, {
+                        method: 'POST',
+                        headers: {
+                            Accept: "application/json",
+                            "Content-Type": 'application/json',
+                            Connection: "close",
+                        },
+                        body: JSON.stringify({ username: Config.frs.account, password: Config.frs.password })
+                    }),
+                    Observable.of(true).delay(3000).toPromise()
+                ]);
+                if (typeof buffer === "boolean") throw "Login failed";
                 let body = await buffer.json();
                 this.loggingIn = false;
                 this.sjLogined.next(true);
                 console.log(`Login into FRS Server@${Config.frs.ip}:${Config.frs.apiPort}.`);
+                this.sjFRSLoginResult.next(true);
 
                 this.sessionId = body.session_id;
                 /// After login and got session_id, maintain session every 1 minute.
@@ -241,7 +246,7 @@ export class FRSService {
             } catch(e) {
                 this.loggingIn = false;
                 console.log(`Login FRS Server failed@${Config.frs.ip}:${Config.frs.apiPort}. Retry in 1 second.`);
-                console.log(e);
+                this.sjFRSLoginResult.next(false);
                 setTimeout(() => { tryLogin(); }, 1000);
                 return;
             }
