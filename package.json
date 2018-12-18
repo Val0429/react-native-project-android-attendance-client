@@ -1,6 +1,6 @@
 {
   "name": "AttendanceClient",
-  "version": "1.00.01",
+  "version": "1.00.02",
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
@@ -16,6 +16,7 @@
     "react-native-face-detection": "https://github.com/Val0429/react-native-face-detection.git#b6144fddfadbd5933cc2cdbb0a1c313bf3b2071c",
     "react-native-feature-compare": "https://github.com/Val0429/react-native-feature-compare.git#4ca5d8f6a2c0d2ac1996850f1227239f6006ef0c",
     "react-native-fetch-blob": "^0.10.8",
+    "react-native-fs": "^2.12.1",
     "react-native-router-flux": "4.0.5",
     "react-native-shimmer": "0.4.1",
     "react-native-stream-rtsp": "https://github.com/Val0429/react-native-stream-rtsp.git#d56f3ed9fb06abaa2b40e58b0607404b772ce94f",

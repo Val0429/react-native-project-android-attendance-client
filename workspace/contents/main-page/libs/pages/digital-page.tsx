@@ -75,15 +75,14 @@ export class DigitalPage extends Component<Props, States> {
 
                 /// welcome
                 let welcomeMap = [
-                    { start: 5, end: 11, message: "Good Morning!\r\n美好的一天開始！" },
-                    { start: 11, end: 18, message: "Good Afternoon!\r\n記得多喝水！" },
-                    { start: 18, end: 22, message: "Good Evening!\r\n要記得吃飯！" },
+                    { start: 5, end: 11, message: `Good Morning!${this.props.settingsDigital.greetingMorning && `\r\n${this.props.settingsDigital.greetingMorning}`}` },
+                    { start: 11, end: 18, message: `Good Afternoon!${this.props.settingsDigital.greetingAfternoon && `\r\n${this.props.settingsDigital.greetingAfternoon}`}` },
+                    { start: 18, end: 22, message: `Good Evening!${this.props.settingsDigital.greetingEvening && `\r\n${this.props.settingsDigital.greetingEvening}`}` },
                 ];
-                let welcomeOther = "Good Night!\r\n時間晚了，明天見！";
                 function pickWelcome() {
                     let date = new Date();
                     let hour = date.getHours();
-                    let welcomeMessage = welcomeOther;
+                    let welcomeMessage = welcomeMap[welcomeMap.length-1].message;
                     for (let unit of welcomeMap) {
                         if (hour >= unit.start && hour < unit.end) {
                             welcomeMessage = unit.message;

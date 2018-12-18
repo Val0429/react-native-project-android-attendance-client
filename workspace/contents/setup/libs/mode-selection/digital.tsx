@@ -47,6 +47,25 @@ export class Digital extends Component<Props, States> {
                     { ...Storage.bind(this, "settingsDigital", "longitude") }
                     icon={makeIcon(Icon, "access-point")}
                     />
+
+                {/* Location */}
+                <ItemDivider title="Greeting Message" />
+                <ItemText
+                    title="Morning"
+                    { ...Storage.bind(this, "settingsDigital", "greetingMorning") }
+                    icon={makeIcon(Icon, "message-text")}
+                    />
+                <ItemText
+                    title="Afternoon"
+                    { ...Storage.bind(this, "settingsDigital", "greetingAfternoon") }
+                    icon={makeIcon(Icon, "message-text")}
+                    />
+                <ItemText
+                    title="Evening"
+                    { ...Storage.bind(this, "settingsDigital", "greetingEvening") }
+                    icon={makeIcon(Icon, "message-text")}
+                    />
+
             </Container>
         );
     }

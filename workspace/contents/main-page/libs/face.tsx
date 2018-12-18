@@ -71,7 +71,7 @@ export class Face extends Component<Props> {
                     <Image style={styles.row_image_1} resizeMode="contain" source={{ uri: frs.snapshotUrl(this.props.user.snapshot) }} />
                 </Row>
                 <Row style={[styles.row_main]} size={1}>
-                    <Text style={[styles.row_text, styles.row_text_1_id]}>{user.highest_score.score}</Text>
+                    <Text numberOfLines={1} style={[styles.row_text, styles.row_text_1_id]}>{`${Math.floor(user.highest_score.score*100)}% (${user.highest_score.fullname})`}</Text>
                 </Row>
                 <Row style={[styles.row_main, styles.row_main_2]} size={0.8}>
                     <Text style={[styles.row_text, styles.row_text_2_title]} numberOfLines={1}>No Match</Text>

@@ -161,6 +161,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-fs')
     implementation project(':react-native-stream-rtsp')
     implementation project(':react-native-feature-compare')
     implementation project(':react-native-face-detection')

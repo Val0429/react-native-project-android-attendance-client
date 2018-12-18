@@ -8,6 +8,8 @@ import { rcImages } from './../../resources/images';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { ConnectObservables } from './../../../helpers/storage/connect';
 import lang, { _ } from './../../../core/lang';
+import FaceFeatureCompare from 'react-native-feature-compare';
+let RNFS = require('react-native-fs');
 
 let package = require('./../../../package.json');
 
@@ -19,6 +21,27 @@ interface Props {
     lang: lang.getLangObservable()
 })
 export class LoginContent extends Component<Props> {
+    constructor(props) {
+        super(props);
+    }
+
+    async componentDidMount() {
+        do {
+            let path = `${RNFS.ExternalCachesDirectoryPath}/crash_notify`;
+            let result = await RNFS.exists(path);
+            if (result) { await RNFS.unlink(path); break; }
+
+            path = `${RNFS.CachesDirectoryPath}/crash_notify`;
+            result = await RNFS.exists(path);
+            if (result) { await RNFS.unlink(path); break; }
+
+            return;
+
+        } while(0);
+
+        Actions.push('main');
+    }
+
     render() {
 
         return (
@@ -68,6 +91,7 @@ export class LoginContent extends Component<Props> {
                                     </Picker>
                                 </View>
 
+                                {/* <Button style={styles.item_button} primary full onPress={() => FaceFeatureCompare.TestCrash()}> */}
                                 <Button style={styles.item_button} primary full onPress={() => Actions.push('main')}>
                                     <Icon name='login' style={[styles.item_icon, {fontSize: 32, marginTop: 1}]} />
                                     <Text style={styles.item_input}>{_("w_Start")}</Text>
