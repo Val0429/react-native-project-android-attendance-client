@@ -1,6 +1,6 @@
 {
   "name": "AttendanceClient",
-  "version": "1.00.02",
+  "version": "1.00.03",
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
