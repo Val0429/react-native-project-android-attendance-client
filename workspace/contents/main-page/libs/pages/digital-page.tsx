@@ -9,13 +9,15 @@ import Iconion from 'react-native-vector-icons/Ionicons';
 import './../../../../services/frs-service';
 import { OutlineElement } from '../outline-element';
 import { Face } from '../face';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import frs, { UserType } from './../../../../services/frs-service';
-import { StorageInstance as Storage, SettingsDigital } from './../../../../config';
+import { StorageInstance as Storage, SettingsDigital, SettingsBasic } from './../../../../config';
 import { Connect, ConnectObservables, ConnectIsEmpty } from './../../../../../helpers/storage/connect';
 import lang, { defaultLang } from './../../../../../core/lang';
 
 import Shimmer from 'react-native-shimmer';
+import moment from 'moment';
+import 'moment/min/locales';
 
 const weatherAPI = "https://api.darksky.net/forecast/bc828de5d93bc25e236acc3e9dd9fb4f";
 //const weatherLanguage = "zh-tw";
@@ -28,6 +30,8 @@ const weatherMapping = {
 
 type Props = {
     settingsDigital: SettingsDigital;
+    settingsBasic: SettingsBasic;
+    now: { value: Date };
     lang: string;
 }
 
@@ -40,23 +44,36 @@ interface States {
     weatherText?: string;
 
     weatherDescription?: string;
+    showGreeting: boolean;
 }
 
 //@Connect(Storage, "settingsDigital")
 @ConnectObservables({
     "settingsDigital": Storage.getObservable("settingsDigital"),
+    "settingsBasic": Storage.getObservable("settingsBasic"),
+    "now": Observable.timer(0, 1000).map( () => ({value: new Date()}) ),
     "lang": lang.getLangObservable()
 })
 export class DigitalPage extends Component<Props, States> {
+    private sjTimer = new Subject();    
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            showGreeting: false
+        };
     }
 
     private subscription;
     private subscription2;
     private subscription3;
+    private subscription4;
     componentDidMount() {
+        this.subscription4 = this.sjTimer
+            .switchMap( () => Observable.of(true).delay(30*1000) )
+            .subscribe( (data) => {
+                this.setState({showGreeting: false});
+            });
+
         this.subscription = Observable.timer(0, 10*60*1000)
             .subscribe( async () => {
                 if (ConnectIsEmpty(this.props.lang)) return;
@@ -118,17 +135,48 @@ export class DigitalPage extends Component<Props, States> {
         this.subscription2 = frs.sjLiveFace.subscribe( (data) => {
             if (data.type === UserType.Recognized) {
                 this.setState({
-                    incoming: data.person_info.fullname
+                    incoming: data.person_info.fullname,
+                    showGreeting: true
                 });
+                this.sjTimer.next();
             }
         });
-        this.subscription3 = frs.livestream.subscribe();        
-                
+        this.subscription3 = frs.livestream.subscribe();
     }
     componentWillUnmount() {
         this.subscription && this.subscription.unsubscribe();
         this.subscription2 && this.subscription2.unsubscribe();
         this.subscription3 && this.subscription3.unsubscribe();
+        this.subscription4 && this.subscription4.unsubscribe();
+    }
+
+    getDefaultPage() {
+        return (
+            <>
+                <View style={styles.default_title}>
+                    <Text style={styles.default_title_text}>{this.props.settingsBasic.companyName}</Text>
+                </View>
+                <View style={styles.default_box}>
+                    {
+                        this.props.now.value && (
+                            <>
+                                <Text style={styles.default_box_time}>{this.getHourString(this.props.now.value)}</Text>
+                                <Text style={styles.default_box_date}>{this.getDateString(this.props.now.value)}</Text>
+                            </>
+                        )
+                    }
+                </View>
+            </>
+        )
+    }
+
+    getWelcomePage() {
+        return (
+            <>
+                <Text style={styles.welcome}>{this.state.welcome}</Text>
+                <Text style={styles.incoming}>{this.state.incoming}</Text>
+            </>            
+        );
     }
 
     render() {
@@ -138,9 +186,10 @@ export class DigitalPage extends Component<Props, States> {
                     {/* background image */}
                     <Image source={rcImages.digital_bk} resizeMode="stretch" style={{flex: 1, width: '100%'}} />
 
-                    <Text style={styles.welcome}>{this.state.welcome}</Text>
-
-                    <Text style={styles.incoming}>{this.state.incoming}</Text>
+                    {/* { this.getWelcomePage() } */}
+                    {
+                        this.state.showGreeting ? this.getWelcomePage() : this.getDefaultPage()
+                    }
 
                     <Text style={styles.temperature}>{this.state.temperature ? `${Math.floor(this.state.temperature)}°` : ''}</Text>
 
@@ -158,6 +207,28 @@ export class DigitalPage extends Component<Props, States> {
                 </Content>
             </Container>
         );
+    }
+
+    private getHourString(date: Date | number) {
+        if (typeof date === 'number') date = new Date(date);
+        return `${this.pad(date.getHours(), 2)}:${this.pad(date.getMinutes(), 2)}:${this.pad(date.getSeconds(), 2)}`;
+    }
+    private getDateString(date: Date | number) {
+        if (ConnectIsEmpty(this.props.lang)) return;
+        if (typeof date === 'number') date = new Date(date);
+        /// to extract first part of lang
+        let lang = this.props.lang;
+        if (lang.indexOf("zh") < 0) {
+            let regex = /^([a-z]+)\-?/i;
+            lang = lang.match(regex)[1];
+        }
+        moment.locale(lang);
+        return moment().format('ll dddd');
+    }    
+    private pad(n, width, z?) {
+        z = z || '0';
+        n = n + '';
+        return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
     }
 }
 
@@ -181,6 +252,43 @@ const styles = EStyleSheet.create({
         color: "black",
         fontSize: "34 rem",
         fontWeight: "bold"
+    },
+
+    default_title: {
+        position: "absolute",
+        top: "17%",
+        left: "4%",
+        width: "50%",
+        height: "28%",
+        justifyContent: "center",
+        textAlign: "center",
+    },
+    default_title_text: {
+        fontSize: "28 rem",
+        color: "#9ACE32",
+        justifyContent: "center",
+        textAlign: "center"
+    },
+
+    default_box: {
+        position: "absolute",
+        bottom: "12%",
+        left: "4%",
+        width: "50%",
+        height: "36%",
+        justifyContent: "center",
+        textAlign: "center",
+    },
+    default_box_time: {
+        justifyContent: "center",
+        textAlign: "center",
+        fontSize: "36 rem",
+        fontWeight: "bold"
+    },
+    default_box_date: {
+        justifyContent: "center",
+        textAlign: "center",
+        fontSize: "16 rem"
     },
 
     temperature: {
