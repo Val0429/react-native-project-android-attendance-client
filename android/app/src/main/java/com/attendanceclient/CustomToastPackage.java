@@ -1,6 +1,5 @@
 package com.attendanceclient;
 
-import com.attendanceclient.RTSP.RTSPViewManager;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.bridge.NativeModule;
 import com.facebook.react.bridge.ReactApplicationContext;
@@ -17,8 +16,7 @@ public class CustomToastPackage implements ReactPackage {
         //return Collections.emptyList();
 
         return Arrays.<ViewManager>asList(
-            new ReactImageManager(),
-            new RTSPViewManager()
+            new ReactImageManager()
         );
     }
 
