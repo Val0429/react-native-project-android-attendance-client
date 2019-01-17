@@ -26,7 +26,8 @@ const weatherIcon = "https://darksky.net/images/weather-icons/";
 const weatherMapping = {
     "zh-tw": true, "zh-cn": true,
     "en-us": "en", "ja-jp": "ja",
-    "th": "en", "id-id": "id"
+    "th": "en", "id-id": "id",
+    "es": true, "pt": true,
 }
 
 type Props = {

@@ -9,6 +9,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Icon2 from 'react-native-vector-icons/Ionicons';
 import Icon3 from 'react-native-vector-icons/SimpleLineIcons';
 import { StorageInstance as Storage, modesText, SettingsModes } from './../../../../config';
+import lang, { _ } from './../../../../../core/lang';
 
 import {Video} from './video';
 import {Digital} from './digital';
@@ -53,7 +54,7 @@ export class ModeSelection extends Component<Props, States> {
                     first={ index === 0 ? true : undefined }
                     last={ index === tabsText.length - 1 ? true : undefined }
                     active={this.state.modes === index ? true : undefined}
-                    ><Text>{data}</Text></Button>
+                    ><Text>{_(`m_${data}` as any)}</Text></Button>
             );
         });
 

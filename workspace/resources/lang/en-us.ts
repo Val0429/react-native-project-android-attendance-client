@@ -10,6 +10,8 @@ export default class LangObject {
     w_Start = "Start";
 
     m_LoginFRSFailed = "Login into FRS failed.";
+    m_ModeVideo = "Video";
+    m_ModeDigitalSignage = "Welcome Display";
 }
 
 type ClassToInterface<T> = {

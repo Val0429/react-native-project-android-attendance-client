@@ -60,7 +60,7 @@ export class Setup extends Component<Props, States> {
                             {/* ListItem - Modes */}
                             <ItemDivider title={_("w_General")} />
                             <ItemNavigate title={_("w_ModeSelection")} onPress={() => this.setState({selection: "mode"})}
-                                value={modesText[this.props.modes.modes]}
+                                value={_(`m_${modesText[this.props.modes.modes]}` as any)}
                                 icon={makeIcon(Icon, "toggle-switch")}
                                 />
 

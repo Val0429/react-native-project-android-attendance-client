@@ -1,6 +1,8 @@
 import './en-us';
-import './zh-tw';
-import './ja-jp';
-import './zh-cn';
-import './th';
+import './es';
 import './id-id';
+import './ja-jp';
+import './pt';
+import './th';
+import './zh-cn';
+import './zh-tw';

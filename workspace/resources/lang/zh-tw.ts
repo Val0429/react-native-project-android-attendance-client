@@ -11,4 +11,6 @@ export default class LangObject implements ILang {
     w_Start = "開始";
 
     m_LoginFRSFailed = "FRS登入失敗。";    
+    m_ModeVideo = "Video";
+    m_ModeDigitalSignage = "Welcome Display";
 }
