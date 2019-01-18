@@ -13,8 +13,6 @@ export default class LangObject {
     m_ModeVideo = "Video";
     m_ModeDigitalSignage = "Welcome Display";
 
-
-
     w_CompanyName = "Company Name";
     m_VideoSourceSelection = "Video Source Selection";
     m_VideoSourceUrl = "Video Source Url";

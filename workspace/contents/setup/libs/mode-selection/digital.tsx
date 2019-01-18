@@ -55,12 +55,12 @@ export class Digital extends Component<Props, State> {
                 {/* Location */}
                 <ItemDivider title={_("w_MyLocation")} />
                 <ItemText
-                    title="Latitude"
+                    title={_("w_Latitude")}
                     { ...Storage.bind(this, "settingsDigital", "latitude") }
                     icon={makeIcon(Icon, "access-point")}
                     />
                 <ItemText
-                    title="Longitude"
+                    title={_("w_Longitude")}
                     { ...Storage.bind(this, "settingsDigital", "longitude") }
                     icon={makeIcon(Icon, "access-point")}
                     />
