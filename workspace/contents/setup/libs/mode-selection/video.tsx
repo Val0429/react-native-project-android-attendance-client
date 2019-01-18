@@ -17,6 +17,11 @@ import { timestamp } from 'rxjs/operator/timestamp';
 interface IVideoSource {
     sourceId: string;
     url: string;
+    ip: string;
+    port: number;
+    account: string;
+    password: string;
+    uri: string;
 }
 
 interface Props {
@@ -49,7 +54,12 @@ export class Video extends Component<Props, State> {
                     if (item.video_source_type !== 'rtsp') return final;
                     final.push({
                         sourceId: item.video_source_sourceid,   ///+`_${index}`,
-                        url: `rtsp://${item.video_source_username}:${item.video_source_password}@${item.video_source_ip}:${item.video_source_port}/${item.video_source_rtsp_path}`
+                        url: `rtsp://${item.video_source_username}:${item.video_source_password}@${item.video_source_ip}:${item.video_source_port}${item.video_source_rtsp_path}`,
+                        ip: item.video_source_ip,
+                        port: item.video_source_port,
+                        account: item.video_source_username,
+                        password: item.video_source_password,
+                        uri: item.video_source_rtsp_path,
                     });
                     return final;
                 }, []);
@@ -57,8 +67,7 @@ export class Video extends Component<Props, State> {
                 if (sources.length > 0) {
                     let source: IVideoSource = sources[0];
                     if (!this.props.settingsVideo.videoSourceId) {
-                        Storage.update("settingsVideo", "videoSourceId", source.sourceId);
-                        Storage.update("settingsVideo", "videoSourceUrl", source.url);
+                        this.saveRTSPSource(source);
                     }
                     if (!this.props.settingsVideo.faceRecognitionSource) {
                         Storage.update("settingsVideo", "faceRecognitionSource", [source.sourceId]);
@@ -68,6 +77,16 @@ export class Video extends Component<Props, State> {
                     videoSources: sources
                 });
             });
+    }
+
+    private saveRTSPSource(source: IVideoSource) {
+        Storage.update("settingsVideo", "videoSourceId", source.sourceId);
+        Storage.update("settingsVideo", "videoSourceUrl", source.url);
+        Storage.update("settingsVideo", "videoSourceIp", source.ip);
+        Storage.update("settingsVideo", "videoSourcePort", source.port);
+        Storage.update("settingsVideo", "videoSourceAccount", source.account);
+        Storage.update("settingsVideo", "videoSourcePassword", source.password);
+        Storage.update("settingsVideo", "videoSourceUri", source.uri);
     }
 
     render() {
@@ -94,8 +113,7 @@ export class Video extends Component<Props, State> {
                                 let idx = this.state.videoSources.findIndex( (v) => v.sourceId === value );
                                 if (idx >= 0) {
                                     let item = this.state.videoSources[idx];
-                                    Storage.update("settingsVideo", "videoSourceId", item.sourceId);
-                                    Storage.update("settingsVideo", "videoSourceUrl", item.url);
+                                    this.saveRTSPSource(item);
                                 }
                             }}
                             icon={makeIcon(Icon, "access-point-network")}

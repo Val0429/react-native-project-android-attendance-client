@@ -4,8 +4,15 @@ export interface SettingsVideo {
     FRSCH?: number;
 
     companyName?: string;
+
     videoSourceId?: string;
     videoSourceUrl?: string;
+    videoSourceIp?: string;
+    videoSourcePort?: number;
+    videoSourceAccount?: string;
+    videoSourcePassword?: string;
+    videoSourceUri?: string;
+
     faceRecognitionSource?: string[];
     
     showStranger?: boolean;
