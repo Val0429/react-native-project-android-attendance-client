@@ -1,7 +1,17 @@
+
 export interface SettingsVideo {
     fromFRS?: boolean;
     FRSCH?: number;
+
+    companyName?: string;
+    videoSourceId?: string;
+    videoSourceUrl?: string;
+    faceRecognitionSource?: string[];
     
+    showStranger?: boolean;
+    mergeFaceDuration?: string;
+    
+    /// to do remove ///
     fromCamera?: boolean;
     cameraIp?: string;
     cameraPort?: string;
@@ -11,11 +21,13 @@ export interface SettingsVideo {
     cameraUri?: string;
 
     hideStranger?: boolean;
-    faceKeepingTime?: string;
+    faceKeepingTime?: string;   /// merge face duration
+    /// to do remove ///
+
 }
 
 const value: SettingsVideo = {
-    faceKeepingTime: "30"
+    mergeFaceDuration: "30"
 };
 
 export default value;

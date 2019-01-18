@@ -13,9 +13,10 @@ import Icon3 from 'react-native-vector-icons/SimpleLineIcons';
 import { StorageInstance as Storage, modesText, SettingsModes, makeIcon } from './../../config';
 import { FRS } from './libs/frs';
 import { DGS } from './libs/dgs';
-import { Basic } from './libs/basic';
+import { Language } from './libs/language';
 import { ConnectObservables } from './../../../helpers/storage/connect';
 import lang, { _ } from './../../../core/lang';
+let package = require('./../../../package.json');
 
 interface Props {
     modes: SettingsModes;
@@ -23,7 +24,7 @@ interface Props {
 }
 
 interface Selection {
-    selection: "mode" | "basic" | "frs" | "dgs";
+    selection: "mode" | "frs" | "dgs" | "language";
 }
 
 type States = Selection;
@@ -57,6 +58,18 @@ export class Setup extends Component<Props, States> {
                                 </Body>
                             </Header>
 
+                            {/* Servers */}
+                            <ItemDivider title={_("w_Server")} />
+                            <ItemNavigate title="FRS" last onPress={() => this.setState({selection: "frs"}) }
+                                icon={makeIcon(Icon, "face")}
+                                />
+                            {/* <ItemNavigate title="Demographic" last onPress={() => this.setState({selection: "dgs"}) }
+                                icon={makeIcon(Icon, "face")}
+                                /> */}
+                            <ItemNavigate title={_("w_Language")} last onPress={() => this.setState({selection: "language"}) }
+                                icon={makeIcon(Icon, "face")}
+                                />
+
                             {/* ListItem - Modes */}
                             <ItemDivider title={_("w_General")} />
                             <ItemNavigate title={_("w_ModeSelection")} onPress={() => this.setState({selection: "mode"})}
@@ -64,26 +77,21 @@ export class Setup extends Component<Props, States> {
                                 icon={makeIcon(Icon, "toggle-switch")}
                                 />
 
-                            <ItemNavigate title={_("w_Display")} last onPress={() => this.setState({selection: "basic"}) }
-                                icon={makeIcon(Icon3, "screen-desktop")}
-                                />
-
-                            {/* Servers */}
-                            <ItemDivider title={_("w_Server")} />
-                            <ItemNavigate title="FRS" last onPress={() => this.setState({selection: "frs"}) }
-                                icon={makeIcon(Icon, "face")}
-                                />
-                            <ItemNavigate title="Demographic" last onPress={() => this.setState({selection: "dgs"}) }
-                                icon={makeIcon(Icon, "face")}
+                            {/* Others */}
+                            <ItemDivider title={_("w_Others")} />
+                            <ItemNavigate title={_("w_About")}
+                                value={`v${package.version}`}
+                                showArrow={false}
+                                icon={makeIcon(Icon, "toggle-switch")}
                                 />
 
                         </Col>
 
                         <Col size={1}>
                             { this.state.selection === "mode" && <ModeSelection style={styles.full_height} /> }
-                            { this.state.selection === "basic" && <Basic style={styles.full_height} /> }
                             { this.state.selection === "frs" && <FRS style={styles.full_height} /> }
                             { this.state.selection === "dgs" && <DGS style={styles.full_height} /> }
+                            { this.state.selection === "language" && <Language style={styles.full_height} /> }
                         </Col>
                     </Grid>
                 </Content>

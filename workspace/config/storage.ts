@@ -14,6 +14,7 @@ import settingsDisplay, { SettingsDisplay } from './storage/settings-display';
 import settingsFRS, { SettingsFRS } from './storage/settings-frs';
 import settingsDGS, { SettingsDGS } from './storage/settings-dgs';
 import settingsBasic, { SettingsBasic } from './storage/settings-basic';
+import settingsLanguage, { SettingsLanguage } from './storage/settings-language';
 
 export interface IStorage {
     settingsBasic: SettingsBasic;
@@ -25,6 +26,7 @@ export interface IStorage {
 
     settingsFRS: SettingsFRS;
     settingsDGS: SettingsDGS;
+    settingsLanguage: SettingsLanguage;
 }
 
 const storage: IStorage = {
@@ -36,7 +38,8 @@ const storage: IStorage = {
     settingsDisplay,
 
     settingsFRS,
-    settingsDGS
+    settingsDGS,
+    settingsLanguage,
 }
 
 const StorageInstance = new Storage(storage);

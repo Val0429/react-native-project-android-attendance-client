@@ -9,9 +9,10 @@ import Icon from 'react-native-vector-icons/Ionicons';
 interface Props {
     icon?: any;
     title: string;
-    value?: string;
+    value?: string | any;
     last?: boolean;
     onPress?: () => void;
+    showArrow?: boolean;
 }
 
 export class ItemNavigate extends Component<Props> {
@@ -20,8 +21,14 @@ export class ItemNavigate extends Component<Props> {
             <ListItem icon={this.props.icon ? true : false} last={this.props.last} onPress={this.props.onPress}>
                 { this.props.icon ? (<Left>{this.props.icon}</Left>) : null }
                 <Body><Text>{this.props.title}</Text></Body>
-                <Right><Text>{this.props.value}</Text>
-                <Icon style={styles.right_listitem_icon} active name="ios-arrow-forward" /></Right>                            
+                <Right>
+                    {
+                        this.props.value === undefined ? null :
+                            typeof this.props.value === 'string' ? (<Text>{this.props.value}</Text>) :
+                            this.props.value
+                    }
+                    { this.props.showArrow !== false ? (<Icon style={styles.right_listitem_icon} active name="ios-arrow-forward" />) : null }
+                </Right>                
             </ListItem>
         );
     }

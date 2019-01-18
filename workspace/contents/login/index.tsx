@@ -7,6 +7,7 @@ import { Actions } from 'react-native-router-flux';
 import { rcImages } from './../../resources/images';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { ConnectObservables } from './../../../helpers/storage/connect';
+import { StorageInstance as Storage } from './../../config';
 import lang, { _ } from './../../../core/lang';
 import FaceFeatureCompare from 'react-native-feature-compare';
 let RNFS = require('react-native-fs');
@@ -26,6 +27,9 @@ export class LoginContent extends Component<Props> {
     }
 
     async componentDidMount() {
+        let settingsLanguage = Storage.get("settingsLanguage");
+        lang.setLang(settingsLanguage.lang);
+
         do {
             let path = `${RNFS.ExternalCachesDirectoryPath}/crash_notify`;
             let result = await RNFS.exists(path);
@@ -78,7 +82,10 @@ export class LoginContent extends Component<Props> {
                                         mode="dropdown"
                                         style={{width: 200, height: 40, color: 'black'}}
                                         selectedValue={this.props.lang}
-                                        onValueChange={(value) => lang.setLang(value)}
+                                        onValueChange={(value) => {
+                                            lang.setLang(value);
+                                            Storage.update("settingsLanguage", "lang", value);
+                                        }}
                                         >
                                         { 
                                             (() => {

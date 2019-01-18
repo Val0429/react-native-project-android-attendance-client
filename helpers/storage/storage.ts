@@ -74,6 +74,21 @@ export class Storage<T extends Object> {
         }
     }
 
+    vbind<K extends keyof T, U extends keyof T[K]>(source: Component, key: K, data: U, validator?: Validator) {
+        return {
+            value: (source.props as any)[key][data],
+            onValueChange: (value) => {
+                if (validator &&
+                    ((validator instanceof RegExp) && !validator.test(value)) ||
+                    (validator && typeof validator === 'function' && !validator(value))
+                ) {
+                    // source.setState({ [data]: value });
+                } else
+                    this.update(key, data, value);
+            }
+        }
+    }
+
     /// deprecated
     bind<K extends keyof T, U extends keyof T[K]>(source: Component, key: K, data: U, validator?: Validator) {
         return {

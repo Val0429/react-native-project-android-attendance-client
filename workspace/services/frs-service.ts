@@ -15,9 +15,20 @@ export interface FetchOptions {
     cameras?: string[];
 }
 
+export interface IFCSSettings {
+    video_source_sourceid: string;
+    video_source_location: string;
+    video_source_type: 'rtsp' | 'cms';
+    video_source_ip?: string;
+    video_source_port?: number;
+    video_source_username?: string;
+    video_source_password?: string;
+    video_source_rtsp_path?: string;
+}
+
 export class FRSService {
     private sessionId: string;
-    private sjLogined: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+    public sjLogined: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
     private sjRecovered: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
     public livestream: Observable<RecognizedUser | UnRecognizedUser>;
     public sjLiveFace: Subject<RecognizedUser | UnRecognizedUser> = new Subject();
@@ -304,6 +315,22 @@ export class FRSService {
                 body: JSON.stringify(body)
             })).text();
             resolve();
+        });
+    }
+
+    public getFCSSettings(): Promise<IFCSSettings[]> {
+        const url: string = this.makeUrl('getfcssettings');
+        let me = this;
+
+        return new Promise( async (resolve, reject) => {
+            let body = {
+                session_id: this.sessionId
+            }
+            let result = await (await fetch(url, {
+                method: 'POST',
+                body: JSON.stringify(body),
+            })).json();
+            resolve((result as any).fcs_settings);
         });
     }
 

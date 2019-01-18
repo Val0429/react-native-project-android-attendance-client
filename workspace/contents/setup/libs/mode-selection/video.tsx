@@ -1,80 +1,200 @@
 import React, {Component, ReactElement} from 'react';
 import {Platform, View, Image, TouchableOpacity, StyleProp, ViewStyle, Settings} from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
-import { Container, Header, Title, Segment, Tabs, Tab, TabHeading, Content, ListItem, Switch, Footer, FooterTab, Button, Left, Right, Body, Text, Item, Input, H1, Label } from 'native-base';
+import { Container, Header, Title, Segment, Tabs, Tab, TabHeading, Content, ListItem, Switch, Footer, FooterTab, Button, Left, Right, Body, Text, Item, Input, H1, Label, Picker, CheckBox } from 'native-base';
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import { Actions } from 'react-native-router-flux';
 import { rcImages } from './../../../../resources/images';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import IconOcticons from 'react-native-vector-icons/Octicons';
 import { StorageInstance as Storage, SettingsVideo, makeIcon } from './../../../../config';
-import { ItemDivider, ItemSwitch, ItemText, ItemColor } from './../../../../../core/components/form';
+import { ItemDivider, ItemSwitch, ItemText, ItemColor, ItemPicker, ItemNavigate } from './../../../../../core/components/form';
+import lang, { _ } from './../../../../../core/lang';
+import { ConnectObservables } from './../../../../../helpers/storage/connect';
+import frs, {RecognizedUser, UnRecognizedUser, UserType, Gender, IFCSSettings} from './../../../../services/frs-service';
+import { timestamp } from 'rxjs/operator/timestamp';
 
-
-interface Props {
+interface IVideoSource {
+    sourceId: string;
+    url: string;
 }
 
-export class Video extends Component<Props, Partial<SettingsVideo>> {
+interface Props {
+    settingsVideo?: SettingsVideo;
+}
+
+interface State {
+    FRSConnected: boolean;
+    videoSources?: IVideoSource[];
+}
+
+
+@ConnectObservables({
+    settingsVideo: Storage.getObservable("settingsVideo"),
+    lang: lang.getLangObservable()
+})
+export class Video extends Component<Props, State> {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            FRSConnected: frs.sjLogined.getValue()
+        };
     }
 
-    private subject = Storage.getSubject("settingsVideo");
-    private subscription;
     componentDidMount() {
-        this.subscription = this.subject.subscribe( (value) => {
-            this.setState({...value});
-        });
-    }
-    componentWillUnmount() {
-        this.subscription.unsubscribe();
+        frs.sjLogined.getValue() &&
+        frs.getFCSSettings()
+            .then( (data) => {
+                let sources = data.reduce( (final, item, index) => {
+                    if (item.video_source_type !== 'rtsp') return final;
+                    final.push({
+                        sourceId: item.video_source_sourceid,   ///+`_${index}`,
+                        url: `rtsp://${item.video_source_username}:${item.video_source_password}@${item.video_source_ip}:${item.video_source_port}/${item.video_source_rtsp_path}`
+                    });
+                    return final;
+                }, []);
+                /// save for first time
+                if (sources.length > 0) {
+                    let source: IVideoSource = sources[0];
+                    if (!this.props.settingsVideo.videoSourceId) {
+                        Storage.update("settingsVideo", "videoSourceId", source.sourceId);
+                        Storage.update("settingsVideo", "videoSourceUrl", source.url);
+                    }
+                    if (!this.props.settingsVideo.faceRecognitionSource) {
+                        Storage.update("settingsVideo", "faceRecognitionSource", [source.sourceId]);
+                    }
+                }
+                this.setState({
+                    videoSources: sources
+                });
+            });
     }
 
     render() {
         return (
             <Container>
-                <Button warning full><Text uppercase={false}>Warning: restart required to make change to this page take effect.</Text></Button>
+                <Button warning full><Text uppercase={false}>{_("m_RestartRequired")}</Text></Button>
 
-                {/* RTSP Source */}
+                {/* Display */}
+                <ItemDivider title={_("w_Display")} />
+                <ItemText
+                    title={_("w_CompanyName")}
+                    { ...Storage.vbind(this, "settingsVideo", "companyName") }
+                    icon={makeIcon(Icon, "access-point-network")}
+                    />
+                
+                {/* Video Source Selection */}
+                {
+                    this.state.FRSConnected ? (
+                        <ItemPicker
+                            title={_("m_VideoSourceSelection")}
+                            items={this.state.videoSources && this.state.videoSources.map(v => v.sourceId)}
+                            value={this.props.settingsVideo.videoSourceId}
+                            onValueChange={(value) => {
+                                let idx = this.state.videoSources.findIndex( (v) => v.sourceId === value );
+                                if (idx >= 0) {
+                                    let item = this.state.videoSources[idx];
+                                    Storage.update("settingsVideo", "videoSourceId", item.sourceId);
+                                    Storage.update("settingsVideo", "videoSourceUrl", item.url);
+                                }
+                            }}
+                            icon={makeIcon(Icon, "access-point-network")}
+                            />
+                    ) : (
+                        <ItemNavigate icon={makeIcon(Icon, "access-point-network")}
+                            title={_("m_VideoSourceSelection")}
+                            value={_("m_LoginFRSFailed")}
+                            showArrow={false}
+                        />
+                    )
+                }
+
+                {/* Video Source Url */}
+                {
+                    this.props.settingsVideo.videoSourceUrl &&
+                    <ItemNavigate icon={makeIcon(Icon, "access-point-network")}
+                        title={_("m_VideoSourceUrl")}
+                        value={this.props.settingsVideo.videoSourceUrl}
+                        showArrow={false}
+                    />
+                }
+
+                {/* Face Recognition Source */}
+                {
+                    this.state.FRSConnected && <ItemDivider title={_("m_FaceRecognitionSource")} />
+                }
+                {
+                    this.state.FRSConnected && this.state.videoSources && (
+                        this.state.videoSources.map( (source, index) => {
+                            let sourceId = source.sourceId;
+                            //let checked = sourceId === this.props.settingsVideo.videoSourceId;
+                            let checked = this.props.settingsVideo.faceRecognitionSource.findIndex((v) => v===sourceId) >= 0;
+                            return (
+                                <ListItem key={index}>
+                                    <CheckBox
+                                        checked={checked}
+                                        onPress={() => {
+                                            let source = this.props.settingsVideo.faceRecognitionSource;
+                                            if (checked) {
+                                                let idx = source.findIndex((v) => v === sourceId);
+                                                if (idx < 0) return;
+                                                source.splice(idx, 1);
+                                                Storage.update( "settingsVideo", "faceRecognitionSource", source);
+                                            } else {
+                                                let idx = source.findIndex((v) => v === sourceId);
+                                                if (idx >= 0) return;
+                                                Storage.update( "settingsVideo", "faceRecognitionSource", [...source, sourceId] );
+                                            }
+                                        }}
+                                        />
+                                    <Body>
+                                        <Text>{source.sourceId}</Text>
+                                    </Body>
+                                </ListItem>
+                            )
+                        })
+                    )
+                }
+
+                {/* RTSP Source
                 <ItemDivider title="RTSP Source" />
                 <ItemText
                     title="IP Address"
-                    { ...Storage.bind(this, "settingsVideo", "cameraIp") }
+                    { ...Storage.vbind(this, "settingsVideo", "cameraIp") }
                     icon={makeIcon(Icon, "access-point-network")}                                        
                     />
                 <ItemText
                     title="Port"
-                    { ...Storage.bind(this, "settingsVideo", "cameraPort") }
+                    { ...Storage.vbind(this, "settingsVideo", "cameraPort") }
                     icon={makeIcon(Icon, "folder-network")}                                        
                     />
                 <ItemText
                     title="Account"
-                    { ...Storage.bind(this, "settingsVideo", "cameraAccount") }
+                    { ...Storage.vbind(this, "settingsVideo", "cameraAccount") }
                     icon={makeIcon(Icon, "account")}                                        
                     />
                 <ItemText
                     title="Password"
-                    { ...Storage.bind(this, "settingsVideo", "cameraPassword") }
+                    { ...Storage.vbind(this, "settingsVideo", "cameraPassword") }
                     secureTextEntry={true}
                     icon={makeIcon(Icon, "onepassword")}                                        
                     />
                 <ItemText last
                     title="URI"
-                    { ...Storage.bind(this, "settingsVideo", "cameraUri") }
+                    { ...Storage.vbind(this, "settingsVideo", "cameraUri") }
                     icon={makeIcon(Icon, "comment-text-outline")}
-                    />
+                    /> */}
 
                 {/* Display */}
                 <ItemDivider title="Display" />
-                <ItemSwitch last
-                    title="Hide Stranger"
-                    { ...Storage.bind(this, "settingsVideo", "hideStranger") }
+                <ItemSwitch
+                    title={_("m_ShowStranger")}
+                    { ...Storage.vbind(this, "settingsVideo", "showStranger") }
                     icon={makeIcon(Icon, "toggle-switch")}
                     />
-                <ItemText
-                    title="Face Keeping Time (Seconds)"
-                    { ...Storage.bind(this, "settingsVideo", "faceKeepingTime", /^[0-9]+$/) }
+                <ItemText last
+                    title={_("m_MergeFaceDuration")}
+                    { ...Storage.vbind(this, "settingsVideo", "mergeFaceDuration", /^[0-9]+$/) }
                     icon={makeIcon(Icon, "timer")}
                     />
 
@@ -110,57 +230,6 @@ export class Video extends Component<Props, Partial<SettingsVideo>> {
                     colorTitle="Dark Blue"
                     icon={<Button style={{ backgroundColor: "#1D2073AA" }}><Icon style={styles.listitem_icon} active name="human-male" /></Button>}
                     />
-
-                {/* FRS Source */}
-                {/* <ItemDivider title="FRS Source" />
-                <ItemSwitch
-                    title="Enable"
-                    { ...Storage.bind(this, "settingsVideo", "fromFRS") }
-                    icon={<Button style={{ backgroundColor: "#BC913F" }}><Icon style={styles.listitem_icon} active name="toggle-switch" /></Button>}
-                    />
-                <ItemText
-                    title="Channel"
-                    { ...Storage.bind(this, "settingsVideo", "FRSCH", /^[0-9]+$/) }
-                    icon={<Button style={{ backgroundColor: "#BC913F" }}><IconOcticons style={[styles.listitem_icon, styles.listitem_icon_channel]} active name="device-camera-video" /></Button>}
-                    /> */}
-
-                {/* Camera Source */}
-                {/* <ItemDivider title="Camera Source" />
-                <ItemSwitch
-                    title="Enable"
-                    icon={<Button style={{ backgroundColor: "#BC913F" }}><Icon style={styles.listitem_icon} active name="toggle-switch" /></Button>}
-                    />
-                <ItemText
-                    title="IP Address"
-                    { ...Storage.bind(this, "settingsVideo", "cameraIp") }
-                    icon={<Button style={{ backgroundColor: "#BC913F" }}><IconOcticons style={[styles.listitem_icon, styles.listitem_icon_channel]} active name="device-camera-video" /></Button>}
-                    />
-                <ItemText
-                    title="Port"
-                    { ...Storage.bind(this, "settingsVideo", "cameraPort") }
-                    icon={<Button style={{ backgroundColor: "#BC913F" }}><IconOcticons style={[styles.listitem_icon, styles.listitem_icon_channel]} active name="device-camera-video" /></Button>}
-                    />
-                <ItemText
-                    title="Account"
-                    { ...Storage.bind(this, "settingsVideo", "cameraAccount") }
-                    icon={<Button style={{ backgroundColor: "#BC913F" }}><IconOcticons style={[styles.listitem_icon, styles.listitem_icon_channel]} active name="device-camera-video" /></Button>}
-                    />
-                <ItemText
-                    title="Password"
-                    { ...Storage.bind(this, "settingsVideo", "cameraPassword") }
-                    secureTextEntry={true}
-                    icon={<Button style={{ backgroundColor: "#BC913F" }}><IconOcticons style={[styles.listitem_icon, styles.listitem_icon_channel]} active name="device-camera-video" /></Button>}
-                    />
-                <ItemText
-                    title="ChannelID"
-                    { ...Storage.bind(this, "settingsVideo", "cameraChannelId") }
-                    icon={<Button style={{ backgroundColor: "#BC913F" }}><IconOcticons style={[styles.listitem_icon, styles.listitem_icon_channel]} active name="device-camera-video" /></Button>}
-                    />
-                <ItemText
-                    title="URI"
-                    { ...Storage.bind(this, "settingsVideo", "cameraUri") }
-                    icon={<Button style={{ backgroundColor: "#BC913F" }}><IconOcticons style={[styles.listitem_icon, styles.listitem_icon_channel]} active name="device-camera-video" /></Button>}
-                    /> */}
 
             </Container>
         );

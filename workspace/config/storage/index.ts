@@ -4,5 +4,6 @@ export * from './settings-dgs';
 export * from './settings-digital';
 export * from './settings-display';
 export * from './settings-frs';
+export * from './settings-language';
 export * from './settings-modes';
 export * from './settings-video';

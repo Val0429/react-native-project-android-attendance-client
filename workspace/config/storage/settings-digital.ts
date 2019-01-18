@@ -1,4 +1,5 @@
 export interface SettingsDigital {
+    companyName?: string;
     latitude?: string;
     longitude?: string;
 

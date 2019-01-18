@@ -33,6 +33,7 @@ export class Lang {
     private currentLang: BehaviorSubject<string> = new BehaviorSubject<string>(defaultLang);
     /// set current lang name
     setLang(name: string) {
+        if (!name) return;
         if (Object.keys(langMap).indexOf(name) >= 0) this.currentLang.next(name);
         else throw `Language <${name}> not exists.`;
     }

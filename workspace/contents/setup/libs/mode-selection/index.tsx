@@ -68,7 +68,9 @@ export class ModeSelection extends Component<Props, States> {
                     { tabs }
                 </Segment>
 
-                <Content>
+                <Content scrollEnabled
+                    onContentSizeChange={(value) => console.log('got!!!', value)}
+                    >
                     { this.state.modes === 0 && <Video /> }
                     { this.state.modes === 1 && <Digital /> }
                     {/* { this.state.modes === 2 && <Attendance /> } */}

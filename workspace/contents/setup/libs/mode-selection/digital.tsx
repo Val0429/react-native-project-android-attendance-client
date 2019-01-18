@@ -9,13 +9,22 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import IconOcticons from 'react-native-vector-icons/Octicons';
 import { ItemDivider, ItemSwitch, ItemText } from './../../../../../core/components/form';
 import { StorageInstance as Storage, SettingsDigital, makeIcon } from './../../../../config';
+import lang, { _ } from './../../../../../core/lang';
+import { ConnectObservables } from './../../../../../helpers/storage/connect';
 
 interface Props {
+    settingsDigital?: SettingsDigital;
 }
 
-type States = SettingsDigital;
+interface State {
 
-export class Digital extends Component<Props, States> {
+}
+
+@ConnectObservables({
+    settingsDigital: Storage.getObservable("settingsDigital"),
+    lang: lang.getLangObservable()
+})
+export class Digital extends Component<Props, State> {
     constructor(props) {
         super(props);
         this.state = {};
@@ -35,8 +44,16 @@ export class Digital extends Component<Props, States> {
     render() {
         return (
             <Container>
+                {/* General */}
+                <ItemDivider title={_("w_General")} />
+                <ItemText
+                    title={_("w_CompanyName")}
+                    { ...Storage.vbind(this, "settingsDigital", "companyName") }
+                    icon={makeIcon(Icon, "access-point")}
+                    />
+
                 {/* Location */}
-                <ItemDivider title="My Location" />
+                <ItemDivider title={_("w_MyLocation")} />
                 <ItemText
                     title="Latitude"
                     { ...Storage.bind(this, "settingsDigital", "latitude") }
@@ -49,19 +66,19 @@ export class Digital extends Component<Props, States> {
                     />
 
                 {/* Location */}
-                <ItemDivider title="Greeting Message" />
+                <ItemDivider title={_("w_GreetingMessage")} />
                 <ItemText
-                    title="Morning"
+                    title={_("w_Morning")}
                     { ...Storage.bind(this, "settingsDigital", "greetingMorning") }
                     icon={makeIcon(Icon, "message-text")}
                     />
                 <ItemText
-                    title="Afternoon"
+                    title={_("w_Afternoon")}
                     { ...Storage.bind(this, "settingsDigital", "greetingAfternoon") }
                     icon={makeIcon(Icon, "message-text")}
                     />
                 <ItemText
-                    title="Evening"
+                    title={_("w_Evening")}
                     { ...Storage.bind(this, "settingsDigital", "greetingEvening") }
                     icon={makeIcon(Icon, "message-text")}
                     />

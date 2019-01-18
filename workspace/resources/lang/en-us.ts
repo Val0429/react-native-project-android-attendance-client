@@ -12,6 +12,31 @@ export default class LangObject {
     m_LoginFRSFailed = "Login into FRS failed.";
     m_ModeVideo = "Video";
     m_ModeDigitalSignage = "Welcome Display";
+
+
+
+    w_CompanyName = "Company Name";
+    m_VideoSourceSelection = "Video Source Selection";
+    m_VideoSourceUrl = "Video Source Url";
+    m_FaceRecognitionSource = "Face Recognition Source";
+    m_RestartRequired = "Warning: restart required to make change to this page take effect.";
+    m_ShowStranger = "Show Stranger";
+    m_MergeFaceDuration = "Merge Face Duration";
+    w_Ip = "IP";
+    w_Account = "Account";
+    w_Password = "Password";
+    w_APIPort = "API Port";
+    w_SocketPort = "Socket Port";
+    w_Language = "Language";
+    w_Others = "Others";
+    w_About = "About";
+    w_MyLocation = "My Location";
+    w_Latitude = "Latitude";
+    w_Longitude = "Longitude";
+    w_GreetingMessage = "Greeting Message";
+    w_Morning = "Morning";
+    w_Afternoon = "Afternoon";
+    w_Evening = "Evening";
 }
 
 type ClassToInterface<T> = {

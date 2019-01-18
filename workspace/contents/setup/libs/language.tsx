@@ -7,37 +7,71 @@ import { Actions } from 'react-native-router-flux';
 import { rcImages } from './../../../resources/images';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import IconOcticons from 'react-native-vector-icons/Octicons';
-import { ItemDivider, ItemSwitch, ItemText } from './../../../../core/components/form';
-import { StorageInstance as Storage, SettingsFRS, makeIcon } from './../../../config';
+import { ItemDivider, ItemSwitch, ItemText, ItemPicker } from './../../../../core/components/form';
+import { StorageInstance as Storage, SettingsFRS, makeIcon, SettingsLanguage } from './../../../config';
 import { ConnectObservables } from './../../../../helpers/storage/connect';
 import lang, { _ } from './../../../../core/lang';
 
 interface Props {
     style?: ViewStyle;
+    settingsLanguage?: SettingsLanguage;
 }
 
-type States = SettingsFRS;
+interface State {
+
+}
 
 @ConnectObservables({
-    settingsFRS: Storage.getObservable("settingsFRS"),
+    settingsLanguage: Storage.getObservable("settingsLanguage"),
     lang: lang.getLangObservable()
 })
-export class FRS extends Component<Props, States> {
+export class Language extends Component<Props, State> {
     constructor(props) {
         super(props);
         this.state = {};
     }
 
+//     <Picker
+//     note
+//     mode="dropdown"
+//     style={{width: 200, height: 40, color: 'black'}}
+//     selectedValue={this.props.lang}
+//     onValueChange={(value) => lang.setLang(value)}
+//     >
+//     { 
+//         (() => {
+//             let list = lang.list();
+//             return Object.keys(list).map( (key) => {
+//                 return <Picker.Item key={key} label={list[key]} value={key} />
+//             })
+//         })()
+//     }
+// </Picker>
+
+
     render() {
         return (
             <Container style={this.props.style}>
                 <Header>
-                    <Body style={{alignItems: 'center'}}><Title>FRS</Title></Body>
+                    <Body style={{alignItems: 'center'}}><Title>{_("w_Language")}</Title></Body>
                 </Header>
 
                 {/* General */}
                 <ItemDivider title={_("w_General")} />
-                <ItemText
+
+                <ItemPicker
+                    title={_("w_Language")}
+                    value={this.props.settingsLanguage.lang}
+                    items={ Object.keys(lang.list()) }
+                    onValueChange={(value) => {
+                        Storage.update("settingsLanguage", "lang", value);
+                        lang.setLang(value);
+                    }}
+                    labelTransform={ (value) => lang.list()[value] }
+                    icon={makeIcon(Icon, "access-point-network")}
+                    />
+
+                {/* <ItemText
                     title={_("w_Ip")}
                     { ...Storage.vbind(this, "settingsFRS", "ip") }
                     icon={makeIcon(Icon, "access-point-network")}                    
@@ -46,7 +80,7 @@ export class FRS extends Component<Props, States> {
                 <ItemText
                     title={_("w_Account")}
                     { ...Storage.vbind(this, "settingsFRS", "account") }
-                    icon={makeIcon(Icon, "account")}                    
+                    icon={makeIcon(Icon, "account")}        
                     
                     />
 
@@ -68,7 +102,7 @@ export class FRS extends Component<Props, States> {
                     title={_("w_SocketPort")}
                     { ...Storage.vbind(this, "settingsFRS", "socketPort") }
                     icon={makeIcon(Icon, "folder-network")}                                        
-                    />
+                    /> */}
 
             </Container>
         );
