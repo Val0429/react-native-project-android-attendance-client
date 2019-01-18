@@ -15,7 +15,7 @@ import 'moment/min/locales';
 
 import { OutlineElement } from '../outline-element';
 import { Face } from '../face';
-import { StorageInstance as Storage, SettingsVideo, SettingsBasic } from './../../../../config';
+import { StorageInstance as Storage, SettingsVideo } from './../../../../config';
 import { Connect, ConnectObservables, ConnectIsEmpty } from './../../../../../helpers/storage/connect';
 import lang, { _ } from './../../../../../core/lang';
 
@@ -23,7 +23,6 @@ import Shimmer from 'react-native-shimmer';
 
 
 interface Props {
-    settingsBasic: SettingsBasic;
     lang: string;
 }
 interface States {
@@ -32,7 +31,6 @@ interface States {
 }
 
 @ConnectObservables({
-    settingsBasic: Storage.getSubject("settingsBasic"),
     lang: lang.getLangObservable()
 })
 export class VideoPage extends Component<Props, States> {
@@ -42,18 +40,18 @@ export class VideoPage extends Component<Props, States> {
         super(props);
         
         this.config = Storage.get("settingsVideo");
-        if (this.config.cameraIp && this.config.cameraPort && this.config.cameraUri) {
+        if (this.config.videoSourceIp && this.config.videoSourcePort && this.config.videoSourceUri) {
             this.camset = {
                 name: 'TEST-CAM',
-                ip: this.config.cameraIp,
-                port: +this.config.cameraPort,
-                account: this.config.cameraAccount,
-                password: this.config.cameraPassword,
+                ip: this.config.videoSourceIp,
+                port: +this.config.videoSourcePort,
+                account: this.config.videoSourceAccount,
+                password: this.config.videoSourcePassword,
                 model: 'TEST-CAM',
                 mac: '',
                 channelid: 0,
                 firmware: '',
-                uri: this.config.cameraUri
+                uri: this.config.videoSourceUri
             }
         }
 
@@ -123,6 +121,13 @@ export class VideoPage extends Component<Props, States> {
     private handleFace(face: RecognizedUser | UnRecognizedUser) {
         if (this.config.hideStranger && face.type === UserType.UnRecognized) return;
 
+        /// filter Face Recognition Source
+        let frSource = this.config.faceRecognitionSource;
+        console.log('face channel', face.channel, frSource)
+        if (frSource && frSource.length > 0) {
+            if (frSource.indexOf(face.channel) < 0) return;
+        }
+
         this.setState( (prevState) => {
             let idx = -1;
             for (let i=0; i<prevState.faces.length; ++i) {
@@ -163,7 +168,7 @@ export class VideoPage extends Component<Props, States> {
 
                     {/* company name */}
                     <Shimmer style={styles.company_title_position} duration={2600}>
-                        <H1 style={styles.company_title}>{this.props.settingsBasic.companyName || "旭人科技股份有限公司"}</H1>
+                        <H1 style={styles.company_title}>{this.config.companyName || "旭人科技股份有限公司"}</H1>
                     </Shimmer>
 
                     {/* time */}
@@ -195,8 +200,6 @@ export class VideoPage extends Component<Props, States> {
         );
     }
 }
-// const VideoPage = Connect(Storage, "settingsBasic")(CVideoPage);
-// export { VideoPage }
 
 const styles = EStyleSheet.create({
     content: {

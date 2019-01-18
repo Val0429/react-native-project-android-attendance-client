@@ -11,7 +11,7 @@ import { OutlineElement } from '../outline-element';
 import { Face } from '../face';
 import { Observable, Subject } from 'rxjs';
 import frs, { UserType } from './../../../../services/frs-service';
-import { StorageInstance as Storage, SettingsDigital, SettingsBasic } from './../../../../config';
+import { StorageInstance as Storage, SettingsDigital } from './../../../../config';
 import { Connect, ConnectObservables, ConnectIsEmpty } from './../../../../../helpers/storage/connect';
 import lang, { defaultLang, _ } from './../../../../../core/lang';
 
@@ -32,7 +32,6 @@ const weatherMapping = {
 
 type Props = {
     settingsDigital: SettingsDigital;
-    settingsBasic: SettingsBasic;
     now: { value: Date };
     lang: string;
 }
@@ -49,10 +48,8 @@ interface States {
     showGreeting: boolean;
 }
 
-//@Connect(Storage, "settingsDigital")
 @ConnectObservables({
     "settingsDigital": Storage.getObservable("settingsDigital"),
-    "settingsBasic": Storage.getObservable("settingsBasic"),
     "now": Observable.timer(0, 1000).map( () => ({value: new Date()}) ),
     "lang": lang.getLangObservable()
 })
@@ -156,7 +153,7 @@ export class DigitalPage extends Component<Props, States> {
         return (
             <>
                 <View style={styles.default_title}>
-                    <Text style={styles.default_title_text}>{this.props.settingsBasic.companyName}</Text>
+                    <Text style={styles.default_title_text}>{this.props.settingsDigital.companyName}</Text>
                 </View>
                 <View style={styles.default_box}>
                     {

@@ -13,6 +13,8 @@ import { Setup } from './contents/setup';
 import { WorkflowPage } from './contents/main-page/libs/pages/attendance-taking-page/workflow-page';
 import { Workflow1Page } from './contents/main-page/libs/pages/attendance-taking-page/workflow-1-page';
 
+import lang, { _ } from './../core/lang';
+
 class App extends Component<any, any> {
     constructor(props) {
         super(props);
