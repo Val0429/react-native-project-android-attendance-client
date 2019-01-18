@@ -43,7 +43,7 @@ export class Digital extends Component<Props, State> {
 
     render() {
         return (
-            <Container>
+            <View>
                 {/* General */}
                 <ItemDivider title={_("w_General")} />
                 <ItemText
@@ -83,7 +83,7 @@ export class Digital extends Component<Props, State> {
                     icon={makeIcon(Icon, "message-text")}
                     />
 
-            </Container>
+            </View>
         );
     }
 }  

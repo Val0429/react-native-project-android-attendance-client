@@ -91,7 +91,7 @@ export class Video extends Component<Props, State> {
 
     render() {
         return (
-            <Container>
+            <View>
                 <Button warning full><Text uppercase={false}>{_("m_RestartRequired")}</Text></Button>
 
                 {/* Display */}
@@ -249,7 +249,7 @@ export class Video extends Component<Props, State> {
                     icon={<Button style={{ backgroundColor: "#1D2073AA" }}><Icon style={styles.listitem_icon} active name="human-male" /></Button>}
                     />
 
-            </Container>
+            </View>
         );
     }
 }  

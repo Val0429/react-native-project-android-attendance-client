@@ -123,7 +123,6 @@ export class VideoPage extends Component<Props, States> {
 
         /// filter Face Recognition Source
         let frSource = this.config.faceRecognitionSource;
-        console.log('face channel', face.channel, frSource)
         if (frSource && frSource.length > 0) {
             if (frSource.indexOf(face.channel) < 0) return;
         }

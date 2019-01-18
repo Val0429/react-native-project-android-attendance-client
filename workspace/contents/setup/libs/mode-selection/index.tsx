@@ -24,7 +24,8 @@ type States = SettingsModes;
 export class ModeSelection extends Component<Props, States> {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+        };
     }
 
     private subject = Storage.getSubject("modes");
@@ -69,7 +70,6 @@ export class ModeSelection extends Component<Props, States> {
                 </Segment>
 
                 <Content scrollEnabled
-                    onContentSizeChange={(value) => console.log('got!!!', value)}
                     >
                     { this.state.modes === 0 && <Video /> }
                     { this.state.modes === 1 && <Digital /> }
