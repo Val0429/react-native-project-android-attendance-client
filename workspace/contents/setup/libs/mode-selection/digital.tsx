@@ -6,7 +6,7 @@ import { Col, Row, Grid } from 'react-native-easy-grid';
 import { Actions } from 'react-native-router-flux';
 import { rcImages } from './../../../../resources/images';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import IconOcticons from 'react-native-vector-icons/Octicons';
+import IconMaterial from 'react-native-vector-icons/MaterialIcons';
 import { ItemDivider, ItemSwitch, ItemText } from './../../../../../core/components/form';
 import { StorageInstance as Storage, SettingsDigital, makeIcon } from './../../../../config';
 import lang, { _ } from './../../../../../core/lang';
@@ -49,7 +49,7 @@ export class Digital extends Component<Props, State> {
                 <ItemText
                     title={_("w_CompanyName")}
                     { ...Storage.vbind(this, "settingsDigital", "companyName") }
-                    icon={makeIcon(Icon, "access-point")}
+                    icon={makeIcon(IconMaterial, "people")}
                     />
 
                 {/* Location */}
@@ -57,12 +57,12 @@ export class Digital extends Component<Props, State> {
                 <ItemText
                     title={_("w_Latitude")}
                     { ...Storage.bind(this, "settingsDigital", "latitude") }
-                    icon={makeIcon(Icon, "access-point")}
+                    icon={makeIcon(Icon, "earth")}
                     />
                 <ItemText
                     title={_("w_Longitude")}
                     { ...Storage.bind(this, "settingsDigital", "longitude") }
-                    icon={makeIcon(Icon, "access-point")}
+                    icon={makeIcon(Icon, "earth")}
                     />
 
                 {/* Location */}

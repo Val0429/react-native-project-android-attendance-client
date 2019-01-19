@@ -6,6 +6,7 @@ import { Col, Row, Grid } from 'react-native-easy-grid';
 import { Actions } from 'react-native-router-flux';
 import { rcImages } from './../../../../resources/images';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import IconMaterial from 'react-native-vector-icons/MaterialIcons'
 import IconOcticons from 'react-native-vector-icons/Octicons';
 import { StorageInstance as Storage, SettingsVideo, makeIcon } from './../../../../config';
 import { ItemDivider, ItemSwitch, ItemText, ItemColor, ItemPicker, ItemNavigate } from './../../../../../core/components/form';
@@ -99,7 +100,7 @@ export class Video extends Component<Props, State> {
                 <ItemText
                     title={_("w_CompanyName")}
                     { ...Storage.vbind(this, "settingsVideo", "companyName") }
-                    icon={makeIcon(Icon, "access-point-network")}
+                    icon={makeIcon(IconMaterial, "people")}
                     />
                 
                 {/* Video Source Selection */}
@@ -116,10 +117,10 @@ export class Video extends Component<Props, State> {
                                     this.saveRTSPSource(item);
                                 }
                             }}
-                            icon={makeIcon(Icon, "access-point-network")}
+                            icon={makeIcon(Icon, "video-input-antenna")}
                             />
                     ) : (
-                        <ItemNavigate icon={makeIcon(Icon, "access-point-network")}
+                        <ItemNavigate icon={makeIcon(Icon, "video-input-antenna")}
                             title={_("m_VideoSourceSelection")}
                             value={_("m_LoginFRSFailed")}
                             showArrow={false}
@@ -130,7 +131,7 @@ export class Video extends Component<Props, State> {
                 {/* Video Source Url */}
                 {
                     this.props.settingsVideo.videoSourceUrl &&
-                    <ItemNavigate icon={makeIcon(Icon, "access-point-network")}
+                    <ItemNavigate icon={makeIcon(Icon, "comment-text-outline")}
                         title={_("m_VideoSourceUrl")}
                         value={this.props.settingsVideo.videoSourceUrl}
                         showArrow={false}

@@ -6,7 +6,7 @@ import { Col, Row, Grid } from 'react-native-easy-grid';
 import { Actions } from 'react-native-router-flux';
 import { rcImages } from './../../../resources/images';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import IconOcticons from 'react-native-vector-icons/Octicons';
+import IconEntypo from 'react-native-vector-icons/Entypo';
 import { ItemDivider, ItemSwitch, ItemText, ItemPicker } from './../../../../core/components/form';
 import { StorageInstance as Storage, SettingsFRS, makeIcon, SettingsLanguage } from './../../../config';
 import { ConnectObservables } from './../../../../helpers/storage/connect';
@@ -68,7 +68,7 @@ export class Language extends Component<Props, State> {
                         lang.setLang(value);
                     }}
                     labelTransform={ (value) => lang.list()[value] }
-                    icon={makeIcon(Icon, "access-point-network")}
+                    icon={makeIcon(IconEntypo, "language")}
                     />
 
                 {/* <ItemText
