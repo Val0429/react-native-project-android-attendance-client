@@ -5,7 +5,7 @@ import { ILang } from './en-us';
 export default class LangObject implements ILang {
     w_Display = "แสดง";
     w_General = "ทั่วไป";
-    w_ModeSelection = "การเลือกโหมด";
+    w_ModeSelection = "โหมด";
     w_Server = "เซิร์ฟเวอร์";
     w_Settings = "การตั้งค่า";
     w_Start = "เริ่มต้น";
@@ -20,7 +20,7 @@ export default class LangObject implements ILang {
     m_FaceRecognitionSource = "แหล่งการจดจำใบหน้า";
     m_RestartRequired = "คำเตือน: จำเป็นต้องรีสตาร์ทเพื่อให้การเปลี่ยนแปลงหน้านี้มีผล";
     m_ShowStranger = "แสดงคนแปลกหน้า";
-    m_MergeFaceDuration = "รวมระยะเวลาของใบหน้า";
+    m_MergeFaceDuration = "รวมระยะเวลาของใบหน้า (วินาที)";
     w_Ip = "IP";
     w_Account = "บัญชี";
     w_Password = "รหัสผ่าน";

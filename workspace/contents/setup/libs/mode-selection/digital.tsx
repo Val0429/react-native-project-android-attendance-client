@@ -68,17 +68,17 @@ export class Digital extends Component<Props, State> {
                 {/* Location */}
                 <ItemDivider title={_("w_GreetingMessage")} />
                 <ItemText
-                    title={_("w_Morning")}
+                    title={_("w_Morning")+" (5:00-11:00)"}
                     { ...Storage.bind(this, "settingsDigital", "greetingMorning") }
                     icon={makeIcon(Icon, "message-text")}
                     />
                 <ItemText
-                    title={_("w_Afternoon")}
+                    title={_("w_Afternoon")+" (11:00-18:00)"}
                     { ...Storage.bind(this, "settingsDigital", "greetingAfternoon") }
                     icon={makeIcon(Icon, "message-text")}
                     />
                 <ItemText
-                    title={_("w_Evening")}
+                    title={_("w_Evening")+" (18:00~)"}
                     { ...Storage.bind(this, "settingsDigital", "greetingEvening") }
                     icon={makeIcon(Icon, "message-text")}
                     />

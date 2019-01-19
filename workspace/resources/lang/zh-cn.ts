@@ -5,7 +5,7 @@ import { ILang } from './en-us';
 export default class LangObject implements ILang {
     w_Display = "显示";
     w_General = "一般";
-    w_ModeSelection = "模式选择";
+    w_ModeSelection = "模式";
     w_Server = "服务器";
     w_Settings = "设置";
     w_Start = "开始";
@@ -20,7 +20,7 @@ export default class LangObject implements ILang {
     m_FaceRecognitionSource = "人脸辨识来源";
     m_RestartRequired = "警示: 修改本页需要重启App才能产生效果。";
     m_ShowStranger = "显示陌生人";
-    m_MergeFaceDuration = "合并人脸持续时间";
+    m_MergeFaceDuration = "合并人脸持续时间 (秒)";
     w_Ip = "IP";
     w_Account = "帐号";
     w_Password = "密码";

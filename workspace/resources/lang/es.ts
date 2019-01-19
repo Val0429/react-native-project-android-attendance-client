@@ -5,7 +5,7 @@ import { ILang } from './en-us';
 export default class LangObject implements ILang {
     w_Display = "Visualización";
     w_General = "General";
-    w_ModeSelection = "Selección de modo";
+    w_ModeSelection = "Modo";
     w_Server = "Servidor";
     w_Settings = "Ajustes";
     w_Start = "Comienzo";
@@ -20,7 +20,7 @@ export default class LangObject implements ILang {
     m_FaceRecognitionSource = "Fuente de reconocimiento facial";
     m_RestartRequired = "Advertencia: reinicio requerido para que los cambios en esta página surtan efecto.";
     m_ShowStranger = "Mostrar Extraño";
-    m_MergeFaceDuration = "Combinar la duración de la cara";
+    m_MergeFaceDuration = "Combinar la duración de la cara (segundos)";
     w_Ip = "IP";
     w_Account = "Cuenta";
     w_Password = "Contraseña";

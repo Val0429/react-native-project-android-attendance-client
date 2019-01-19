@@ -4,7 +4,7 @@ import { RegisterLang } from './../../../core/lang';
 export default class LangObject {
     w_Display = "Display";
     w_General = "General";
-    w_ModeSelection = "Mode Selection";
+    w_ModeSelection = "Mode";
     w_Server = "Server";
     w_Settings = "Settings";
     w_Start = "Start";
@@ -19,7 +19,7 @@ export default class LangObject {
     m_FaceRecognitionSource = "Face Recognition Source";
     m_RestartRequired = "Warning: restart required to make change to this page take effect.";
     m_ShowStranger = "Show Stranger";
-    m_MergeFaceDuration = "Merge Face Duration";
+    m_MergeFaceDuration = "Merge Face Duration (seconds)";
     w_Ip = "IP";
     w_Account = "Account";
     w_Password = "Password";

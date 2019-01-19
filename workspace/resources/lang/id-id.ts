@@ -5,7 +5,7 @@ import { ILang } from './en-us';
 export default class LangObject implements ILang {
     w_Display = "Tampilan";
     w_General = "Umum";
-    w_ModeSelection = "Mode pilihan";
+    w_ModeSelection = "Mode";
     w_Server = "Server";
     w_Settings = "Pengaturan";
     w_Start = "Mulai";
@@ -20,7 +20,7 @@ export default class LangObject implements ILang {
     m_FaceRecognitionSource = "Sumber Pengenalan Wajah";
     m_RestartRequired = "Peringatan: mulai ulang diperlukan untuk membuat perubahan pada halaman ini berlaku.";
     m_ShowStranger = "Tampilkan Orang Asing";
-    m_MergeFaceDuration = "Gabungkan Durasi Wajah";
+    m_MergeFaceDuration = "Gabungkan Durasi Wajah (detik)";
     w_Ip = "AKU P";
     w_Account = "Rekening";
     w_Password = "Kata sandi";

@@ -5,7 +5,7 @@ import { ILang } from './en-us';
 export default class LangObject implements ILang {
     w_Display = "ディスプレイ";
     w_General = "一般";
-    w_ModeSelection = "モード選択";
+    w_ModeSelection = "モード";
     w_Server = "サーバー";
     w_Settings = "設定";
     w_Start = "スタート";
@@ -20,7 +20,7 @@ export default class LangObject implements ILang {
     m_FaceRecognitionSource = "顔認識ソース";
     m_RestartRequired = "警告：このページへの変更を有効にするには再起動が必要です。";
     m_ShowStranger = "見知らぬ人を表示";
-    m_MergeFaceDuration = "フェイスデュレーションのマージ";
+    m_MergeFaceDuration = "フェイスデュレーションのマージ (秒)";
     w_Ip = "IP";
     w_Account = "アカウント";
     w_Password = "パスワード";

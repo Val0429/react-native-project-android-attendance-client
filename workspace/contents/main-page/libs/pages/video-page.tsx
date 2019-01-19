@@ -119,7 +119,7 @@ export class VideoPage extends Component<Props, States> {
         return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
     }
     private handleFace(face: RecognizedUser | UnRecognizedUser) {
-        if (this.config.hideStranger && face.type === UserType.UnRecognized) return;
+        if (!this.config.showStranger && face.type === UserType.UnRecognized) return;
 
         /// filter Face Recognition Source
         let frSource = this.config.faceRecognitionSource;
