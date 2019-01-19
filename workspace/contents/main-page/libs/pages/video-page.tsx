@@ -75,7 +75,7 @@ export class VideoPage extends Component<Props, States> {
                 let changed = false;
                 let now = new Date();
                 var faces = prevState.faces.map( (face) => {
-                    if (now.valueOf() - face.touchtime > 1000*(+this.config.faceKeepingTime)) {
+                    if (now.valueOf() - face.touchtime > 1000*(+this.config.mergeFaceDuration)) {
                         changed = true;
                         return;
                     }
