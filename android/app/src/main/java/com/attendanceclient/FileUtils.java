@@ -1,10 +1,13 @@
 package com.attendanceclient;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;  
-import java.io.IOException;  
-import java.io.InputStream;  
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 
 import android.content.Context;
@@ -118,5 +121,50 @@ public class FileUtils {
             cachePath = context.getCacheDir().getPath();
         }
         return cachePath;
+    }
+
+    // get LogCat file (only E, W, and I)
+    public static File getLogCat(Context context) {
+        // set a file
+        String fullName = getDiskCacheDir(context) + "-logcat.txt";
+        File file = new File(fullName);
+
+        if (!file.exists()) {
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+
+        // get logcat to file
+        int pid = android.os.Process.myPid();
+        try {
+            String command = String.format("logcat -d -v threadtime *:*");
+            Process process = Runtime.getRuntime().exec(command);
+
+            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            StringBuilder result = new StringBuilder();
+            String currentLine = null;
+
+            while ((currentLine = reader.readLine()) != null) {
+                if (currentLine != null && currentLine.contains(String.valueOf(pid))) {
+                    if (currentLine.contains("W ") || currentLine.contains("E ") || currentLine.contains("I ")) {
+                        result.append(currentLine);
+                        result.append("\n");
+                    }
+                }
+            }
+
+            FileWriter out = new FileWriter(file);
+            out.write(result.toString());
+            out.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return file;
     }
 }   
