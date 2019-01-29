@@ -1,6 +1,7 @@
 package com.attendanceclient;
 
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -16,6 +17,8 @@ import java.lang.Thread.UncaughtExceptionHandler;
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
+
+import static android.content.Context.ACTIVITY_SERVICE;
 
 /**
  * Created by Neo on 2017/11/13.
@@ -83,6 +86,7 @@ public class CrashHandler implements UncaughtExceptionHandler {
 //        }
 
 
+        collectDeviceInfo(mContext);
         saveCrashInfo2File(ex);
 
         Intent intent = new Intent(mActivity, MainActivity.class);
@@ -151,6 +155,13 @@ public class CrashHandler implements UncaughtExceptionHandler {
      */
     private String saveCrashInfo2File(Throwable ex) {
 
+        // get memory info
+        ActivityManager.MemoryInfo mi = getAvailableMemory();
+        infos.put("availMem", ""+mi.availMem);
+        infos.put("lowMemory", mi.lowMemory?"YES":"NO");
+        infos.put("threshold", ""+mi.threshold);
+        infos.put("totalMem", ""+mi.totalMem);
+
         StringBuffer sb = new StringBuffer();
         sb.append("\n---------------------crash start------------------------\n");
         for (Map.Entry<String, String> entry : infos.entrySet()) {
@@ -173,5 +184,12 @@ public class CrashHandler implements UncaughtExceptionHandler {
         sb.append("\n--------------------crash end---------------------------\n");
         LogUtils.e(sb.toString());
         return null;
+    }
+
+    private ActivityManager.MemoryInfo getAvailableMemory() {
+        ActivityManager activityManager = (ActivityManager) mActivity.getSystemService(ACTIVITY_SERVICE);
+        ActivityManager.MemoryInfo memoryInfo = new ActivityManager.MemoryInfo();
+        activityManager.getMemoryInfo(memoryInfo);
+        return memoryInfo;
     }
 }
