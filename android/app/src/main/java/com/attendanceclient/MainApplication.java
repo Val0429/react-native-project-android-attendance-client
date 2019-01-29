@@ -5,6 +5,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.facebook.react.ReactApplication;
+import com.isap.RNStreamRtspPackage;
 import com.rnfs.RNFSPackage;
 import com.github.anrwatchdog.ANRError;
 import com.github.anrwatchdog.ANRWatchDog;
@@ -40,6 +41,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNStreamRtspPackage(),
             new RNFSPackage(),
             new RNFeatureComparePackage(),
             new RNFaceDetectionPackage(MainActivity.mActivity),
@@ -47,8 +49,7 @@ public class MainApplication extends Application implements ReactApplication {
             new RNFetchBlobPackage(),
             new RNShimmerPackage(),
             new VectorIconsPackage(),
-            new CustomToastPackage(),
-              new RNStreamRtspPackage()
+            new CustomToastPackage()
       );
     }
 
