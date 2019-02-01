@@ -1,9 +1,10 @@
 import React, {Component, ReactElement} from 'react';
-import {Platform, Image, StyleProp, ViewStyle} from 'react-native';
+import {Platform, StyleProp, ViewStyle} from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import { View, Container, Thumbnail, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Text, Item, Input, H1 } from 'native-base';
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import frs, {RecognizedUser, UnRecognizedUser, UserType, Gender} from './../../../services/frs-service';
+import Image from 'react-native-fast-image';
 
 import { rcImages } from './../../../resources/images';
 

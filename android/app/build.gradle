@@ -161,6 +161,15 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-video')
+    compile project(':react-native-vector-icons')
+    compile project(':react-native-stream-rtsp')
+    compile project(':react-native-shimmer')
+    compile project(':react-native-fs')
+    compile project(':react-native-fetch-blob')
+    compile project(':react-native-feature-compare')
+    compile project(':react-native-fast-image')
+    compile project(':react-native-face-detection')
     implementation project(':react-native-fs')
     implementation project(':react-native-stream-rtsp')
     implementation project(':react-native-feature-compare')

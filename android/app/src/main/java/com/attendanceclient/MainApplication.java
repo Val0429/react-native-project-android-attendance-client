@@ -5,6 +5,15 @@ import android.content.Context;
 import android.util.Log;
 
 import com.facebook.react.ReactApplication;
+import com.brentvatne.react.ReactVideoPackage;
+import com.oblador.vectoricons.VectorIconsPackage;
+import com.isap.RNStreamRtspPackage;
+import com.oblador.shimmer.RNShimmerPackage;
+import com.rnfs.RNFSPackage;
+import com.RNFetchBlob.RNFetchBlobPackage;
+import com.isap.featurecompare.RNFeatureComparePackage;
+import com.dylanvann.fastimage.FastImageViewPackage;
+import com.facedetection.RNFaceDetectionPackage;
 import com.isap.RNStreamRtspPackage;
 import com.rnfs.RNFSPackage;
 import com.github.anrwatchdog.ANRError;
@@ -41,14 +50,15 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-            new RNStreamRtspPackage(),
-            new RNFSPackage(),
-            new RNFeatureComparePackage(),
-            new RNFaceDetectionPackage(MainActivity.mActivity),
             new ReactVideoPackage(),
-            new RNFetchBlobPackage(),
-            new RNShimmerPackage(),
             new VectorIconsPackage(),
+            new RNStreamRtspPackage(),
+            new RNShimmerPackage(),
+            new RNFSPackage(),
+            new RNFetchBlobPackage(),
+            new RNFeatureComparePackage(),
+            new FastImageViewPackage(),
+            new RNFaceDetectionPackage(MainActivity.mActivity),
             new CustomToastPackage()
       );
     }
