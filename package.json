@@ -13,6 +13,7 @@
     "react-native": "0.57.4",
     "react-native-easy-grid": "0.2.0",
     "react-native-extended-stylesheet": "0.10.0",
+    "react-native-fabric": "^0.5.2",
     "react-native-face-detection": "https://github.com/Val0429/react-native-face-detection.git#b6144fddfadbd5933cc2cdbb0a1c313bf3b2071c",
     "react-native-fast-image": "^5.1.2",
     "react-native-feature-compare": "https://github.com/Val0429/react-native-feature-compare.git#4ca5d8f6a2c0d2ac1996850f1227239f6006ef0c",

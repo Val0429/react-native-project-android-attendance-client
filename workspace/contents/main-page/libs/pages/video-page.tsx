@@ -64,6 +64,7 @@ export class VideoPage extends Component<Props, States> {
     private subscription: Subscription;
     private subscription2: Subscription;
     private timer;
+    private cachedFaces = [];
     componentDidMount() {
         this.subscription = frs.sjLiveFace.subscribe( (data) => {
             this.handleFace(data);
@@ -72,16 +73,53 @@ export class VideoPage extends Component<Props, States> {
         this.timer = setInterval( () => {
             /// remove outdate faces
             this.setState( (prevState) => {
+                let faces = prevState.faces;
+
+                for (let face of this.cachedFaces) {
+                    let idx = -1;
+                    for (let i=0; i<faces.length; ++i) {
+                        let thisface = faces[i];
+                        if (face.valFaceId === thisface.valFaceId) {
+                            idx = i;
+                            break;
+                        }
+                    }
+                    faces = [
+                        ...(idx > 0  ? faces.slice(0, idx) : []),
+                        { ...face, face_feature: undefined, touchtime: new Date().valueOf() },
+                        ...faces.slice(idx+1, faces.length)
+                    ];
+                }
+                this.cachedFaces.length = 0;
+                // this.setState( (prevState) => {
+                //     let idx = -1;
+                //     for (let i=0; i<prevState.faces.length; ++i) {
+                //         let thisface = prevState.faces[i];
+                //         if (face.valFaceId === thisface.valFaceId) {
+                //             idx = i;
+                //             break;
+                //         }
+                //     }
+                //     return {
+                //         faces: [
+                //             ...(idx > 0  ? prevState.faces.slice(0, idx) : []),
+                //             { ...face, face_feature: undefined, touchtime: new Date().valueOf() },
+                //             ...prevState.faces.slice(idx+1, prevState.faces.length)
+                //         ]
+                //     }
+                // });
+        
+
                 let changed = false;
                 let now = new Date();
-                var faces = prevState.faces.map( (face) => {
+                faces = faces.map( (face) => {
                     if (now.valueOf() - face.touchtime > 1000*(+this.config.mergeFaceDuration)) {
                         changed = true;
                         return;
                     }
                     return face;
                 } );
-                if (!changed) return {now};
+                // if (!changed) return {now};
                 faces = faces.filter( (v) => v !== undefined );
                 return { faces, now };
             });
@@ -121,29 +159,33 @@ export class VideoPage extends Component<Props, States> {
     private handleFace(face: RecognizedUser | UnRecognizedUser) {
         if (!this.config.showStranger && face.type === UserType.UnRecognized) return;
 
+        //console.log('handle face', `channel: ${face.channel}, person: ${face.person_info.fullname}, date: ${new Date(face.timestamp)}, group: ${JSON.stringify(face.groups)}`);
+
         /// filter Face Recognition Source
         let frSource = this.config.faceRecognitionSource;
         if (frSource && frSource.length > 0) {
             if (frSource.indexOf(face.channel) < 0) return;
-        }
+        } else return;
 
-        this.setState( (prevState) => {
-            let idx = -1;
-            for (let i=0; i<prevState.faces.length; ++i) {
-                let thisface = prevState.faces[i];
-                if (face.valFaceId === thisface.valFaceId) {
-                    idx = i;
-                    break;
-                }
-            }
-            return {
-                faces: [
-                    ...(idx > 0  ? prevState.faces.slice(0, idx) : []),
-                    { ...face, face_feature: undefined, touchtime: new Date().valueOf() },
-                    ...prevState.faces.slice(idx+1, prevState.faces.length)
-                ]
-            }
-        });
+        this.cachedFaces.push(face);
+
+        // this.setState( (prevState) => {
+        //     let idx = -1;
+        //     for (let i=0; i<prevState.faces.length; ++i) {
+        //         let thisface = prevState.faces[i];
+        //         if (face.valFaceId === thisface.valFaceId) {
+        //             idx = i;
+        //             break;
+        //         }
+        //     }
+        //     return {
+        //         faces: [
+        //             ...(idx > 0  ? prevState.faces.slice(0, idx) : []),
+        //             { ...face, face_feature: undefined, touchtime: new Date().valueOf() },
+        //             ...prevState.faces.slice(idx+1, prevState.faces.length)
+        //         ]
+        //     }
+        // });
     }
 
     private first: boolean = true;

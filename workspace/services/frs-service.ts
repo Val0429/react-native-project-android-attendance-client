@@ -221,79 +221,124 @@ export class FRSService {
     /// private functions ///////////////////
     private loggingIn: boolean = false;
     private maintainTimer: number = null;
-    private login() {
-        let tryLogin = async () => {
-            if (this.loggingIn === true) return;
-            const url = this.makeUrl("login");
-            this.loggingIn = true;
-            try {
-                let buffer = await Promise.race([ fetch(url, {
-                        method: 'POST',
-                        headers: {
-                            Accept: "application/json",
-                            "Content-Type": 'application/json',
-                            Connection: "close",
-                        },
-                        body: JSON.stringify({ username: Config.frs.account, password: Config.frs.password })
-                    }),
-                    Observable.of(true).delay(3000).toPromise()
-                ]);
-                if (typeof buffer === "boolean") throw "Login failed";
-                let body = await buffer.json();
-                this.loggingIn = false;
-                this.sjLogined.next(true);
-                console.log(`Login into FRS Server@${Config.frs.ip}:${Config.frs.apiPort}.`);
-                this.sjFRSLoginResult.next(true);
-
-                this.sessionId = body.session_id;
-                /// After login and got session_id, maintain session every 1 minute.
-                if (this.maintainTimer !== null) clearInterval(this.maintainTimer);
-                this.maintainTimer = setInterval( async () => {
-                    var result = await this.maintainSession();
-                    if (!result) clearInterval(this.maintainTimer);
-                }, 60000);
-                this.doWebsocketListen();
-                
-            } catch(e) {
-                this.loggingIn = false;
-                console.log(`Login FRS Server failed@${Config.frs.ip}:${Config.frs.apiPort}. Retry in 1 second.`);
-                this.sjFRSLoginResult.next(false);
-                setTimeout(() => { tryLogin(); }, 1000);
-                return;
-            }
-
-
-            // request({
-            //     url, method: 'POST', json: true,
-            //     body: { username: Config.frs.account, password: Config.frs.password }
-            // }, (err, res, body) => {
-            //     this.loggingIn = false;
-            //     if (err || !body) {
-            //         console.log(`Login FRS Server failed@${Config.frs.ip}:${Config.frs.apiPort}. Retry in 1 second.`);
-            //         setTimeout(() => { tryLogin() }, 1000);
-            //         return;
-            //     }
-
-            //     this.sjLogined.next(true);
-            //     console.log(`Login into FRS Server@${Config.frs.ip}:${Config.frs.apiPort}.`);
-
-            //     this.sessionId = body.session_id;
-            //     /// After login and got session_id, maintain session every 1 minute.
-            //     if (this.maintainTimer !== null) clearInterval(this.maintainTimer);
-            //     this.maintainTimer = setInterval( async () => {
-            //         var result = await this.maintainSession();
-            //         if (!result) clearInterval(this.maintainTimer);
-            //     }, 60000);
-            //     this.doWebsocketListen();
-            // });
+    private async tryLogin() {
+        if (this.loggingIn === true) return;
+        const url = this.makeUrl("login");
+        this.loggingIn = true;
+        try {
+            let buffer = await Promise.race([ fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        Accept: "application/json",
+                        "Content-Type": 'application/json',
+                        Connection: "close",
+                    },
+                    body: JSON.stringify({ username: Config.frs.account, password: Config.frs.password })
+                }),
+                Observable.of(true).delay(3000).toPromise()
+            ]);
+            if (typeof buffer === "boolean") throw "Login failed";
+            let body = await buffer.json();
+            let sessionId = body.session_id;
+            if (!sessionId) throw "Login failed";
             
+            this.loggingIn = false;
+            this.sjLogined.next(true);
+            console.log(`Login into FRS Server@${Config.frs.ip}:${Config.frs.apiPort}.`);
+            this.sjFRSLoginResult.next(true);
+
+            this.sessionId = sessionId;
+            /// After login and got session_id, maintain session every 1 minute.
+            if (this.maintainTimer !== null) clearInterval(this.maintainTimer);
+            this.maintainTimer = setInterval( async () => {
+                var result = await this.maintainSession();
+                if (!result) clearInterval(this.maintainTimer);
+                else this.doWebsocketListen();
+            }, 60000);
+            this.websocketInited = false;
+            this.doWebsocketListen();
+            
+        } catch(e) {
+            this.loggingIn = false;
+            console.log(`Login FRS Server failed@${Config.frs.ip}:${Config.frs.apiPort}. Retry in 10 second.`);
+            this.sjFRSLoginResult.next(false);
+            setTimeout(() => { this.tryLogin(); }, 10000);
+            return;
         }
+    }
+    private login() {
+        // let tryLogin = async () => {
+        //     if (this.loggingIn === true) return;
+        //     const url = this.makeUrl("login");
+        //     this.loggingIn = true;
+        //     try {
+        //         let buffer = await Promise.race([ fetch(url, {
+        //                 method: 'POST',
+        //                 headers: {
+        //                     Accept: "application/json",
+        //                     "Content-Type": 'application/json',
+        //                     Connection: "close",
+        //                 },
+        //                 body: JSON.stringify({ username: Config.frs.account, password: Config.frs.password })
+        //             }),
+        //             Observable.of(true).delay(3000).toPromise()
+        //         ]);
+        //         if (typeof buffer === "boolean") throw "Login failed";
+        //         let body = await buffer.json();
+        //         this.loggingIn = false;
+        //         this.sjLogined.next(true);
+        //         console.log(`Login into FRS Server@${Config.frs.ip}:${Config.frs.apiPort}.`);
+        //         this.sjFRSLoginResult.next(true);
+
+        //         this.sessionId = body.session_id;
+        //         /// After login and got session_id, maintain session every 1 minute.
+        //         if (this.maintainTimer !== null) clearInterval(this.maintainTimer);
+        //         this.maintainTimer = setInterval( async () => {
+        //             var result = await this.maintainSession();
+        //             if (!result) clearInterval(this.maintainTimer);
+        //         }, 60000);
+        //         this.doWebsocketListen();
+                
+        //     } catch(e) {
+        //         this.loggingIn = false;
+        //         console.log(`Login FRS Server failed@${Config.frs.ip}:${Config.frs.apiPort}. Retry in 10 second.`);
+        //         this.sjFRSLoginResult.next(false);
+        //         setTimeout(() => { tryLogin(); }, 10000);
+        //         return;
+        //     }
+
+
+        //     // request({
+        //     //     url, method: 'POST', json: true,
+        //     //     body: { username: Config.frs.account, password: Config.frs.password }
+        //     // }, (err, res, body) => {
+        //     //     this.loggingIn = false;
+        //     //     if (err || !body) {
+        //     //         console.log(`Login FRS Server failed@${Config.frs.ip}:${Config.frs.apiPort}. Retry in 1 second.`);
+        //     //         setTimeout(() => { tryLogin() }, 1000);
+        //     //         return;
+        //     //     }
+
+        //     //     this.sjLogined.next(true);
+        //     //     console.log(`Login into FRS Server@${Config.frs.ip}:${Config.frs.apiPort}.`);
+
+        //     //     this.sessionId = body.session_id;
+        //     //     /// After login and got session_id, maintain session every 1 minute.
+        //     //     if (this.maintainTimer !== null) clearInterval(this.maintainTimer);
+        //     //     this.maintainTimer = setInterval( async () => {
+        //     //         var result = await this.maintainSession();
+        //     //         if (!result) clearInterval(this.maintainTimer);
+        //     //     }, 60000);
+        //     //     this.doWebsocketListen();
+        //     // });
+            
+        // }
+
         if (!Config.frs.ip || !Config.frs.apiPort || !Config.frs.socketPort) {
-            console.log('!', Config, Storage.get("settingsFRS"));
             setTimeout(() => { this.login(); }, 1000);
             return;
         }
-        tryLogin();
+        this.tryLogin();
     }
 
     public pushFace(image: string): Promise<void> {
@@ -344,6 +389,7 @@ export class FRSService {
                     method: 'POST',
                     body: JSON.stringify({ session_id: this.sessionId })
                 })).json();
+                if (body.message === 'Unauthorized.') throw "maintain failed.";
                 console.log('maintain success', body);
                 resolve(true);
                 
@@ -378,7 +424,7 @@ export class FRSService {
         if (this.websocketInited) return;
         this.websocketInited = true;
         function makeConnection(url: string, callback: (data: any) => void) {
-            var cli = new WebSocket(url);
+            let cli = new WebSocket(url);
             var me = this;
             var timer;
             function reconnect() {
@@ -392,20 +438,24 @@ export class FRSService {
                 }));
             }
             cli.onerror = (err) => {
-                console.log("FRS Connection Error", err);
-                reconnect();
+                console.log("Socket: FRS Connection Error", err);
+                this.websocketInited = false;
+                //reconnect();
             }
             cli.onclose = () => {
-                console.log("FRS Connection Closed");
-                reconnect();
+                console.log("Socket: FRS Connection Closed");
+                this.websocketInited = false;
+                //reconnect();
             }
             cli.onmessage = (message) => {
                 var data = eval(`(${message.data})`);
                 let code = (<any>data).code;
                 if (code) {
                     if (code === 200) return;
-                    if (code === 401) {
-                        console.log('FRS error, message', data);
+                    if (code === 401 || code === 423) {
+                        console.log('Socket: FRS error, message', data);
+                        cli.close();
+                        this.websocketInited = false;
                         me.login();
                         return;
                     }
@@ -414,7 +464,11 @@ export class FRSService {
                 }
                 callback && callback(data);
             }
-
+            this.sjFRSLoginResult.filter(v => v).first().toPromise()
+                .then( () => {
+                    cli.close();
+                    this.websocketInited = false;
+                });
 
             // cli.on('connect', (connection) => {
             //     connection.on('error', (err) => {

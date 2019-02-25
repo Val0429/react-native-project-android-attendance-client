@@ -7,6 +7,9 @@ import com.facebook.react.ReactActivity;
 
 import java.io.File;
 
+import com.crashlytics.android.Crashlytics;
+import io.fabric.sdk.android.Fabric;
+
 public class MainActivity extends ReactActivity {
 
     public static Activity mActivity;
@@ -16,7 +19,9 @@ public class MainActivity extends ReactActivity {
         super.onCreate(savedInstanceState);
         mActivity = this;
 
-        Thread.setDefaultUncaughtExceptionHandler(new CrashHandler(this));
+        Fabric.with(this, new Crashlytics());
+
+        //Thread.setDefaultUncaughtExceptionHandler(new CrashHandler(this));
 
         if (getIntent().getBooleanExtra("crash", false)) {
             FileUtils.createSDDir(FileUtils.getDiskCacheDir(this) + "/crash_notify/");
