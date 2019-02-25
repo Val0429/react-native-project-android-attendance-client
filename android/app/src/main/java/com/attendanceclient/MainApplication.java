@@ -80,30 +80,30 @@ public class MainApplication extends Application implements ReactApplication {
 
       instance = this;
 
-//      ANRWatchDog anrWatchDog = new ANRWatchDog(300);
+      ANRWatchDog anrWatchDog = new ANRWatchDog(300);
 
-    ANRWatchDog anrWatchDog;
-    if (BuildConfig.DEBUG) {
-      anrWatchDog = new ANRWatchDog(2000 /*timeout*/);
-    }
-    else {
-      anrWatchDog = new ANRWatchDog().setANRListener(new ANRWatchDog.ANRListener() {
-        @Override
-        public void onAppNotResponding(ANRError error) {
-          // Some tools like ACRA are serializing the exception, so we must make sure the exception serializes correctly
-          try {
-            new ObjectOutputStream(new ByteArrayOutputStream()).writeObject(error);
-          }
-          catch (IOException ex) {
-            throw new RuntimeException(ex);
-          }
-
-          Log.i("JC+ WatchDog", "Error was successfully serialized");
-
-          throw error;
-        }
-      });
-    }
+//    ANRWatchDog anrWatchDog;
+//    if (BuildConfig.DEBUG) {
+//      anrWatchDog = new ANRWatchDog(2000 /*timeout*/);
+//    }
+//    else {
+//      anrWatchDog = new ANRWatchDog().setANRListener(new ANRWatchDog.ANRListener() {
+//        @Override
+//        public void onAppNotResponding(ANRError error) {
+//          // Some tools like ACRA are serializing the exception, so we must make sure the exception serializes correctly
+//          try {
+//            new ObjectOutputStream(new ByteArrayOutputStream()).writeObject(error);
+//          }
+//          catch (IOException ex) {
+//            throw new RuntimeException(ex);
+//          }
+//
+//          Log.i("JC+ WatchDog", "Error was successfully serialized");
+//
+//          throw error;
+//        }
+//      });
+//    }
 
       LogUtils.init(this);
 
