@@ -113,6 +113,12 @@ apply plugin: 'io.fabric'
 repositories {
     maven { url 'https://dl.bintray.com/tzutalin/maven' }
     maven { url 'https://maven.fabric.io/public' }
+
+    flatDir {
+        dirs project(':react-native-face-detection').file('libs')
+        dirs project(':react-native-stream-rtsp').file('libs')
+        dirs project(':react-native-feature-compare').file('libs')
+    }
 }
 
 android {
@@ -203,19 +209,5 @@ dependencies {
 
     compile('com.crashlytics.sdk.android:crashlytics:2.9.9@aar') {
         transitive = true;
-    }
-}
-
-// Run this once to be able to run the application with BUCK
-// puts all compile dependencies into folder libs for BUCK to use
-task copyDownloadableDepsToLibs(type: Copy) {
-    from configurations.compile
-    into 'libs'
-}
-
-//for using aar
-repositories{
-    flatDir{
-        dirs 'libs'
     }
 }
