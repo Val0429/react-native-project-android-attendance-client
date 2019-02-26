@@ -80,7 +80,7 @@ public class MainApplication extends Application implements ReactApplication {
 
       instance = this;
 
-      ANRWatchDog anrWatchDog = new ANRWatchDog(300);
+      //ANRWatchDog anrWatchDog = new ANRWatchDog(300);
 
 //    ANRWatchDog anrWatchDog;
 //    if (BuildConfig.DEBUG) {

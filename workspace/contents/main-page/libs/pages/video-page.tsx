@@ -121,6 +121,8 @@ export class VideoPage extends Component<Props, States> {
                 } );
                 // if (!changed) return {now};
                 faces = faces.filter( (v) => v !== undefined );
+                /// limit faces to 10
+                if (faces.length > 10) faces.length = 10;
                 return { faces, now };
             });
 
