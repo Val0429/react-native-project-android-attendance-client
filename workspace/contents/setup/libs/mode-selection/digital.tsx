@@ -66,7 +66,47 @@ export class Digital extends Component<Props, State> {
                     />
 
                 {/* Location */}
-                <ItemDivider title={_("w_GreetingMessage")} />
+                <ItemDivider title={`${_("w_GreetingMessage")} - ${_("w_Morning")} (5:00-11:00)`} />
+                {
+                    [1,2,3].map( (value) => {
+                        return (
+                            <ItemText
+                                title={`${_("w_Message")} ${value}`}
+                                { ...Storage.bind(this, "settingsDigital", `greetingMorning${value}` as any) }
+                                icon={makeIcon(Icon, "message-text")}
+                                />
+                        )
+                    })
+                }
+
+                <ItemDivider title={`${_("w_GreetingMessage")} - ${_("w_Afternoon")} (11:00-18:00)`} />
+                {
+                    [1,2,3].map( (value) => {
+                        return (
+                            <ItemText
+                                title={`${_("w_Message")} ${value}`}
+                                { ...Storage.bind(this, "settingsDigital", `greetingAfternoon${value}` as any) }
+                                icon={makeIcon(Icon, "message-text")}
+                                />
+                        )
+                    })
+                }
+
+                <ItemDivider title={`${_("w_GreetingMessage")} - ${_("w_Evening")} (18:00~)`} />
+                {
+                    [1,2,3].map( (value) => {
+                        return (
+                            <ItemText
+                                title={`${_("w_Message")} ${value}`}
+                                { ...Storage.bind(this, "settingsDigital", `greetingEvening${value}` as any) }
+                                icon={makeIcon(Icon, "message-text")}
+                                />
+                        )
+                    })
+                }
+
+
+                {/* <ItemDivider title={_("w_GreetingMessage")} />
                 <ItemText
                     title={_("w_Morning")+" (5:00-11:00)"}
                     { ...Storage.bind(this, "settingsDigital", "greetingMorning") }
@@ -81,7 +121,7 @@ export class Digital extends Component<Props, State> {
                     title={_("w_Evening")+" (18:00~)"}
                     { ...Storage.bind(this, "settingsDigital", "greetingEvening") }
                     icon={makeIcon(Icon, "message-text")}
-                    />
+                    /> */}
 
             </View>
         );

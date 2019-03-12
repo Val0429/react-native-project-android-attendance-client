@@ -90,24 +90,7 @@ export class DigitalPage extends Component<Props, States> {
                 })).json();
 
                 /// welcome
-                let welcomeMap = [
-                    { start: 5, end: 11, message: `Good Morning!${this.props.settingsDigital.greetingMorning && `\r\n${this.props.settingsDigital.greetingMorning}`}` },
-                    { start: 11, end: 18, message: `Good Afternoon!${this.props.settingsDigital.greetingAfternoon && `\r\n${this.props.settingsDigital.greetingAfternoon}`}` },
-                    { start: 18, end: 22, message: `Good Evening!${this.props.settingsDigital.greetingEvening && `\r\n${this.props.settingsDigital.greetingEvening}`}` },
-                ];
-                function pickWelcome() {
-                    let date = new Date();
-                    let hour = date.getHours();
-                    let welcomeMessage = welcomeMap[welcomeMap.length-1].message;
-                    for (let unit of welcomeMap) {
-                        if (hour >= unit.start && hour < unit.end) {
-                            welcomeMessage = unit.message;
-                            break;
-                        }
-                    }
-                    return welcomeMessage;
-                }
-                let welcome = pickWelcome();
+                let welcome = this.generateWelcomeMessage();
 
                 /// temperature
                 let temperature = result.currently.temperature;
@@ -134,6 +117,7 @@ export class DigitalPage extends Component<Props, States> {
         this.subscription2 = frs.sjLiveFace.subscribe( (data) => {
             if (data.type === UserType.Recognized) {
                 this.setState({
+                    welcome: this.generateWelcomeMessage(),
                     incoming: data.person_info.fullname,
                     showGreeting: true
                 });
@@ -186,9 +170,11 @@ export class DigitalPage extends Component<Props, States> {
                     <Image source={rcImages.digital_bk} resizeMode="stretch" style={{flex: 1, width: '100%'}} />
 
                     {/* { this.getWelcomePage() } */}
-                    {
+                    {/* {
                         this.state.showGreeting ? this.getWelcomePage() : this.getDefaultPage()
-                    }
+                    } */}
+
+                    { this.getWelcomePage() }
 
                     <Text style={styles.temperature}>{this.state.temperature ? `${Math.floor(this.state.temperature)}°` : ''}</Text>
 
@@ -206,6 +192,33 @@ export class DigitalPage extends Component<Props, States> {
                 </Content>
             </Container>
         );
+    }
+
+    private generateWelcomeMessage(): string {
+        const welcomeMap = [
+            { start: 5, end: 11, ref: 'greetingMorning', message: `Good Morning!` },
+            { start: 11, end: 18, ref: 'greetingAfternoon', message: `Good Afternoon!` },
+            { start: 18, end: 22, ref: 'greetingEvening', message: `Good Evening!` },
+        ];
+
+        /// generate
+        let date = new Date();
+        let hour = date.getHours();
+        let welcomeState = welcomeMap[welcomeMap.length-1];
+        for (let unit of welcomeMap) {
+            if (hour >= unit.start && hour < unit.end) {
+                welcomeState = unit;
+                break;
+            }
+        }
+        /// generate message
+        let messages = [1,2,3].reduce( (final, value) => {
+            let msg = this.props.settingsDigital[`${welcomeState.ref}${value}`];
+            msg && (final.push(msg));
+            return final;
+        }, []);
+        
+        return `${welcomeState.message}\r\n` + (messages.length > 0 ? messages[Math.floor(Math.random()*messages.length)] : '');
     }
 
     private getHourString(date: Date | number) {

@@ -36,4 +36,5 @@ export default class LangObject implements ILang {
     w_Morning = "朝";
     w_Afternoon = "午後";
     w_Evening = "夕方";
+    w_Message = "メッセージ";
 }

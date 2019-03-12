@@ -35,6 +35,7 @@ export default class LangObject {
     w_Morning = "Morning";
     w_Afternoon = "Afternoon";
     w_Evening = "Evening";
+    w_Message = "Message";
 }
 
 type ClassToInterface<T> = {
