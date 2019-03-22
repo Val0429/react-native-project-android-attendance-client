@@ -11,7 +11,7 @@ import { OutlineElement } from '../outline-element';
 import { Face } from '../face';
 import { Observable, Subject } from 'rxjs';
 import frs, { UserType } from './../../../../services/frs-service';
-import { StorageInstance as Storage, SettingsDigital } from './../../../../config';
+import { StorageInstance as Storage, SettingsDigital, EShowPersonRule } from './../../../../config';
 import { Connect, ConnectObservables, ConnectIsEmpty } from './../../../../../helpers/storage/connect';
 import lang, { defaultLang, _ } from './../../../../../core/lang';
 
@@ -111,14 +111,18 @@ export class DigitalPage extends Component<Props, States> {
                     weatherIcon,
                     weatherDescription
                 })
-                    
+
             } );
 
         this.subscription2 = frs.sjLiveFace.subscribe( (data) => {
             if (data.type === UserType.Recognized) {
+                let name = this.props.settingsDigital.showPersonRule === EShowPersonRule.Name ?
+                    data.person_info.fullname || data.person_info.employeeno :
+                    data.person_info.employeeno || data.person_info.fullname;
+
                 this.setState({
                     welcome: this.generateWelcomeMessage(),
-                    incoming: data.person_info.fullname,
+                    incoming: name,
                     showGreeting: true
                 });
                 this.sjTimer.next();
@@ -329,23 +333,38 @@ const styles = EStyleSheet.create({
         justifyContent: "center",
         textAlign: "center",
     },
+    // default_box_time: {
+    //     justifyContent: "center",
+    //     textAlign: "center",
+    //     fontSize: "36 rem",
+    //     fontWeight: "bold"
+    // },
+    // default_box_date: {
+    //     justifyContent: "center",
+    //     textAlign: "center",
+    //     fontSize: "16 rem"
+    // },
+
     default_box_time: {
         justifyContent: "center",
         textAlign: "center",
         fontSize: "36 rem",
-        fontWeight: "bold"
+        fontWeight: "bold",
+        color: "white"
     },
     default_box_date: {
         justifyContent: "center",
         textAlign: "center",
-        fontSize: "16 rem"
+        fontSize: "16 rem",
+        color: "white"
     },
 
     temperature: {
         position: "absolute",
         top: "30%",
         right: "7%",
-        color: "black",
+        // color: "black",
+        color: "white",
         fontSize: "20 rem",
         fontWeight: "bold"
     },
@@ -362,7 +381,8 @@ const styles = EStyleSheet.create({
         position: "absolute",
         top: "55%",
         right: "6.1%",
-        color: "black",
+        // color: "black",
+        color: "white",
         width: "100 rem",
         fontSize: "20 rem",
         textAlignVertical: "center",
@@ -373,7 +393,8 @@ const styles = EStyleSheet.create({
         position: "absolute",
         top: "70%",
         right: "3%",
-        color: "black",
+        // color: "black",
+        color: "white",
         fontSize: "8 rem",
         width: "130 rem",
         textAlign: "center",

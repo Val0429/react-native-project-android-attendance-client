@@ -35,6 +35,14 @@ export default class LangObject implements ILang {
     w_GreetingMessage = "ข้อความทักทาย";
     w_Morning = "ตอนเช้า";
     w_Afternoon = "ตอนบ่าย";
-    w_Evening = "ตอนเย็น";    
+    w_Evening = "ตอนเย็น";
     w_Message = "ข่าวสาร";
+
+    m_CreateHolidayMessage = "สร้างข้อความวันหยุด";
+    m_HolidayPicker = "เครื่องมือเลือกวันหยุด";
+    m_GreetingHolidays = "คำอวยพรวันหยุด";
+
+    m_ShowPersonRule = "กฎการแสดงชื่อ";
+    m_PrioritizeName = "ชื่อแรก";
+    m_PrioritizeEmployeeID = "หมายเลขแรก";
 }

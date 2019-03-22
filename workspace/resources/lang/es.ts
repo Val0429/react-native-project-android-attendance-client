@@ -37,4 +37,12 @@ export default class LangObject implements ILang {
     w_Afternoon = "Tarde";
     w_Evening = "Noche";
     w_Message = "Mensaje";
+
+    m_CreateHolidayMessage = "Crear mensaje de vacaciones";
+    m_HolidayPicker = "Selector de vacaciones";
+    m_GreetingHolidays = "Vacaciones de saludo";
+
+    m_ShowPersonRule = "regla de visualización del nombre";
+    m_PrioritizeName = "name first";
+    m_PrioritizeEmployeeID = "número primero";
 }

@@ -37,4 +37,12 @@ export default class LangObject implements ILang {
     w_Afternoon = "Sore";
     w_Evening = "Malam";
     w_Message = "Pesan";
+
+    m_CreateHolidayMessage = "Buat Pesan Liburan";
+    m_HolidayPicker = "Holiday Picker";
+    m_GreetingHolidays = "Liburan Salam";
+
+    m_ShowPersonRule = "aturan tampilan nama";
+    m_PrioritizeName = "name first";
+    m_PrioritizeEmployeeID = "number first";
 }

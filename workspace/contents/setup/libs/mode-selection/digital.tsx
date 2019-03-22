@@ -7,7 +7,7 @@ import { Actions } from 'react-native-router-flux';
 import { rcImages } from './../../../../resources/images';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import IconMaterial from 'react-native-vector-icons/MaterialIcons';
-import { ItemDivider, ItemSwitch, ItemText } from './../../../../../core/components/form';
+import { ItemDivider, ItemSwitch, ItemText, ItemPicker } from './../../../../../core/components/form';
 import { StorageInstance as Storage, SettingsDigital, makeIcon } from './../../../../config';
 import lang, { _ } from './../../../../../core/lang';
 import { ConnectObservables } from './../../../../../helpers/storage/connect';
@@ -57,6 +57,15 @@ export class Digital extends Component<Props, State> {
                     { ...Storage.vbind(this, "settingsDigital", "companyName") }
                     icon={makeIcon(IconMaterial, "people")}
                     />
+                <ItemPicker
+                    title={_("m_ShowPersonRule")}
+                    { ...Storage.vbind(this, "settingsDigital", "showPersonRule") }
+                    items={[0, 1]}
+                    labelTransform={(value) => {
+                        return [_("m_PrioritizeName"), _("m_PrioritizeEmployeeID")][value];
+                    }}
+                    icon={makeIcon(IconMaterial, "person")}
+                    />
 
                 {/* Location */}
                 <ItemDivider title={_("w_MyLocation")} />
@@ -71,7 +80,15 @@ export class Digital extends Component<Props, State> {
                     icon={makeIcon(Icon, "earth")}
                     />
 
-                {/* Location */}
+                {/* Show Name */}
+                <ItemDivider title={_("w_MyLocation")} />
+                <ItemText
+                    title={_("w_Latitude")}
+                    { ...Storage.bind(this, "settingsDigital", "latitude") }
+                    icon={makeIcon(Icon, "earth")}
+                    />
+
+                {/* Messages */}
                 <ItemDivider title={`${_("w_GreetingMessage")} - ${_("w_Morning")} (5:00-11:00)`} />
                 {
                     [1,2,3].map( (value) => {
@@ -114,7 +131,7 @@ export class Digital extends Component<Props, State> {
                     })
                 }
 
-                <ItemDivider title={`Holiday Picker`} />
+                <ItemDivider title={_("m_HolidayPicker")} />
                 <ItemDatePicker
                     title={'Date'}
                     value={this.state.pickedDate}
@@ -133,9 +150,9 @@ export class Digital extends Component<Props, State> {
                         holidays.push({ date: this.state.pickedDate.toISOString(), message: this.state.pickedHolidayMessage });
                         Storage.update("settingsDigital", "greetingHolidays", holidays);
                     }}
-                    ><Text>Create</Text></Button>
+                    ><Text>{ _("m_CreateHolidayMessage") }</Text></Button>
 
-                { (this.props.settingsDigital.greetingHolidays && this.props.settingsDigital.greetingHolidays.length > 0) && <ItemDivider title={`Greeting Holidays`} /> }
+                { (this.props.settingsDigital.greetingHolidays && this.props.settingsDigital.greetingHolidays.length > 0) && <ItemDivider title={_("m_GreetingHolidays")} /> }
                 {
                     (this.props.settingsDigital.greetingHolidays || []).map( (value, index) => {
                         return (

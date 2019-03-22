@@ -37,4 +37,12 @@ export default class LangObject implements ILang {
     w_Afternoon = "午後";
     w_Evening = "夕方";
     w_Message = "メッセージ";
+
+    m_CreateHolidayMessage = "休日メッセージを追加";
+    m_HolidayPicker = "休日選択";
+    m_GreetingHolidays = "休日メッセージ";
+
+    m_ShowPersonRule = "名前表示規則";
+    m_PrioritizeName = "名前が先頭";
+    m_PrioritizeEmployeeID = "番号が先頭";
 }

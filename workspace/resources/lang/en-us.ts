@@ -36,6 +36,14 @@ export default class LangObject {
     w_Afternoon = "Afternoon";
     w_Evening = "Evening";
     w_Message = "Message";
+
+    m_CreateHolidayMessage = "Create Holiday Message";
+    m_HolidayPicker = "Holiday Picker";
+    m_GreetingHolidays = "Greeting Holidays";
+
+    m_ShowPersonRule = "Person Display Rule";
+    m_PrioritizeName = "Name First";
+    m_PrioritizeEmployeeID = "EmployeeID First";
 }
 
 type ClassToInterface<T> = {

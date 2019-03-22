@@ -1,5 +1,6 @@
 export interface SettingsDigital {
     companyName?: string;
+    showPersonRule?: EShowPersonRule;
     latitude?: string;
     longitude?: string;
 
@@ -18,12 +19,19 @@ export interface SettingsDigital {
     greetingHolidays?: IGreetingHoliday[];
 }
 
+export enum EShowPersonRule {
+    Name,
+    EmployeeID
+}
+
 interface IGreetingHoliday {
     date: string;
     message: string;
 }
 
 const value: SettingsDigital = {
+    showPersonRule: EShowPersonRule.Name,
+
     latitude: "25.0375",
     longitude: "121.5637",
 

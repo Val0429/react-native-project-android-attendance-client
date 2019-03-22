@@ -37,4 +37,12 @@ export default class LangObject implements ILang {
     w_Afternoon = "中午";
     w_Evening = "晚上";
     w_Message = "訊息";
+
+    m_CreateHolidayMessage = "新增假日訊息";
+    m_HolidayPicker = "假日選擇器";
+    m_GreetingHolidays = "假日歡迎詞";
+
+    m_ShowPersonRule = "人名顯示規則";
+    m_PrioritizeName = "姓名優先";
+    m_PrioritizeEmployeeID = "工號優先";
 }
