@@ -14,6 +14,13 @@ export interface SettingsDigital {
     greetingEvening1?: string;
     greetingEvening2?: string;
     greetingEvening3?: string;
+
+    greetingHolidays?: IGreetingHoliday[];
+}
+
+interface IGreetingHoliday {
+    date: string;
+    message: string;
 }
 
 const value: SettingsDigital = {

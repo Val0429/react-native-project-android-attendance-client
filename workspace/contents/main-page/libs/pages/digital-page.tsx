@@ -157,8 +157,8 @@ export class DigitalPage extends Component<Props, States> {
         return (
             <>
                 <Text style={styles.welcome}>{this.state.welcome}</Text>
-                <Text style={styles.incoming}>{this.state.incoming}</Text>
-            </>            
+                <Text style={styles.incoming}>{this.state.incoming && `Hi, ${this.state.incoming}`}</Text>
+            </>
         );
     }
 
@@ -169,12 +169,12 @@ export class DigitalPage extends Component<Props, States> {
                     {/* background image */}
                     <Image source={rcImages.digital_bk} resizeMode="stretch" style={{flex: 1, width: '100%'}} />
 
-                    {/* { this.getWelcomePage() } */}
-                    {/* {
+                    {
                         this.state.showGreeting ? this.getWelcomePage() : this.getDefaultPage()
-                    } */}
+                    }
 
-                    { this.getWelcomePage() }
+                    { /* todo remove */ }
+                    {/* { this.getWelcomePage() } */}
 
                     <Text style={styles.temperature}>{this.state.temperature ? `${Math.floor(this.state.temperature)}°` : ''}</Text>
 
@@ -203,22 +203,43 @@ export class DigitalPage extends Component<Props, States> {
 
         /// generate
         let date = new Date();
+        let year = date.getFullYear();
+        let day = date.getDate();
         let hour = date.getHours();
         let welcomeState = welcomeMap[welcomeMap.length-1];
+        let message;
         for (let unit of welcomeMap) {
             if (hour >= unit.start && hour < unit.end) {
                 welcomeState = unit;
                 break;
             }
         }
-        /// generate message
-        let messages = [1,2,3].reduce( (final, value) => {
-            let msg = this.props.settingsDigital[`${welcomeState.ref}${value}`];
-            msg && (final.push(msg));
-            return final;
-        }, []);
+
+        // check holidays first
+        let holidays = this.props.settingsDigital.greetingHolidays;
+        if (holidays) {
+            for (let holiday of holidays) {
+                let curdate = new Date(holiday.date);
+                let curyear = curdate.getFullYear();
+                let curday = curdate.getDate();
+                if (curyear !== year || curday !== day) continue;
+                message = holiday.message;
+                break;
+            }
+        }
         
-        return `${welcomeState.message}\r\n` + (messages.length > 0 ? messages[Math.floor(Math.random()*messages.length)] : '');
+        /// fall back to daily message
+        if (!message) {
+            /// generate message
+            let messages = [1,2,3].reduce( (final, value) => {
+                let msg = this.props.settingsDigital[`${welcomeState.ref}${value}`];
+                msg && (final.push(msg));
+                return final;
+            }, []);
+            message = (messages.length > 0 ? messages[Math.floor(Math.random()*messages.length)] : '');
+        }
+
+        return `${welcomeState.message}\r\n` + message;
     }
 
     private getHourString(date: Date | number) {
@@ -249,22 +270,39 @@ const styles = EStyleSheet.create({
         backgroundColor: "$bgColor"
     },
 
-    welcome: {
-        position: "absolute",
-        top: "30%",
-        left: "4%",
-        color: "#9ACE32",
-        fontSize: "32 rem"
-    },
-
     incoming: {
         position: "absolute",
-        top: "70%",
+        top: "28%",
         left: "4%",
-        color: "black",
+        color: "#9ACE32",
         fontSize: "34 rem",
         fontWeight: "bold"
     },
+
+    welcome: {
+        position: "absolute",
+        top: "48%",
+        left: "4%",
+        color: "white",
+        fontSize: "32 rem",
+    },
+
+    // welcome: {
+    //     position: "absolute",
+    //     top: "30%",
+    //     left: "4%",
+    //     color: "#9ACE32",
+    //     fontSize: "32 rem"
+    // },
+
+    // incoming: {
+    //     position: "absolute",
+    //     top: "68%",
+    //     left: "4%",
+    //     color: "black",
+    //     fontSize: "34 rem",
+    //     fontWeight: "bold"
+    // },
 
     default_title: {
         position: "absolute",
