@@ -45,4 +45,6 @@ export default class LangObject implements ILang {
     m_ShowPersonRule = "กฎการแสดงชื่อ";
     m_PrioritizeName = "ชื่อแรก";
     m_PrioritizeEmployeeID = "หมายเลขแรก";
+
+    m_AutoLogin = "เข้าสู่ระบบอัตโนมัติ";
 }

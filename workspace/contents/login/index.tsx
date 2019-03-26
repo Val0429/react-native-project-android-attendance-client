@@ -7,7 +7,7 @@ import { Actions } from 'react-native-router-flux';
 import { rcImages } from './../../resources/images';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { ConnectObservables } from './../../../helpers/storage/connect';
-import { StorageInstance as Storage } from './../../config';
+import { StorageInstance as Storage, SettingsOthers } from './../../config';
 import lang, { _ } from './../../../core/lang';
 import FaceFeatureCompare from 'react-native-feature-compare';
 let RNFS = require('react-native-fs');
@@ -31,6 +31,7 @@ export class LoginContent extends Component<Props> {
         lang.setLang(settingsLanguage.lang);
 
         do {
+            /// auto login when - crashed
             let path = `${RNFS.ExternalCachesDirectoryPath}/crash_notify`;
             let result = await RNFS.exists(path);
             if (result) { await RNFS.unlink(path); break; }
@@ -39,11 +40,15 @@ export class LoginContent extends Component<Props> {
             result = await RNFS.exists(path);
             if (result) { await RNFS.unlink(path); break; }
 
+            /// auto login when - autoLogin is set
+            let settingsOthers = Storage.get("settingsOthers");
+            if (settingsOthers.autoLogin) break;
+            
             return;
 
         } while(0);
 
-        Actions.push('main');
+        setImmediate( () => Actions.push('main') );
     }
 
     render() {

@@ -45,4 +45,6 @@ export default class LangObject implements ILang {
     m_ShowPersonRule = "aturan tampilan nama";
     m_PrioritizeName = "name first";
     m_PrioritizeEmployeeID = "number first";
+
+    m_AutoLogin = "Login otomatis";
 }

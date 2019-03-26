@@ -14,6 +14,7 @@ import { StorageInstance as Storage, modesText, SettingsModes, makeIcon } from '
 import { FRS } from './libs/frs';
 import { DGS } from './libs/dgs';
 import { Language } from './libs/language';
+import { Others } from './libs/others';
 import { ConnectObservables } from './../../../helpers/storage/connect';
 import lang, { _ } from './../../../core/lang';
 let package = require('./../../../package.json');
@@ -24,7 +25,7 @@ interface Props {
 }
 
 interface Selection {
-    selection: "mode" | "frs" | "dgs" | "language";
+    selection: "mode" | "frs" | "dgs" | "language" | "others";
 }
 
 type States = Selection;
@@ -76,6 +77,9 @@ export class Setup extends Component<Props, States> {
                                 value={_(`m_${modesText[this.props.modes.modes]}` as any)}
                                 icon={makeIcon(Icon, "toggle-switch")}
                                 />
+                            <ItemNavigate title={_("w_Others")} last onPress={() => this.setState({selection: "others"}) }
+                                icon={makeIcon(Icon, "face")}
+                                />
 
                             {/* Others */}
                             <ItemDivider title={_("w_Others")} />
@@ -92,6 +96,7 @@ export class Setup extends Component<Props, States> {
                             { this.state.selection === "frs" && <FRS style={styles.full_height} /> }
                             { this.state.selection === "dgs" && <DGS style={styles.full_height} /> }
                             { this.state.selection === "language" && <Language style={styles.full_height} /> }
+                            { this.state.selection === "others" && <Others style={styles.full_height} /> }
                         </Col>
                     </Grid>
                 </Content>

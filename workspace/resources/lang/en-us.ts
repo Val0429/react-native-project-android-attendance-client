@@ -44,6 +44,8 @@ export default class LangObject {
     m_ShowPersonRule = "Person Display Rule";
     m_PrioritizeName = "Name First";
     m_PrioritizeEmployeeID = "EmployeeID First";
+
+    m_AutoLogin = "Auto Login";
 }
 
 type ClassToInterface<T> = {

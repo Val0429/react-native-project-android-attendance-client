@@ -7,3 +7,4 @@ export * from './settings-frs';
 export * from './settings-language';
 export * from './settings-modes';
 export * from './settings-video';
+export * from './settings-others';
