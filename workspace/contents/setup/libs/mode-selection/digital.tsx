@@ -1,7 +1,7 @@
 import React, {Component, ReactElement} from 'react';
 import {Platform, View, Image, TouchableOpacity, StyleProp, ViewStyle} from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
-import { Container, Header, Title, Segment, Tabs, Tab, TabHeading, Content, ListItem, Switch, Footer, FooterTab, Button, Left, Right, Body, Text, Item, Input, H1, Label, DatePicker } from 'native-base';
+import { Container, Header, Title, Segment, Tabs, Tab, TabHeading, Content, ListItem, Switch, Footer, FooterTab, Button, Left, Right, Body, Text, Item, Input, H1, Label, DatePicker, CheckBox } from 'native-base';
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import { Actions } from 'react-native-router-flux';
 import { rcImages } from './../../../../resources/images';
@@ -13,6 +13,17 @@ import lang, { _ } from './../../../../../core/lang';
 import { ConnectObservables } from './../../../../../helpers/storage/connect';
 import { ItemDatePicker } from './../../../../../core/components/form/item-datepicker';
 import { ItemDeleter } from './../../../../../core/components/form/item-deleter';
+import frs, {RecognizedUser, UnRecognizedUser, UserType, Gender, IFCSSettings} from './../../../../services/frs-service';
+
+interface IVideoSource {
+    sourceId: string;
+    url: string;
+    ip: string;
+    port: number;
+    account: string;
+    password: string;
+    uri: string;
+}
 
 interface Props {
     settingsDigital?: SettingsDigital;
@@ -21,6 +32,8 @@ interface Props {
 interface State {
     pickedDate?: Date;
     pickedHolidayMessage?: string;
+    FRSConnected: boolean;
+    videoSources?: IVideoSource[];
 }
 
 @ConnectObservables({
@@ -32,7 +45,8 @@ export class Digital extends Component<Props, State> {
         super(props);
         this.state = {
             pickedDate: new Date(),
-            pickedHolidayMessage: ""
+            pickedHolidayMessage: "",
+            FRSConnected: frs.sjLogined.getValue()
         };
     }
 
@@ -42,6 +56,35 @@ export class Digital extends Component<Props, State> {
         this.subscription = this.subject.subscribe( (value) => {
             this.setState({...value as any});
         });
+
+        /// face recognition source
+        frs.sjLogined.getValue() &&
+        frs.getFCSSettings()
+            .then( (data) => {
+                let sources = data.reduce( (final, item, index) => {
+                    if (item.video_source_type !== 'rtsp') return final;
+                    final.push({
+                        sourceId: item.video_source_sourceid,   ///+`_${index}`,
+                        url: `rtsp://${item.video_source_username}:${item.video_source_password}@${item.video_source_ip}:${item.video_source_port}${item.video_source_rtsp_path}`,
+                        ip: item.video_source_ip,
+                        port: item.video_source_port,
+                        account: item.video_source_username,
+                        password: item.video_source_password,
+                        uri: item.video_source_rtsp_path,
+                    });
+                    return final;
+                }, []);
+                /// save for first time
+                if (sources.length > 0) {
+                    let source = sources[0];
+                    if (!this.props.settingsDigital.faceRecognitionSource) {
+                        Storage.update("settingsDigital", "faceRecognitionSource", [source.sourceId]);
+                    }
+                }
+                this.setState({
+                    videoSources: sources
+                });
+            });
     }
     componentWillUnmount() {
         this.subscription.unsubscribe();
@@ -66,6 +109,43 @@ export class Digital extends Component<Props, State> {
                     }}
                     icon={makeIcon(IconMaterial, "person")}
                     />
+
+                {/* Face Recognition Source */}
+                {
+                    this.state.FRSConnected && <ItemDivider title={_("m_FaceRecognitionSource")} />
+                }
+                {
+                    this.state.FRSConnected && this.state.videoSources && (
+                        this.state.videoSources.map( (source, index) => {
+                            let sourceId = source.sourceId;
+                            //let checked = sourceId === this.props.settingsDigital.videoSourceId;
+                            let checked = this.props.settingsDigital.faceRecognitionSource.findIndex((v) => v===sourceId) >= 0;
+                            return (
+                                <ListItem key={index}>
+                                    <CheckBox
+                                        checked={checked}
+                                        onPress={() => {
+                                            let source = this.props.settingsDigital.faceRecognitionSource;
+                                            if (checked) {
+                                                let idx = source.findIndex((v) => v === sourceId);
+                                                if (idx < 0) return;
+                                                source.splice(idx, 1);
+                                                Storage.update( "settingsDigital", "faceRecognitionSource", source);
+                                            } else {
+                                                let idx = source.findIndex((v) => v === sourceId);
+                                                if (idx >= 0) return;
+                                                Storage.update( "settingsDigital", "faceRecognitionSource", [...source, sourceId] );
+                                            }
+                                        }}
+                                        />
+                                    <Body>
+                                        <Text>{source.sourceId}</Text>
+                                    </Body>
+                                </ListItem>
+                            )
+                        })
+                    )
+                }
 
                 {/* Location */}
                 <ItemDivider title={_("w_MyLocation")} />

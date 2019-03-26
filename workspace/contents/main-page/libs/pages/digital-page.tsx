@@ -115,6 +115,12 @@ export class DigitalPage extends Component<Props, States> {
             } );
 
         this.subscription2 = frs.sjLiveFace.subscribe( (data) => {
+            /// filter Face Recognition Source
+            let frSource = this.props.settingsDigital.faceRecognitionSource;
+            if (frSource && frSource.length > 0) {
+                if (frSource.indexOf(data.channel) < 0) return;
+            } /// if not set, default to show all
+
             if (data.type === UserType.Recognized) {
                 let name = this.props.settingsDigital.showPersonRule === EShowPersonRule.Name ?
                     data.person_info.fullname || data.person_info.employeeno :

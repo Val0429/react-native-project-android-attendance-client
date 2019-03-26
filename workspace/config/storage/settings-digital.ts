@@ -4,6 +4,8 @@ export interface SettingsDigital {
     latitude?: string;
     longitude?: string;
 
+    faceRecognitionSource?: string[];
+
     greetingMorning1?: string;
     greetingMorning2?: string;
     greetingMorning3?: string;
