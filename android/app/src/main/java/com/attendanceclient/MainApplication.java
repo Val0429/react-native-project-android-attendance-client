@@ -5,6 +5,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.facebook.react.ReactApplication;
+import io.sentry.RNSentryPackage;
 import com.brentvatne.react.ReactVideoPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.isap.RNStreamRtspPackage;
@@ -50,6 +51,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNSentryPackage(),
             new ReactVideoPackage(),
             new VectorIconsPackage(),
             new RNStreamRtspPackage(),
@@ -80,7 +82,7 @@ public class MainApplication extends Application implements ReactApplication {
 
       instance = this;
 
-      //ANRWatchDog anrWatchDog = new ANRWatchDog(300);
+      //ANRWatchDog anrWatchDog = new ANRWatchDog(1000);
 
 //    ANRWatchDog anrWatchDog;
 //    if (BuildConfig.DEBUG) {
@@ -107,8 +109,8 @@ public class MainApplication extends Application implements ReactApplication {
 
       LogUtils.init(this);
 
-//    CrashHandler handler = CrashHandler.getInstance();
-//    handler.init(getApplicationContext());
+    CrashHandler handler = CrashHandler.getInstance();
+    handler.init(getApplicationContext());
 
     SoLoader.init(this, /* native exopackage */ false);
   }

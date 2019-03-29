@@ -46,7 +46,7 @@ export function ConnectObservables(obs: IConnectObservables, delay: number = und
                 this.state = {};
                 for (let key of keys) this.state[key] = {};
             }
-            componentDidMount() {
+            componentWillMount() {
                 let observables = keys.map( key => obs[key] );
 
                 this.subscription = Observable.from(observables)

@@ -56,7 +56,7 @@ export class Digital extends Component<Props, State> {
         this.subscription = this.subject.subscribe( (value) => {
             this.setState({...value as any});
         });
-
+            
         /// face recognition source
         frs.sjLogined.getValue() &&
         frs.getFCSSettings()
@@ -86,10 +86,11 @@ export class Digital extends Component<Props, State> {
                 });
             });
     }
+
     componentWillUnmount() {
         this.subscription.unsubscribe();
     }
-
+    
     render() {
         return (
             <View>

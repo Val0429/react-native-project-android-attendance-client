@@ -15,7 +15,7 @@ const Config: IConfig = {
     dgs: Storage.get("settingsDGS"),
     fts: {
         specialScoreForUnRecognizedFace: 0.6,
-        throttleKeepSameFaceSeconds: 15
+        throttleKeepSameFaceSeconds: +(Storage.get("settingsVideo").mergeFaceDuration || '10')
     }
 }
 Storage.getSubject("settingsFRS").subscribe(d => Config.frs = d);

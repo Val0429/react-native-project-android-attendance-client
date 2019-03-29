@@ -7,6 +7,7 @@ import com.facebook.react.ReactActivity;
 
 import java.io.File;
 
+// disable fabric.io
 import com.crashlytics.android.Crashlytics;
 import io.fabric.sdk.android.Fabric;
 
@@ -19,6 +20,7 @@ public class MainActivity extends ReactActivity {
         super.onCreate(savedInstanceState);
         mActivity = this;
 
+        // disable fabric.io
         Fabric.with(this, new Crashlytics());
 
         //Thread.setDefaultUncaughtExceptionHandler(new CrashHandler(this));

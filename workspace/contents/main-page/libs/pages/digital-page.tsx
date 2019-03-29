@@ -1,7 +1,7 @@
 import React, {Component, ReactElement} from 'react';
 import {Platform, View, Image, TouchableOpacity} from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
-import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Text, Item, Input, H1 } from 'native-base';
+import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Text, Item, Input, H1, DatePicker } from 'native-base';
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import { Actions } from 'react-native-router-flux';
 import { rcImages } from '../../../../resources/images';
@@ -114,12 +114,18 @@ export class DigitalPage extends Component<Props, States> {
 
             } );
 
+        let updateTime: Date;
         this.subscription2 = frs.sjLiveFace.subscribe( (data) => {
             /// filter Face Recognition Source
             let frSource = this.props.settingsDigital.faceRecognitionSource;
             if (frSource && frSource.length > 0) {
                 if (frSource.indexOf(data.channel) < 0) return;
             } /// if not set, default to show all
+
+            /// won't show more frequently than given time
+            let now = new Date();
+            if ( updateTime && (now - updateTime) < 200 ) return;
+            updateTime = now;
 
             if (data.type === UserType.Recognized) {
                 let name = this.props.settingsDigital.showPersonRule === EShowPersonRule.Name ?
