@@ -133,18 +133,13 @@ export class DigitalPage extends Component<Props, States> {
                     data.person_info.employeeno || data.person_info.fullname;
 
                 /// make message constantly if name not changing
-                let result: any = {
-                    incoming: name,
-                    showGreeting: true
-                };
-                if (name !== this.state.incoming) result.welcome = this.generateWelcomeMessage();
-                this.setState(result);
-
-                // this.setState({
-                //     welcome: this.generateWelcomeMessage(),
-                //     incoming: name,
-                //     showGreeting: true
-                // });
+                if (this.state.showGreeting === false || name !== this.state.incoming) {
+                    this.setState({
+                        welcome: this.generateWelcomeMessage(),
+                        incoming: name,
+                        showGreeting: true
+                    });
+                }
                 this.sjTimer.next();
             }
         });
