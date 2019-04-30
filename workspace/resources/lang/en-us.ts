@@ -44,6 +44,7 @@ export default class LangObject {
     m_ShowPersonRule = "Person Display Rule";
     m_PrioritizeName = "Name First";
     m_PrioritizeEmployeeID = "EmployeeID First";
+    m_BackgroundImage = "Background Image";
 
     m_AutoLogin = "Auto Login";
 }

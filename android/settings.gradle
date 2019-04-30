@@ -1,6 +1,4 @@
 rootProject.name = 'AttendanceClient'
-include ':react-native-sentry'
-project(':react-native-sentry').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-sentry/android')
 include ':react-native-video'
 project(':react-native-video').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-video/android-exoplayer')
 include ':react-native-vector-icons'
@@ -9,6 +7,8 @@ include ':react-native-stream-rtsp'
 project(':react-native-stream-rtsp').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-stream-rtsp/android')
 include ':react-native-shimmer'
 project(':react-native-shimmer').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-shimmer/android')
+include ':react-native-sentry'
+project(':react-native-sentry').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-sentry/android')
 include ':react-native-fs'
 project(':react-native-fs').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-fs/android')
 include ':react-native-fetch-blob'
@@ -19,21 +19,7 @@ include ':react-native-fast-image'
 project(':react-native-fast-image').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-fast-image/android')
 include ':react-native-face-detection'
 project(':react-native-face-detection').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-face-detection/android')
-include ':react-native-fs'
-project(':react-native-fs').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-fs/android')
-include ':react-native-stream-rtsp'
-project(':react-native-stream-rtsp').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-stream-rtsp/android')
-include ':react-native-feature-compare'
-project(':react-native-feature-compare').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-feature-compare/android')
-include ':react-native-face-detection'
-project(':react-native-face-detection').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-face-detection/android')
-include ':react-native-video'
-project(':react-native-video').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-video/android-exoplayer')
-include ':react-native-fetch-blob'
-project(':react-native-fetch-blob').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-fetch-blob/android')
-include ':react-native-shimmer'
-project(':react-native-shimmer').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-shimmer/android')
-include ':react-native-vector-icons'
-project(':react-native-vector-icons').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-vector-icons/android')
+include ':react-native-fabric'
+project(':react-native-fabric').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-fabric/android')
 
 include ':app'

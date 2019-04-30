@@ -5,27 +5,17 @@ import android.content.Context;
 import android.util.Log;
 
 import com.facebook.react.ReactApplication;
-import io.sentry.RNSentryPackage;
 import com.brentvatne.react.ReactVideoPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.isap.RNStreamRtspPackage;
 import com.oblador.shimmer.RNShimmerPackage;
+import io.sentry.RNSentryPackage;
 import com.rnfs.RNFSPackage;
 import com.RNFetchBlob.RNFetchBlobPackage;
 import com.isap.featurecompare.RNFeatureComparePackage;
 import com.dylanvann.fastimage.FastImageViewPackage;
 import com.facedetection.RNFaceDetectionPackage;
-import com.isap.RNStreamRtspPackage;
-import com.rnfs.RNFSPackage;
-import com.github.anrwatchdog.ANRError;
-import com.github.anrwatchdog.ANRWatchDog;
-import com.isap.RNStreamRtspPackage;
-import com.isap.featurecompare.RNFeatureComparePackage;
-import com.facedetection.RNFaceDetectionPackage;
-import com.brentvatne.react.ReactVideoPackage;
-import com.RNFetchBlob.RNFetchBlobPackage;
-import com.oblador.shimmer.RNShimmerPackage;
-import com.oblador.vectoricons.VectorIconsPackage;
+import com.smixx.fabric.FabricPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
@@ -51,15 +41,16 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-            new RNSentryPackage(),
             new ReactVideoPackage(),
             new VectorIconsPackage(),
             new RNStreamRtspPackage(),
             new RNShimmerPackage(),
+            new RNSentryPackage(),
             new RNFSPackage(),
             new RNFetchBlobPackage(),
             new RNFeatureComparePackage(),
             new FastImageViewPackage(),
+            new FabricPackage(),
             new RNFaceDetectionPackage(MainActivity.mActivity),
             new CustomToastPackage()
       );
