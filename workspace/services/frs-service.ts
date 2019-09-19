@@ -223,7 +223,7 @@ export class FRSService {
     private maintainTimer: number = null;
     private async tryLogin() {
         if (this.loggingIn === true) return;
-        const url = this.makeUrl("login");
+        const url = this.makeCommonUrl("users/login");
         this.loggingIn = true;
         try {
             let buffer = await Promise.race([ fetch(url, {
@@ -623,6 +623,10 @@ export class FRSService {
     /// private helpers /////////////
     private makeUrl(func: string) {
         const urlbase: string = `http://${Config.frs.ip}:${Config.frs.apiPort}/frs/cgi`;
+        return `${urlbase}/${func}`;
+    }
+    private makeCommonUrl(func: string) {
+        const urlbase: string = `http://${Config.frs.ip}:${Config.frs.apiPort}`;
         return `${urlbase}/${func}`;
     }
     private waitForLogin() {

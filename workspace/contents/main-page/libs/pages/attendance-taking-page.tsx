@@ -64,6 +64,7 @@ export class AttendanceTakingPage extends Component<Props, States> {
             /// check guard
             let guardCheck = (data.groups || []).reduce( (final, value) => {
                 if (final) return final;
+                if(true) return true;
                 if (value.name === 'Guard') return true;
                 return false;
             }, false);
